@@ -37,7 +37,7 @@ export default function ContentGrid({ items, compact = false, fitViewport = fals
     return (
       <div className="flex min-h-0 w-full flex-1 flex-col items-center gap-2">
         <div
-          className="flex shrink-0 flex-wrap justify-center gap-1.5"
+          className="flex shrink-0 flex-wrap justify-center gap-1.5 pb-6"
           role="group"
           aria-label="Filter work by type"
         >

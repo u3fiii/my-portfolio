@@ -10,16 +10,22 @@ export default function Button({
   href = "#",
   variant = "primary",
   external = false,
+  icon: Icon,
 }) {
+  const sizeClass = Icon
+    ? "gap-1 px-4 py-2 text-sm font-bold"
+    : "px-6 py-3 text-sm font-light";
+
   return (
     <a
       href={href}
-      className={`inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${variants[variant] ?? variants.primary}`}
+      className={`inline-flex items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${sizeClass} ${variants[variant] ?? variants.primary}`}
       {...(external && {
         target: "_blank",
         rel: "noopener noreferrer",
       })}
     >
+      {Icon ? <Icon className="h-4 w-4 shrink-0" strokeWidth={2} aria-hidden /> : null}
       {children}
     </a>
   );

@@ -15,7 +15,7 @@ export default function Projects() {
       contentMaxWidth="max-w-[78rem]"
     >
       <div className="flex h-full w-full min-h-0 flex-col items-center justify-start gap-2 py-3 pt-2">
-        <header className="w-full shrink-0 text-center">
+        <header className="w-full shrink-0 text-center pb-2">
           <h2 className="text-2xl font-bold tracking-tight text-zinc-900 md:text-3xl">
             {PROJECTS_HEADING}
           </h2>

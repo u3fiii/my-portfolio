@@ -14,10 +14,21 @@ export const INTRO = {
     "I've spent years designing products that make hard things feel simple.",
 };
 
-/** Replace with your profile URLs when ready. */
 export const SOCIAL_LINKS = [
-  { id: "instagram", label: "Instagram", href: "https://instagram.com/" },
-  { id: "dribbble", label: "Dribbble", href: "https://dribbble.com/" },
-  { id: "github", label: "GitHub", href: "https://github.com/" },
-  { id: "linkedin", label: "LinkedIn", href: "https://linkedin.com/in/" },
+  {
+    id: "instagram",
+    label: "Instagram",
+    href: "https://www.instagram.com/yousefilui",
+  },
+  {
+    id: "dribbble",
+    label: "Dribbble",
+    href: "https://dribbble.com/aliyousefi",
+  },
+  { id: "github", label: "GitHub", href: "https://github.com/u3fiii" },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/ali-yousefi-950732147/",
+  },
 ];

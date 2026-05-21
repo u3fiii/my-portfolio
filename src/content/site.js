@@ -4,7 +4,6 @@
 
 export const SITE = {
   logo: "Ali",
-  /** Put your PDF in public/ (e.g. public/cv.pdf) and set the path here. */
   cvUrl: "/cv.pdf",
   cvLabel: "Download CV",
 };
