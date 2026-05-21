@@ -10,15 +10,15 @@ const COLS = {
   4: "grid-cols-4",
 };
 
-function fitViewportGridClasses(count, isFullGrid) {
+function desktopGridClasses(count, isFullGrid) {
   if (isFullGrid) {
-    return "w-full grid-cols-2 grid-rows-4 content-start lg:grid-cols-4 lg:grid-rows-2";
+    return "md:h-full md:grid-cols-2 md:grid-rows-4 md:content-start lg:grid-cols-4 lg:grid-rows-2";
   }
 
-  const mobileCols = count <= 1 ? 1 : 2;
   const lgCols = Math.min(count, 4);
+  const mdCols = count <= 1 ? 1 : 2;
 
-  return `mx-auto w-max max-w-full content-start ${COLS[mobileCols]} lg:${COLS[lgCols]}`;
+  return `md:mx-auto md:h-full md:w-max md:max-w-full md:content-start md:${COLS[mdCols]} lg:${COLS[lgCols]}`;
 }
 
 export default function ContentGrid({ items, compact = false, fitViewport = false }) {
@@ -32,12 +32,12 @@ export default function ContentGrid({ items, compact = false, fitViewport = fals
   if (fitViewport) {
     const count = filteredItems.length;
     const isFullGrid = activeFilter === "all" && count === items.length;
-    const gridClass = fitViewportGridClasses(count, isFullGrid);
+    const desktopGridClass = desktopGridClasses(count, isFullGrid);
 
     return (
-      <div className="flex min-h-0 w-full flex-1 flex-col items-center gap-2">
+      <div className="flex w-full flex-col items-center gap-2 md:min-h-0 md:flex-1">
         <div
-          className="flex shrink-0 flex-wrap justify-center gap-1.5 pb-6"
+          className="flex shrink-0 flex-wrap justify-center gap-1.5 pb-4 md:pb-6"
           role="group"
           aria-label="Filter work by type"
         >
@@ -54,11 +54,10 @@ export default function ContentGrid({ items, compact = false, fitViewport = fals
         </div>
 
         <ul
-          className={`flex min-h-0 flex-1 flex-wrap justify-center items-start gap-3 ${gridClass.replace(/grid-cols-\d+|grid-rows-\d+/g, '')}`}
-     
+          className={`grid w-full grid-cols-2 gap-3 md:min-h-0 md:flex-1 md:grid ${desktopGridClass}`}
         >
           {filteredItems.map((item) => (
-            <li key={item.id} className="min-h-0 w-[250px] max-w-full">
+            <li key={item.id} className="min-h-0 min-w-0 w-full md:h-full">
               <ContentCard
                 id={item.id}
                 title={item.title}

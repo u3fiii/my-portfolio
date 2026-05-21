@@ -10,11 +10,12 @@ export default function Projects() {
   return (
     <Section
       id="projects"
-      className="bg-white"
+      className="mb-16 bg-white"
       align="start"
       contentMaxWidth="max-w-[78rem]"
+      tallOnMobile={false}
     >
-      <div className="flex h-full w-full min-h-0 flex-col items-center justify-start gap-2 py-3 pt-2">
+      <div className="flex w-full flex-col items-center justify-start gap-2 py-6 pt-4 md:h-full md:min-h-0 md:py-3 md:pt-2">
         <header className="w-full shrink-0 text-center pb-2">
           <h2 className="text-2xl font-bold tracking-tight text-zinc-900 md:text-3xl">
             {PROJECTS_HEADING}

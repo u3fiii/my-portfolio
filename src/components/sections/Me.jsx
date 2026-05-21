@@ -16,17 +16,17 @@ const SOCIAL_ICONS = {
 export default function Me() {
   return (
     <Section id="me" className="bg-zinc-50">
-      <div className="grid w-full items-center gap-12 md:grid-cols-2 md:gap-0 pr-42">
-        <div className="flex justify-center w-1/2">
+      <div className="flex h-full w-full flex-col items-center justify-center gap-8 md:grid md:h-auto md:grid-cols-2 md:items-center md:gap-0 md:pr-42">
+        <div className="flex w-2/3 justify-center md:w-1/2">
           <LottiePlayer
             animationData={characterMotion}
-            className="max-w-sm translate-x-45"
+            className="max-w-sm md:translate-x-45"
           />
         </div>
 
-        <div className="flex  flex-col items-center gap-6 text-center md:items-start md:text-left">
-          <div className="flex flex-col gap-4">
-            <h1 className=" flex flex-col text-3xl tracking-tight text-zinc-800 md:text-4xl lg:text-5xl">
+        <div className="flex flex-col items-center justify-center gap-6 text-center md:items-start md:justify-start md:text-left">
+          <div className="flex flex-col items-center gap-4 md:items-start">
+            <h1 className="flex flex-col items-center text-3xl tracking-tight text-zinc-800 md:items-start md:text-4xl lg:text-5xl">
               <span className="font-medium text-3xl text-zinc-700">Hi, I&apos;m {INTRO.name} a </span>
               <span className="inline-block min-w-[14ch] align-bottom">
                 <TypewriterText
@@ -41,7 +41,7 @@ export default function Me() {
           </div>
 
           <nav
-            className="flex flex-wrap justify-center gap-2 md:justify-start"
+            className="flex flex-wrap items-center justify-center gap-2 md:justify-start"
             aria-label="Social and portfolio links"
           >
             {SOCIAL_LINKS.map(({ id, label, href }, index) => (
