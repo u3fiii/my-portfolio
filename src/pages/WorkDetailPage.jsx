@@ -3,15 +3,21 @@ import { Link, useParams } from "react-router-dom";
 import WorkDetailHeader from "../components/layout/WorkDetailHeader.jsx";
 import ContentBody from "../components/work/ContentBody.jsx";
 import { TAG_LABELS, getWorkItemById } from "../content/work.js";
+import { useLenis } from "../hooks/useLenis.jsx";
 import { ROUTES } from "../routes/paths.js";
 
 export default function WorkDetailPage() {
   const { id } = useParams();
   const item = getWorkItemById(id);
+  const lenis = useLenis();
 
   useEffect(() => {
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+      return;
+    }
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [id, lenis]);
 
   if (!item) {
     return (

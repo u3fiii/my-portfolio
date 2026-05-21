@@ -8,18 +8,23 @@ import {
 
 export default function Projects() {
   return (
-    <Section id="projects" className="bg-white px-6 py-24">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
-        <header className="max-w-2xl">
-          <h2 className="text-3xl font-bold tracking-tight text-zinc-900 md:text-4xl">
+    <Section
+      id="projects"
+      className="bg-white"
+      align="start"
+      contentMaxWidth="max-w-[78rem]"
+    >
+      <div className="flex h-full w-full min-h-0 flex-col items-center justify-start gap-2 py-3 pt-2">
+        <header className="w-full shrink-0 text-center">
+          <h2 className="text-2xl font-bold tracking-tight text-zinc-900 md:text-3xl">
             {PROJECTS_HEADING}
           </h2>
-          <p className="mt-3 text-lg font-light text-zinc-600">
+          <p className="mx-auto mt-1 max-w-xl text-sm font-light leading-snug text-zinc-600 md:text-base">
             {PROJECTS_DESCRIPTION}
           </p>
         </header>
 
-        <ContentGrid items={WORK_ITEMS} />
+        <ContentGrid items={WORK_ITEMS} fitViewport />
       </div>
     </Section>
   );

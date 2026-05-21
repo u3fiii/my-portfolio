@@ -7,16 +7,19 @@ import { INTRO, SOCIAL_LINKS, TYPEWRITER_ROLES } from "../../content/me.js";
 
 export default function Me() {
   return (
-    <Section id="me" className="justify-center bg-zinc-50 px-6 py-16">
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-12 md:grid-cols-2 md:gap-16">
-        <div className="flex h-full w-full items-center justify-center md:justify-end">
-          <LottiePlayer animationData={characterMotion} />
+    <Section id="me" className="bg-zinc-50">
+      <div className="grid w-full items-center gap-12 md:grid-cols-2 md:gap-16 pr-42">
+        <div className="flex justify-center w-4/7">
+          <LottiePlayer
+            animationData={characterMotion}
+            className="max-w-sm translate-x-40"
+          />
         </div>
 
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col items-center gap-6 text-center md:items-start md:text-left">
           <div className="flex flex-col gap-4">
             <h1 className="text-3xl tracking-tight text-zinc-800 md:text-4xl lg:text-5xl">
-              <span className="font-light">Hi, I&apos;m {INTRO.name} a </span>
+              <span className="font-regular text-3xl">Hi, I&apos;m {INTRO.name} a </span>
               <span className="inline-block min-w-[14ch] align-bottom">
                 <TypewriterText
                   words={TYPEWRITER_ROLES}
@@ -30,7 +33,7 @@ export default function Me() {
           </div>
 
           <nav
-            className="flex flex-wrap gap-3"
+            className="flex flex-wrap justify-center gap-3 md:justify-start"
             aria-label="Social and portfolio links"
           >
             {SOCIAL_LINKS.map(({ id, label, href }, index) => (

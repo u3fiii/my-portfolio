@@ -7,21 +7,18 @@ import {
 
 export default function Contact() {
   return (
-    <Section
-      id="contact"
-      className="items-center justify-center bg-zinc-50 px-6 py-24"
-    >
-      <div className="mx-auto w-full max-w-lg">
-        <header className="mb-10 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-zinc-900 md:text-4xl">
+    <Section id="contact" className="bg-zinc-950 text-white">
+      <div className="w-full max-w-lg">
+        <header className="mb-8 text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
             {CONTACT_HEADING}
           </h2>
-          <p className="mt-3 text-lg font-light text-zinc-600">
+          <p className="mt-3 text-lg font-light text-zinc-300">
             {CONTACT_DESCRIPTION}
           </p>
         </header>
 
-        <ContactForm />
+        <ContactForm theme="dark" />
       </div>
     </Section>
   );

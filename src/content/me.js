@@ -4,14 +4,14 @@
 
 export const TYPEWRITER_ROLES = [
   "Product Designer",
-  "Developer",
+  "Frontend Developer",
   "Motion Designer",
 ];
 
 export const INTRO = {
   name: "Ali",
   subtitle:
-    "Focused on usability, interaction design, and product clarity.",
+    "I've spent years designing products that make hard things feel simple.",
 };
 
 /** Replace with your profile URLs when ready. */

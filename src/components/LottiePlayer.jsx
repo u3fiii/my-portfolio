@@ -13,7 +13,7 @@ export default function LottiePlayer({ animationData, className = "" }) {
 
   return (
     <div
-      className={`w-full max-w-md ${className}`}
+      className={`w-full ${className}`.trim()}
       style={{ aspectRatio: `${width} / ${height}` }}
     >
       <Lottie
@@ -21,7 +21,7 @@ export default function LottiePlayer({ animationData, className = "" }) {
         loop
         autoplay
         className="h-full w-full"
-        style={{ width: "80%", height: "80%" }}
+        style={{ width: "100%", height: "100%" }}
         rendererSettings={{ preserveAspectRatio: "xMidYMid meet" }}
         aria-hidden
       />

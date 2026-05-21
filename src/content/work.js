@@ -37,8 +37,14 @@ export const TAG_LABELS = {
  * @property {string} title
  * @property {string} subtitle
  * @property {"project"|"article"|"case-study"} tag
+ * @property {string} thumbnail — card image (put files in public/images/work/)
  * @property {ContentBlock[]} body
  */
+
+/** Placeholder helper — replace with /images/work/your-file.jpg when ready. */
+function thumb(label) {
+  return `https://placehold.co/800x450/e4e4e7/52525b?text=${encodeURIComponent(label)}`;
+}
 
 /** @type {WorkItem[]} */
 export const WORK_ITEMS = [
@@ -47,6 +53,7 @@ export const WORK_ITEMS = [
     title: "Banking app redesign",
     subtitle: "Mobile flows, design system, and usability testing.",
     tag: "project",
+    thumbnail: thumb("Banking app"),
     body: [
       {
         type: "paragraph",
@@ -66,13 +73,20 @@ export const WORK_ITEMS = [
         type: "paragraph",
         text: "Shipped a token-based UI kit and reduced task completion time in usability tests by simplifying navigation and feedback states.",
       },
+      {
+        type: "image",
+        src: "https://placehold.co/960x540/e4e4e7/52525b?text=Banking+app",
+        alt: "Banking app screens",
+        caption: "Early wireframes exploring hierarchy and spacing.",
+      },
     ],
   },
   {
     id: "hierarchy-beats-decoration",
-    title: "Why hierarchy beats decoration",
+    title: "Why hierarchy beats",
     subtitle: "Notes on structuring interfaces for clarity.",
     tag: "article",
+    thumbnail: thumb("Typography"),
     body: [
       {
         type: "paragraph",
@@ -98,6 +112,7 @@ export const WORK_ITEMS = [
     title: "SaaS onboarding audit",
     subtitle: "Research, journey maps, and recommended patterns.",
     tag: "case-study",
+    thumbnail: thumb("Journey map"),
     body: [
       {
         type: "paragraph",
@@ -120,6 +135,7 @@ export const WORK_ITEMS = [
     title: "Travel booking experience",
     subtitle: "End-to-end UX for search, compare, and checkout.",
     tag: "project",
+    thumbnail: thumb("Travel booking"),
     body: [
       {
         type: "paragraph",
@@ -141,6 +157,7 @@ export const WORK_ITEMS = [
     title: "Motion in product UI",
     subtitle: "When animation helps—and when it gets in the way.",
     tag: "article",
+    thumbnail: thumb("Motion UI"),
     body: [
       {
         type: "paragraph",
@@ -161,6 +178,7 @@ export const WORK_ITEMS = [
     title: "Healthcare portal",
     subtitle: "Accessibility, forms, and role-based dashboards.",
     tag: "case-study",
+    thumbnail: thumb("Healthcare"),
     body: [
       {
         type: "paragraph",
@@ -182,6 +200,7 @@ export const WORK_ITEMS = [
     title: "Portfolio site",
     subtitle: "Personal brand, layout, and component library.",
     tag: "project",
+    thumbnail: thumb("Portfolio"),
     body: [
       {
         type: "paragraph",
