@@ -34,7 +34,7 @@ export default function WorkDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-transparent">
       <WorkDetailHeader title={item.title} />
       <article className="mx-auto max-w-3xl px-6 py-12">
         <p className="mb-2 text-sm font-light text-zinc-500">

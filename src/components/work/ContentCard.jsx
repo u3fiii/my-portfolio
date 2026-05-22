@@ -21,12 +21,12 @@ export default function ContentCard({
     return (
       <Link
         to={workDetailPath(id)}
-        className="group flex h-[200px] w-full flex-col overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50 p-2 transition-shadow hover:shadow-md md:h-full"
+        className="group flex h-[200px] w-full flex-col overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50 p-2 transition-shadow hover:shadow-md"
       >
         <img
           src={thumbnail}
           alt={title}
-          className="h-[80px] w-full shrink-0 object-cover rounded-md md:h-[140px]"
+          className="h-[80px] w-full shrink-0 object-cover rounded-md"
         />
         <div className="flex min-h-0 flex-1 flex-col p-3">
           <span

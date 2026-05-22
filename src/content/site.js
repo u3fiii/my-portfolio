@@ -5,7 +5,7 @@
 export const SITE = {
   logo: "Ali",
   cvUrl: "/cv.pdf",
-  cvLabel: "Download CV",
+  cvLabel: "",
 };
 
 export const NAV_ITEMS = [

@@ -7,7 +7,7 @@ import {
 
 export default function Contact() {
   return (
-    <Section id="contact" className="bg-zinc-950 text-white">
+    <Section id="contact" className="bg-zinc-950/80 text-white backdrop-blur-sm">
       <div className="w-full max-w-lg">
         <header className="mb-8 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">

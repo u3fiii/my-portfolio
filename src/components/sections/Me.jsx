@@ -15,7 +15,7 @@ const SOCIAL_ICONS = {
 
 export default function Me() {
   return (
-    <Section id="me" className="bg-zinc-50">
+    <Section id="me" className="bg-transparent">
       <div className="flex h-full w-full flex-col items-center justify-center gap-8 md:grid md:h-auto md:grid-cols-2 md:items-center md:gap-0 md:pr-42">
         <div className="flex w-2/3 justify-center md:w-1/2">
           <LottiePlayer

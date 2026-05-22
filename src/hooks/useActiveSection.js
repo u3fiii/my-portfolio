@@ -17,7 +17,6 @@ export default function useActiveSection(sectionIds) {
     if (elements.length === 0) return;
 
     const updateActive = () => {
-      // Line ~35% from top: section spanning this point is "current"
       const anchor = window.innerHeight * 0.35;
       let current = sectionIds[0];
 
