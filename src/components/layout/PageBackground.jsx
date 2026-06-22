@@ -1,13 +1,16 @@
-/** Fixed layered background: gradient, color blobs, grain. */
+import { useMatch } from "react-router-dom";
+import DotBackground from "../background/DotBackground.jsx";
+
+/** Fixed white base + interactive dot grid behind page content. */
 export default function PageBackground() {
+  const isContentPage = Boolean(
+    useMatch("/work/:id") || useMatch("/case-studies/*"),
+  );
+
   return (
     <>
-      <div className="page-bg-gradient" aria-hidden />
-      <div className="page-bg-blobs" aria-hidden>
-        <div className="page-bg-blob-1" />
-        <div className="page-bg-blob-2" />
-      </div>
-      <div className="page-bg-grain" aria-hidden />
+      <div className="fixed inset-0 z-0 bg-white" aria-hidden />
+      <DotBackground variant={isContentPage ? "content" : "default"} />
     </>
   );
 }

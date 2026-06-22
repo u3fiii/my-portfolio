@@ -7,15 +7,13 @@ export default function Section({
   className = "",
   align = "center",
   contentMaxWidth = "max-w-6xl",
-  /** When false, section grows with content on mobile; desktop stays 100dvh. */
+  /** When false, section height follows content at all breakpoints. */
   tallOnMobile = true,
 }) {
   const alignClass = align === "start" ? "justify-start" : "justify-center";
-  const heightClass = tallOnMobile ? "h-[100dvh]" : "h-auto md:h-[100dvh]";
-  const overflowClass = tallOnMobile
-    ? "overflow-hidden"
-    : "overflow-visible md:overflow-hidden";
-  const innerHeightClass = tallOnMobile ? "h-full min-h-0" : "h-auto md:h-full md:min-h-0";
+  const heightClass = tallOnMobile ? "h-[100dvh]" : "h-auto";
+  const overflowClass = tallOnMobile ? "overflow-hidden" : "overflow-visible";
+  const innerHeightClass = tallOnMobile ? "h-full min-h-0" : "h-auto";
 
   return (
     <section

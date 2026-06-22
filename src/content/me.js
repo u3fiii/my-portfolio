@@ -2,10 +2,13 @@
  * "Me" section copy and links.
  */
 
+/** @typedef {{ text: string, fontClass: string }} TypewriterRole */
+
+/** @type {TypewriterRole[]} */
 export const TYPEWRITER_ROLES = [
-  "Product Designer",
-  "Frontend Developer",
-  "Motion Designer",
+  { text: "Product Designer", fontClass: "font-role-product" },
+  { text: "Frontend Developer", fontClass: "font-role-code" },
+  { text: "Motion Designer", fontClass: "font-role-motion" },
 ];
 
 export const INTRO = {

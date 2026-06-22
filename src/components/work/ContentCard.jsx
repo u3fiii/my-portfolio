@@ -30,11 +30,11 @@ export default function ContentCard({
         />
         <div className="flex min-h-0 flex-1 flex-col p-3">
           <span
-            className={`mb-2 w-fit rounded-full px-2 py-0.5 text-[10px] leading-none font-light ${tagStyles[tag] ?? tagStyles.project}`}
+            className={`mb-2 w-fit rounded-full px-2 py-0.5 font-windsor-condensed text-[10px] leading-none uppercase tracking-wide ${tagStyles[tag] ?? tagStyles.project}`}
           >
             {TAG_LABELS[tag] ?? tag}
           </span>
-          <h3 className="line-clamp-2 text-[16px] font-bold leading-snug text-zinc-900 group-hover:text-zinc-700">
+          <h3 className="line-clamp-2 font-windsor-bold text-[16px] leading-snug text-zinc-900 group-hover:text-zinc-700">
             {title}
           </h3>
           <p className="mt-1 line-clamp-3 text-[12px] font-normal leading-snug text-zinc-600">
@@ -57,17 +57,17 @@ export default function ContentCard({
       />
       <div className={`flex flex-1 flex-col ${compact ? "p-3" : "p-4"}`}>
         <span
-          className={`mb-2 w-fit rounded-full px-1.5 py-0.5 text-xs leading-none font-light ${tagStyles[tag] ?? tagStyles.project}`}
+          className={`mb-2 w-fit rounded-full px-1.5 py-0.5 font-windsor-condensed text-xs leading-none uppercase tracking-wide ${tagStyles[tag] ?? tagStyles.project}`}
         >
           {TAG_LABELS[tag] ?? tag}
         </span>
         <h3
-          className={`font-bold text-zinc-900 group-hover:text-zinc-700 ${compact ? "text-sm" : ""}`}
+          className={`font-windsor-bold text-zinc-900 group-hover:text-zinc-700 ${compact ? "text-sm" : ""}`}
         >
           {title}
         </h3>
         <p
-          className={`mt-1 flex-1 font-light leading-relaxed text-zinc-600 ${compact ? "text-xs" : "text-sm"}`}
+          className={`mt-1 flex-1 leading-relaxed text-zinc-600 ${compact ? "text-xs" : "text-sm"}`}
         >
           {subtitle}
         </p>
