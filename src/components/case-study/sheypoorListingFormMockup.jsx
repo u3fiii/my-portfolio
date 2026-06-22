@@ -153,7 +153,8 @@ function SliderSection() {
         <div
           className="relative h-[5px] rounded-sm"
           style={{
-            background: "linear-gradient(to right, #2ECC71, #F39C12, #E74C3C)",
+            background:
+              "linear-gradient(to right, #E74C3C 0%, #F39C12 50%, #2ECC71 100%)",
           }}
         >
           <span
