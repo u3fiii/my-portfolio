@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import CaseStudyDivider from "../components/case-study/CaseStudyDivider.jsx";
-import MediaPlaceholder from "../components/case-study/MediaPlaceholder.jsx";
+import FormReorderDiagram from "../components/case-study/FormReorderDiagram.jsx";
 import PriceBadgeList from "../components/case-study/PriceBadgeList.jsx";
+import PriceSignalResultsGraphic from "../components/case-study/PriceSignalResultsGraphic.jsx";
+import SheypoorFinalFormScreen from "../components/case-study/SheypoorFinalFormScreen.jsx";
+import SheypoorFormComparison from "../components/case-study/SheypoorFormComparison.jsx";
 import StatsRow from "../components/case-study/StatsRow.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
@@ -46,13 +48,14 @@ function PullQuote({ children }) {
 
 function MetaItem({ label, value }) {
   return (
-    <div>
-      <dt className="case-study__ui text-xs font-medium uppercase tracking-[0.06em] text-zinc-500">
+    <div
+      className="case-study__ui h-full rounded-xl border border-[#E2E1DC] bg-white px-5 py-4"
+      style={{ borderWidth: "0.5px" }}
+    >
+      <dt className="text-xs font-medium uppercase tracking-[0.06em] text-zinc-500">
         {label}
       </dt>
-      <dd className="case-study__ui mt-1.5 text-xs leading-relaxed text-zinc-700">
-        {value}
-      </dd>
+      <dd className="mt-1.5 text-xs leading-relaxed text-zinc-700">{value}</dd>
     </div>
   );
 }
@@ -92,7 +95,7 @@ export default function CaseStudyPriceSignal() {
             </p>
           </div>
 
-          <dl className="mt-6 grid gap-5 min-[600px]:grid-cols-3">
+          <dl className="mt-6 grid gap-3 min-[600px]:grid-cols-3">
             <MetaItem
               label="Role"
               value="Product Design — wireframes, prototypes, interaction + product thinking"
@@ -123,9 +126,6 @@ export default function CaseStudyPriceSignal() {
             happening. That was a problem for everyone.
           </Paragraph>
         </Section>
-
-        <CaseStudyDivider />
-
         <Section title="What if Sheypoor just told people whether a price is fair?">
           <PullQuote>
             What if Sheypoor just told people whether a price is fair or not?
@@ -141,13 +141,21 @@ export default function CaseStudyPriceSignal() {
             weren&apos;t using it this way.
           </Paragraph>
           <Paragraph>
+            Before anything else, we wanted to know if the problem was real. Kourosh
+            and I called 20 active users — people who had viewed a lot of listings
+            but never clicked the contact button. Cold-calling strangers is
+            uncomfortable, but a few of those conversations were enough to validate
+            the hypothesis. The pattern was consistent: prices felt too high, and when
+            the gap between expectation and listing price was too wide, people simply
+            stopped engaging. One person put it plainly — &ldquo;There&apos;s no point
+            calling when the prices are like this.&rdquo; That was enough to move
+            forward.
+          </Paragraph>
+          <Paragraph>
             When we brought it to sales and support, they pushed back hard. Sellers
             would get angry. Support would get flooded. The idea was shelved.
           </Paragraph>
         </Section>
-
-        <CaseStudyDivider />
-
         <section>
           <h2 className="case-study__h2">Minimum effort. Just see what happens.</h2>
           <div className="mt-5 flex flex-col gap-5">
@@ -157,8 +165,10 @@ export default function CaseStudyPriceSignal() {
               effort.&rdquo;
             </Paragraph>
             <Paragraph>
-              We built it fast. After a listing passed moderation, a colored badge
-              appeared below the price:
+              We built it fast — but we didn&apos;t open it to everyone. The feature
+              rolled out to 20% of users only, as a controlled test. For that slice
+              of traffic, after a listing passed moderation, a colored badge appeared
+              below the price:
             </Paragraph>
             <PriceBadgeList
               items={[
@@ -189,28 +199,28 @@ export default function CaseStudyPriceSignal() {
               When a seller was clearly in a hurry or just didn&apos;t know the value,
               we wanted to surface that.
             </Paragraph>
-            <MediaPlaceholder
-              tag="Screen 1 of 4"
-              title="Used car listing card — all four badge states"
-              description="Recreate the Sheypoor listing card in Figma. Car photo left, title + price + badge + post date stacked right. Show all 4 badge states."
-              bullets={[
-                "Layout: image left (~110px), text stack right",
-                "Badge sits between price and post date",
-                'Use Sheypoor blue #0099CC for "Fair price" badge',
-                "Mobile frame, 375px wide",
-                "Gray rectangle placeholder for car photo",
-              ]}
-              size="375 × 120px per card · 4 states"
-            />
+            <figure className="case-study__ui my-8 rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-6">
+              <p className="mx-auto mb-3 max-w-[520px] text-center text-[10px] font-medium uppercase tracking-[0.1em] text-[#0099CC]">
+                Screen 1 of 4
+              </p>
+              <div className="mx-auto w-full max-w-[520px]">
+                <img
+                  src="/images/case-studies/price-signal-screen-1.png"
+                  alt="Listing cards before and after the price badge — same listing, new signal"
+                  className="block w-full rounded-lg"
+                />
+              </div>
+              <figcaption className="mx-auto mt-4 max-w-[520px] text-center font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] italic leading-relaxed text-zinc-600">
+                Listing cards before and after the price badge — same listing, new
+                signal.
+              </figcaption>
+            </figure>
             <Paragraph>
               The test ran for two days before seller complaints forced us to roll it
               back.
             </Paragraph>
           </div>
         </section>
-
-        <CaseStudyDivider />
-
         <section>
           <h2 className="case-study__h2">
             Even two days was enough to learn something real
@@ -241,9 +251,6 @@ export default function CaseStudyPriceSignal() {
             </Paragraph>
           </div>
         </section>
-
-        <CaseStudyDivider />
-
         <section>
           <h2 className="case-study__h2">
             We were giving feedback at the wrong moment
@@ -256,9 +263,6 @@ export default function CaseStudyPriceSignal() {
               back and edit.
             </Paragraph>
             <Paragraph>
-              We needed to move the feedback to before anything went live.
-            </Paragraph>
-            <Paragraph>
               We also revisited the four-state design. The green &ldquo;Great
               deal&rdquo; badge made sense in theory — but in practice, genuinely
               underpriced listings were rare enough that designing a whole state around
@@ -266,24 +270,12 @@ export default function CaseStudyPriceSignal() {
               version would use only three labels. Fewer states, clearer signal, less
               for the seller to process.
             </Paragraph>
-            <MediaPlaceholder
-              tag="Screen 2 of 4"
-              title="Flow diagram — before vs. after"
-              description="Two-column diagram. Boxes and arrows only, no UI detail needed."
-              bullets={[
-                "LEFT: form steps → Publish → badge appears (red X — too late)",
-                "RIGHT: form steps → Price field last → feedback here (green check) → Publish",
-                'Label left: "Feedback after going live"',
-                'Label right: "Feedback before going live"',
-                "Use Sheypoor blue #0099CC for right-side arrows",
-              ]}
-              size="800 × 300px · light background"
-            />
+            <Paragraph>
+              We needed to move the feedback to before anything went live.
+            </Paragraph>
+            <FormReorderDiagram />
           </div>
         </section>
-
-        <CaseStudyDivider />
-
         <section>
           <h2 className="case-study__h2">
             I moved the price field to the bottom of the form
@@ -314,24 +306,9 @@ export default function CaseStudyPriceSignal() {
               was for or how it connected to their price. It added confusion we
               didn&apos;t need. We moved on.
             </Paragraph>
-            <MediaPlaceholder
-              tag="Screen 3 of 4"
-              title="Slider concept — the idea we tested and abandoned"
-              description="A static concept frame showing the original slider design. Concept fidelity, not hi-fi."
-              bullets={[
-                "Mobile form frame, price field at the bottom",
-                "Below price input: horizontal gradient bar (red → yellow → green)",
-                "Circular handle in the red/yellow zone (seller priced high)",
-                "Small label under handle showing price value",
-                "Keep it minimal — this is the idea that didn't work",
-              ]}
-              size="375 × 500px · mobile frame"
-            />
+            <SheypoorFormComparison />
           </div>
         </section>
-
-        <CaseStudyDivider />
-
         <section>
           <h2 className="case-study__h2">
             Make the right option the easy option
@@ -373,25 +350,9 @@ export default function CaseStudyPriceSignal() {
               Green was gone. Not because the idea was wrong, but because simplicity
               mattered more than completeness at this stage.
             </Paragraph>
-            <MediaPlaceholder
-              tag="Screen 4 of 4 · Most important"
-              title="Final listing form — price field pre-filled with suggested price"
-              description="The key screen of the whole case study. Hi-fi mobile form — take the most time on this one."
-              bullets={[
-                "Mobile form, 375px wide",
-                "Top: filled-in fields (Brand, Model, Year, Mileage, Condition) with realistic dummy data",
-                "Bottom: Price field pre-filled (e.g. 890,000,000 تومان)",
-                'Below price: subtle info banner in Sheypoor blue — "با توجه به وضعیت بازار، شیپور این قیمت را پیشنهاد می‌دهد."',
-                "Price field with active/focused blue border",
-              ]}
-              size="375 × 600px · mobile frame · hi-fi"
-              highlighted
-            />
+            <SheypoorFinalFormScreen />
           </div>
         </section>
-
-        <CaseStudyDivider />
-
         <section>
           <h2 className="case-study__h2">From 23% to 41% in two weeks</h2>
           <div className="mt-5 flex flex-col gap-5">
@@ -400,23 +361,9 @@ export default function CaseStudyPriceSignal() {
               nearly double. Changing when and how feedback was delivered was enough
               to shift seller behavior at scale.
             </Paragraph>
-            <MediaPlaceholder
-              tag="Results graphic"
-              title="Before / after — 23% → 41%"
-              description="Bold and simple. Two big numbers, not a complex chart."
-              bullets={[
-                'Two large numbers: "23%" (gray) and "41%" (Sheypoor blue #0099CC)',
-                'Label each: "2-day test" and "After redesign — 2 weeks"',
-                "Arrow between them pointing right",
-                "Light background, confident closing visual",
-              ]}
-              size="800 × 280px · landscape"
-            />
+            <PriceSignalResultsGraphic />
           </div>
         </section>
-
-        <CaseStudyDivider />
-
         <Section title="How It Ended">
           <Paragraph>
             A few months after launch, the Iranian government ordered all major
@@ -429,9 +376,6 @@ export default function CaseStudyPriceSignal() {
             was about two months.
           </Paragraph>
         </Section>
-
-        <CaseStudyDivider />
-
         <section>
           <h2 className="case-study__h2">What I Learned</h2>
           <ul className="mt-6 flex flex-col gap-6">
