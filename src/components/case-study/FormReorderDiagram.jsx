@@ -218,17 +218,6 @@ export default function FormReorderDiagram() {
             title="The insight"
             body="By the time the seller reaches the price field, we already have all the specs we need. Now we can pre-fill a fair price and give feedback at exactly the right moment."
           />
-          <p
-            className="mt-3 inline-flex rounded-full border px-2.5 py-0.5 text-[10px]"
-            style={{
-              background: "#EEF6FF",
-              borderColor: "#99DAEF",
-              color: "#0077A3",
-              fontFamily: FONT_UI,
-            }}
-          >
-            💡 Ali&apos;s idea
-          </p>
         </StepColumn>
       </div>
 

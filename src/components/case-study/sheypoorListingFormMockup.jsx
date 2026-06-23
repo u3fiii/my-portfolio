@@ -265,14 +265,16 @@ function PhoneShell({ children }) {
 export function PhoneMockupFooter({ badge, badgeStyle, caption }) {
   return (
     <>
-      <span
-        className="mt-4 inline-flex rounded-full border px-2.5 py-0.5 text-[10px] font-medium"
-        style={{ fontFamily: FONT_UI, ...badgeStyle }}
-      >
-        {badge}
-      </span>
+      {badge ? (
+        <span
+          className="mt-4 inline-flex rounded-full border px-2.5 py-0.5 text-[10px] font-medium"
+          style={{ fontFamily: FONT_UI, ...badgeStyle }}
+        >
+          {badge}
+        </span>
+      ) : null}
       <p
-        className="mt-2 max-w-[240px] text-center text-[11px] italic leading-snug"
+        className={`${badge ? "mt-2" : "mt-4"} max-w-[240px] text-center text-[11px] italic leading-snug`}
         style={{ fontFamily: FONT_UI, color: "#888898" }}
       >
         {caption}

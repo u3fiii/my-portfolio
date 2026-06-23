@@ -1,0 +1,247 @@
+.price-signal-hero {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin-inline: auto;
+  aspect-ratio: 800 / 440;
+  min-height: 240px;
+  background: #0f0f0f;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+}
+
+.price-signal-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.price-signal-hero::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 62.5%;
+  height: 68%;
+  background: radial-gradient(ellipse, rgba(0, 153, 204, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.price-signal-hero__fade-top,
+.price-signal-hero__fade-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 18%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.price-signal-hero__fade-top {
+  top: 0;
+  background: linear-gradient(#0f0f0f, transparent);
+}
+
+.price-signal-hero__fade-bottom {
+  bottom: 0;
+  background: linear-gradient(transparent, #0f0f0f);
+}
+
+.price-signal-hero__inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 6% 5%;
+  gap: 4%;
+}
+
+.price-signal-hero__left {
+  flex-shrink: 0;
+  padding-right: 4%;
+  max-width: 42%;
+}
+
+.price-signal-hero__eyebrow {
+  font-family: var(--font-case-ui);
+  font-size: clamp(9px, 1.4vw, 11px);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 1rem;
+}
+
+.price-signal-hero__title {
+  font-family: var(--font-case-body);
+  font-size: clamp(28px, 6vw, 48px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.price-signal-hero__title span {
+  color: #0099cc;
+}
+
+.price-signal-hero__sub {
+  font-family: var(--font-case-ui);
+  font-size: clamp(11px, 1.75vw, 14px);
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+  max-width: 260px;
+  margin-top: 0.75rem;
+}
+
+.price-signal-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.price-signal-hero__meta-label {
+  font-family: var(--font-case-ui);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.price-signal-hero__meta-val {
+  font-family: var(--font-case-ui);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.price-signal-hero__right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: perspective(800px) rotateY(-8deg) rotateX(3deg);
+  transform-origin: left center;
+  flex-shrink: 0;
+  width: min(260px, 34vw);
+}
+
+.price-signal-hero__card {
+  width: 100%;
+  background: #1c1c1c;
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  direction: rtl;
+}
+
+.price-signal-hero__thumb {
+  width: 64px;
+  height: 50px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: #2a2a2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price-signal-hero__thumb svg {
+  opacity: 0.3;
+}
+
+.price-signal-hero__card-title {
+  font-family: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 3px;
+}
+
+.price-signal-hero__card-price {
+  font-family: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.price-signal-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+
+.price-signal-hero__badge--red {
+  background: rgba(231, 76, 60, 0.15);
+  color: #ff6b5b;
+  border: 0.5px solid rgba(231, 76, 60, 0.3);
+}
+
+.price-signal-hero__badge--yellow {
+  background: rgba(243, 156, 18, 0.15);
+  color: #ffb730;
+  border: 0.5px solid rgba(243, 156, 18, 0.3);
+}
+
+.price-signal-hero__badge--blue {
+  background: rgba(0, 153, 204, 0.15);
+  color: #40c4ec;
+  border: 0.5px solid rgba(0, 153, 204, 0.3);
+}
+
+.price-signal-hero__card-meta {
+  font-family: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.25);
+  margin-top: 4px;
+}
+
+@media (max-width: 599px) {
+  .price-signal-hero__inner {
+    flex-direction: column;
+    justify-content: center;
+    padding: 8% 6%;
+  }
+
+  .price-signal-hero__left {
+    max-width: 100%;
+    padding-right: 0;
+    text-align: center;
+  }
+
+  .price-signal-hero__sub {
+    max-width: none;
+  }
+
+  .price-signal-hero__meta {
+    justify-content: center;
+  }
+
+  .price-signal-hero__right {
+    width: min(260px, 88%);
+    transform: none;
+  }
+}

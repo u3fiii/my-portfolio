@@ -1,8 +1,10 @@
-import {
-  FinalDesignPhone,
-  PhoneColumn,
-  SliderPhone,
-} from "./sheypoorListingFormMockup.jsx";
+import { PhoneColumn } from "./sheypoorListingFormMockup.jsx";
+
+function ScreenImage({ src, alt }) {
+  return (
+    <img src={src} alt={alt} className="mx-auto block w-full max-w-[260px]" />
+  );
+}
 
 export default function SheypoorFormComparison() {
   return (
@@ -21,7 +23,12 @@ export default function SheypoorFormComparison() {
             borderColor: "#F5B3B3",
           }}
           caption="Users didn't understand what the slider was for."
-          phone={<SliderPhone />}
+          phone={
+            <ScreenImage
+              src="/images/case-studies/price-signal-screen-3.png"
+              alt="Sheypoor listing form with price range slider concept"
+            />
+          }
         />
         <PhoneColumn
           label="Screen 4 — Final design"
@@ -33,7 +40,12 @@ export default function SheypoorFormComparison() {
             borderColor: "#99DAEF",
           }}
           caption="Price moved to last — pre-filled with fair estimate."
-          phone={<FinalDesignPhone />}
+          phone={
+            <ScreenImage
+              src="/images/case-studies/price-signal-screen-4.png"
+              alt="Sheypoor listing form final design with pre-filled fair price"
+            />
+          }
         />
       </div>
     </figure>

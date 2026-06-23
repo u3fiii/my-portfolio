@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import FormReorderDiagram from "../components/case-study/FormReorderDiagram.jsx";
 import PriceBadgeList from "../components/case-study/PriceBadgeList.jsx";
+import PriceSignalHero from "../components/case-study/PriceSignalHero.jsx";
 import PriceSignalResultsGraphic from "../components/case-study/PriceSignalResultsGraphic.jsx";
 import SheypoorFinalFormScreen from "../components/case-study/SheypoorFinalFormScreen.jsx";
 import SheypoorFormComparison from "../components/case-study/SheypoorFormComparison.jsx";
@@ -74,7 +75,7 @@ export default function CaseStudyPriceSignal() {
   return (
     <div className="min-h-screen">
       <article className="case-study mx-auto max-w-[680px] px-6 pb-20 pt-24 md:pt-28">
-        <header className="mb-8 border-b border-zinc-200 pb-6">
+        <header className="mb-8 pb-6">
           <p className="case-study__eyebrow">Case Study · Sheypoor · 2020</p>
           <h1 className="case-study__title mt-4">Price Signal</h1>
           <p className="case-study__deck mt-4">
@@ -109,6 +110,8 @@ export default function CaseStudyPriceSignal() {
               value="~2 months from idea to results"
             />
           </dl>
+
+          <PriceSignalHero />
         </header>
 
         <Section title="Buyers were losing trust — and the market was slowing down">
@@ -126,10 +129,11 @@ export default function CaseStudyPriceSignal() {
             happening. That was a problem for everyone.
           </Paragraph>
         </Section>
-        <Section title="What if Sheypoor just told people whether a price is fair?">
-          <PullQuote>
-            What if Sheypoor just told people whether a price is fair or not?
-          </PullQuote>
+        <section>
+          <div className="flex flex-col gap-5">
+            <PullQuote>
+              What if Sheypoor just told people whether a price is fair or not?
+            </PullQuote>
           <Paragraph>
             It started over lunch. A small label on each listing. Is this car priced
             too high? About right? A great deal?
@@ -155,7 +159,8 @@ export default function CaseStudyPriceSignal() {
             When we brought it to sales and support, they pushed back hard. Sellers
             would get angry. Support would get flooded. The idea was shelved.
           </Paragraph>
-        </Section>
+          </div>
+        </section>
         <section>
           <h2 className="case-study__h2">Minimum effort. Just see what happens.</h2>
           <div className="mt-5 flex flex-col gap-5">
@@ -203,14 +208,14 @@ export default function CaseStudyPriceSignal() {
               <p className="mx-auto mb-3 max-w-[520px] text-center text-[10px] font-medium uppercase tracking-[0.1em] text-[#0099CC]">
                 Screen 1 of 4
               </p>
-              <div className="mx-auto w-full max-w-[520px]">
+              <div className="mx-auto w-full">
                 <img
                   src="/images/case-studies/price-signal-screen-1.png"
                   alt="Listing cards before and after the price badge — same listing, new signal"
-                  className="block w-full rounded-lg"
+                  className="block w-full"
                 />
               </div>
-              <figcaption className="mx-auto mt-4 max-w-[520px] text-center font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] italic leading-relaxed text-zinc-600">
+              <figcaption className="mx-auto mt-4 text-center font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] italic leading-relaxed text-zinc-600">
                 Listing cards before and after the price badge — same listing, new
                 signal.
               </figcaption>
