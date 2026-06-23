@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import BadgeColorTest from "../components/case-study/BadgeColorTest.jsx";
 import FormReorderDiagram from "../components/case-study/FormReorderDiagram.jsx";
 import PriceBadgeList from "../components/case-study/PriceBadgeList.jsx";
 import PriceSignalHero from "../components/case-study/PriceSignalHero.jsx";
@@ -203,6 +204,22 @@ export default function CaseStudyPriceSignal() {
               The green state was for listings priced below market — rare, but real.
               When a seller was clearly in a hurry or just didn&apos;t know the value,
               we wanted to surface that.
+            </Paragraph>
+            <BadgeColorTest />
+            <Paragraph>
+              Before we launched, there was one open question: should &ldquo;Fair
+              price&rdquo; be blue or green? Blue was Sheypoor&apos;s brand color.
+              Green followed the universal red-to-green spectrum people already
+              understood. We couldn&apos;t agree internally, so we tested it.
+            </Paragraph>
+            <Paragraph>
+              I put together a skeleton prototype — a listing page with no real content,
+              just colored badges. No labels, no explanation. We showed it to
+              participants from our weekly usability sessions and asked one question:
+              which listing looks like a better deal?
+            </Paragraph>
+            <Paragraph>
+              The majority chose green without hesitation. The answer was clear.
             </Paragraph>
             <figure className="case-study__ui my-8 rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-6">
               <p className="mx-auto mb-3 max-w-[520px] text-center text-[10px] font-medium uppercase tracking-[0.1em] text-[#0099CC]">
