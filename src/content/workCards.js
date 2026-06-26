@@ -15,15 +15,15 @@ export const WORK_CARDS = [
     image: "/images/covers/metriwo.png",
   },
   {
-    id: "metriwo",
-    filter: "project",
-    tag: "Project · 2024",
-    title: "Metriwo Landing Page",
+    id: "bitpin-deposit",
+    filter: "case-study",
+    tag: "Case Study · 2024",
+    title: "Bitpin — Deposit Flow Redesign",
     description:
-      "Designing and building a SaaS landing page for a social media management tool.",
-    href: "#",
-    external: true,
-    comingSoon: true,
+      "Rebuilding user trust in a payment flow after Iran's crypto exchanges lost access to payment gateways overnight.",
+    href: workDetailPath("bitpin-deposit"),
+    external: false,
+    comingSoon: false,
     image: "/images/covers/price-signal.png",
   },
   {

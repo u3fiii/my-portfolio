@@ -1,6 +1,9 @@
 export default function StatsRow({ items }) {
+  const colsClass =
+    items.length === 2 ? "min-[600px]:grid-cols-2" : "min-[600px]:grid-cols-3";
+
   return (
-    <div className="case-study__ui my-8 grid grid-cols-1 gap-3 min-[600px]:grid-cols-3">
+    <div className={`case-study__ui my-8 grid grid-cols-1 gap-3 ${colsClass}`}>
       {items.map(({ value, label }) => (
         <div
           key={label}

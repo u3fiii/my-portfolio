@@ -4,6 +4,7 @@ import PageBackground from "./components/layout/PageBackground.jsx";
 import { LenisProvider } from "./hooks/useLenis.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import WorkDetailPage from "./pages/WorkDetailPage.jsx";
+import CaseStudyBitpinDeposit from "./pages/CaseStudyBitpinDeposit.jsx";
 import CaseStudyPriceSignal from "./pages/CaseStudyPriceSignal.jsx";
 
 export default function App() {
@@ -19,6 +20,10 @@ export default function App() {
             <Route
               path="/case-studies/price-signal"
               element={<CaseStudyPriceSignal />}
+            />
+            <Route
+              path="/case-studies/bitpin-deposit"
+              element={<CaseStudyBitpinDeposit />}
             />
           </Routes>
         </div>

@@ -7,10 +7,12 @@ export const ROUTES = {
 
 const CASE_STUDY_PATHS = {
   "price-signal": "/case-studies/price-signal",
+  "bitpin-deposit": "/case-studies/bitpin-deposit",
 };
 
 export const CASE_STUDY_TITLES = {
   "price-signal": "Price Signal",
+  "bitpin-deposit": "Bitpin — Deposit Flow Redesign",
 };
 
 export function workDetailPath(id) {
