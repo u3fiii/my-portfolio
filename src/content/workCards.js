@@ -24,7 +24,7 @@ export const WORK_CARDS = [
     href: workDetailPath("bitpin-deposit"),
     external: false,
     comingSoon: false,
-    image: "/images/covers/price-signal.png",
+    image: "/images/covers/quiet-checkout.png",
   },
   {
     id: "verified-listings",
@@ -40,15 +40,15 @@ export const WORK_CARDS = [
   },
   {
     id: "quiet-checkout",
-    filter: "case-study",
-    tag: "Case Study",
+    filter: "project",
+    tag: "Project",
     title: "Quiet Checkout",
     description:
       "Removing four fields from a marketplace checkout and watching completion climb.",
     href: "#",
     external: true,
     comingSoon: true,
-    image: "/images/covers/quiet-checkout.png",
+    image: "/images/covers/price-signal.png",
   },
   {
     id: "design-the-default",

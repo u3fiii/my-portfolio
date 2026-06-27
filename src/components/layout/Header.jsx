@@ -53,8 +53,8 @@ export default function Header() {
               transition={fadeTransition}
             >
               <Link
-                to={ROUTES.projects}
-                aria-label="Back to projects"
+                to={ROUTES.home}
+                aria-label="Back to home"
                 className="inline-flex shrink-0 items-center justify-center rounded-full p-2 text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
               >
                 <ArrowLeft

@@ -34,7 +34,7 @@ export default function Me() {
   const buttonsStartStep = 4;
 
   return (
-    <Section id="me" className="bg-transparent">
+    <Section id="me" className="overflow-visible bg-transparent">
       <div className="flex h-full w-full flex-col items-center justify-center gap-8 md:grid md:h-auto md:grid-cols-2 md:items-center md:gap-0 md:pr-42">
         <motion.div
           className="flex w-2/3 justify-center md:w-1/2"
@@ -75,18 +75,18 @@ export default function Me() {
           </div>
 
           <nav
-            className="flex flex-nowrap items-center justify-center gap-2 md:flex-wrap md:justify-start"
+            className="-m-1 flex flex-nowrap items-center justify-center gap-2 overflow-visible p-1 md:flex-wrap md:justify-start"
             aria-label="Social and portfolio links"
           >
             {SOCIAL_LINKS.map(({ id, label, href }, index) => (
               <motion.div
                 key={id}
-                className="inline-flex"
+                className="inline-flex overflow-visible"
                 {...revealProps(buttonsStartStep + index)}
               >
                 <Button
                   href={href}
-                  variant={index === 0 ? "primary" : "secondary"}
+                  variant={id === "instagram" ? "primary" : "secondary"}
                   external
                   icon={SOCIAL_ICONS[id]}
                   iconOnlyMobile

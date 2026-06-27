@@ -160,20 +160,18 @@ body {
 
 /* Bordered pills — thick black ring on hover without layout shift (shadow, not border-width) */
 
-.pill-hover-ring {
+@utility pill-hover-ring {
   transition:
-    transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    scale 200ms cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1),
     background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
     border-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
     color 200ms cubic-bezier(0.4, 0, 0.2, 1);
-}
 
-@media (hover: hover) {
-  .pill-hover-ring:hover {
-    transform: scale(1.01);
-    border-color: #18181b;
-    box-shadow: 0 0 0 2px #18181b;
+  &:hover {
+    scale: 1.01;
+    border-color: transparent;
+    box-shadow: 0 0 0 3px #18181b;
   }
 }
 
