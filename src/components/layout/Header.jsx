@@ -11,6 +11,11 @@ import NavLink from "../ui/NavLink.jsx";
 const sectionIds = NAV_ITEMS.map((item) => item.id);
 
 const fadeTransition = { duration: 0.2, ease: [0.4, 0, 0.2, 1] };
+const headerEnterTransition = {
+  delay: 1.5,
+  duration: 0.55,
+  ease: [0.4, 0, 0.2, 1],
+};
 
 export default function Header() {
   const workMatch = useMatch("/work/:id");
@@ -27,7 +32,12 @@ export default function Header() {
   const activeId = useActiveSection(isDetail ? [] : sectionIds);
 
   return (
-    <header className="pointer-events-none fixed top-4 right-0 left-0 z-[100] mx-auto w-full max-w-[680px] px-6">
+    <motion.header
+      className="pointer-events-none fixed top-4 right-0 left-0 z-[100] mx-auto w-full max-w-[680px] px-6"
+      initial={{ y: -28, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={headerEnterTransition}
+    >
       <nav
         className="pointer-events-auto flex w-full items-center overflow-hidden rounded-full border border-zinc-200/90 bg-white p-2 shadow-sm"
         aria-label={isDetail ? "Work detail" : "Main"}
@@ -107,6 +117,6 @@ export default function Header() {
           )}
         </AnimatePresence>
       </nav>
-    </header>
+    </motion.header>
   );
 }

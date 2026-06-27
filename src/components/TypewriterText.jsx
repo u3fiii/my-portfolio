@@ -12,7 +12,9 @@ export default function TypewriterText({
   roles,
   className = "",
   cursorClassName = "ml-0.5 inline-block h-[0.85em] w-[3px] translate-y-0.5 animate-cursor-blink bg-zinc-900",
+  startDelay = 0,
 }) {
+  const [started, setStarted] = useState(startDelay === 0);
   const [wordIndex, setWordIndex] = useState(0);
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -21,6 +23,15 @@ export default function TypewriterText({
   const currentWord = currentRole.text;
 
   useEffect(() => {
+    if (started || startDelay <= 0) return;
+
+    const timeout = setTimeout(() => setStarted(true), startDelay);
+    return () => clearTimeout(timeout);
+  }, [started, startDelay]);
+
+  useEffect(() => {
+    if (!started) return;
+
     let timeout;
 
     if (!isDeleting && text === currentWord) {
@@ -43,7 +54,7 @@ export default function TypewriterText({
     }
 
     return () => clearTimeout(timeout);
-  }, [text, isDeleting, wordIndex, currentWord, roles.length]);
+  }, [started, text, isDeleting, wordIndex, currentWord, roles.length]);
 
   return (
     <span
