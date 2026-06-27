@@ -86,7 +86,7 @@ export default function Me() {
               >
                 <Button
                   href={href}
-                  variant={id === "instagram" ? "primary" : "secondary"}
+                  variant={id === "instagram" ? "instagram" : "secondary"}
                   external
                   icon={SOCIAL_ICONS[id]}
                   iconOnlyMobile

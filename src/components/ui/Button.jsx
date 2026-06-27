@@ -3,6 +3,7 @@ import { ICON_WEIGHT } from "./icons.js";
 const variants = {
   primary:
     "bg-zinc-900 text-white hover:bg-zinc-700 focus-visible:ring-zinc-900",
+  instagram: "btn-instagram focus-visible:ring-pink-500",
   secondary:
     "pill-hover-ring border border-zinc-300 bg-white text-zinc-900 hover:bg-zinc-50 focus-visible:ring-zinc-400",
 };
