@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/layout/Header.jsx";
 import PageBackground from "./components/layout/PageBackground.jsx";
+import ScrollRestoration from "./components/layout/ScrollRestoration.jsx";
 import { LenisProvider } from "./hooks/useLenis.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import WorkDetailPage from "./pages/WorkDetailPage.jsx";
@@ -11,6 +12,7 @@ export default function App() {
   return (
     <LenisProvider>
       <BrowserRouter>
+        <ScrollRestoration />
         <PageBackground />
         <Header />
         <div className="page-content">
