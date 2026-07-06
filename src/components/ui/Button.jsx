@@ -19,7 +19,7 @@ export default function Button({
 }) {
   const sizeClass = Icon
     ? iconOnlyMobile
-      ? "gap-0 p-2.5 md:gap-1.5 md:px-4 md:py-2 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-semibold"
+      ? "gap-0 p-2.5 max-lg:gap-1 max-lg:px-2.5 max-lg:py-1.5 max-lg:text-xs lg:gap-1.5 lg:px-4 lg:py-2 lg:text-sm font-['DM_Sans',ui-sans-serif,sans-serif] font-semibold"
       : "gap-1.5 px-4 py-2 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-semibold"
     : "px-6 py-3 text-sm";
 

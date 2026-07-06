@@ -35,18 +35,18 @@ export default function Me() {
 
   return (
     <Section id="me" className="overflow-visible bg-transparent">
-      <div className="flex h-full w-full flex-col items-center justify-center gap-8 md:grid md:h-auto md:grid-cols-2 md:items-center md:gap-0 md:pr-42">
+      <div className="flex h-full w-full flex-col items-center justify-center gap-8 md:grid md:h-auto md:items-center max-lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] max-lg:gap-5 max-lg:pr-0 lg:grid-cols-2 lg:gap-0 lg:pr-32 xl:pr-42">
         <motion.div
-          className="flex w-2/3 justify-center md:w-1/2"
+          className="flex w-2/3 justify-center md:w-1/2 max-lg:max-w-[280px] max-lg:justify-self-end"
           {...revealProps(lottieStep)}
         >
           <LottiePlayer
             animationData={characterMotion}
-            className="max-w-sm md:translate-x-45"
+            className="max-w-sm max-lg:max-w-[260px] max-lg:translate-x-0 lg:translate-x-45"
           />
         </motion.div>
 
-        <div className="flex flex-col items-center justify-center gap-6 text-center md:items-start md:justify-start md:text-left">
+        <div className="flex w-full min-w-0 flex-col items-center justify-center gap-6 text-center md:items-start md:justify-start md:text-left">
           <div className="flex flex-col items-center gap-1 md:items-start md:gap-1">
             <h1 className="flex flex-col items-center gap-1.5 text-3xl tracking-tight text-zinc-800 md:items-start md:text-4xl lg:text-5xl">
               <motion.span
@@ -67,7 +67,7 @@ export default function Me() {
               </motion.span>
             </h1>
             <motion.p
-              className="max-w-lg font-['DM_Sans',ui-sans-serif,sans-serif] text-lg font-medium leading-relaxed text-zinc-700"
+              className="max-w-lg font-['DM_Sans',ui-sans-serif,sans-serif] text-lg font-medium leading-relaxed text-zinc-700 max-lg:max-w-none max-lg:text-[0.9375rem] max-lg:leading-snug"
               {...revealProps(descriptionStep)}
             >
               {INTRO.subtitle}
@@ -75,7 +75,7 @@ export default function Me() {
           </div>
 
           <nav
-            className="-m-1 flex flex-nowrap items-center justify-center gap-2 overflow-visible p-1 md:flex-wrap md:justify-start"
+            className="-m-1 flex w-full min-w-0 flex-nowrap items-center justify-center gap-2 overflow-visible p-1 md:justify-start max-lg:gap-1.5 lg:flex-wrap lg:gap-2"
             aria-label="Social and portfolio links"
           >
             {SOCIAL_LINKS.map(({ id, label, href }, index) => (
