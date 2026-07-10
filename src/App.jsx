@@ -6,6 +6,7 @@ import { LenisProvider } from "./hooks/useLenis.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import WorkDetailPage from "./pages/WorkDetailPage.jsx";
 import CaseStudyBitpinDeposit from "./pages/CaseStudyBitpinDeposit.jsx";
+import CaseStudyPindoSecurePurchase from "./pages/CaseStudyPindoSecurePurchase.jsx";
 import CaseStudyPriceSignal from "./pages/CaseStudyPriceSignal.jsx";
 
 export default function App() {
@@ -26,6 +27,10 @@ export default function App() {
             <Route
               path="/case-studies/bitpin-deposit"
               element={<CaseStudyBitpinDeposit />}
+            />
+            <Route
+              path="/case-studies/pindo-secure-purchase"
+              element={<CaseStudyPindoSecurePurchase />}
             />
           </Routes>
         </div>

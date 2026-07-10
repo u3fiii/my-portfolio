@@ -27,6 +27,18 @@ export const WORK_CARDS = [
     image: "/images/covers/quiet-checkout.png",
   },
   {
+    id: "pindo-secure-purchase",
+    filter: "case-study",
+    tag: "Case Study · Pindo",
+    title: "Pindo — Secure Purchase",
+    description:
+      "Making the invisible measurable: redesigning Pindo's escrow flow and growing successful completions from 10% to 23%.",
+    href: workDetailPath("pindo-secure-purchase"),
+    external: false,
+    comingSoon: false,
+    image: "/images/covers/design-the-default.png",
+  },
+  {
     id: "verified-listings",
     filter: "case-study",
     tag: "Case Study",
