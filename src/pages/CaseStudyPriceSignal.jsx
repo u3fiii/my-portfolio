@@ -412,6 +412,38 @@ export default function CaseStudyPriceSignal() {
           </ul>
         </section>
 
+        <section>
+          <h2 className="case-study__h2">What I&apos;d Do Differently</h2>
+          <ul className="mt-6 flex flex-col gap-6">
+            <li>
+              <p className="case-study__body font-semibold text-zinc-900">
+                We could have had the baseline for free.
+              </p>
+              <p className="case-study__body mt-2">
+                The pricing model existed before the feature did. We could have scored
+                every active listing offline — no launch, no seller complaints, no
+                risk — and known from day one that only 23% of listings were fairly
+                priced. That number is exactly what we ended up using to reopen the
+                conversation after the two-day test.
+              </p>
+              <p className="case-study__body mt-2">
+                The test itself was still necessary: offline scoring tells you the
+                state of the market, but only a live test shows how sellers{" "}
+                <em>respond</em> — the 6% who lowered prices after a support call,
+                the ones who quietly deleted and reposted, the +10% lift in contact
+                clicks. No model predicts behavior.
+              </p>
+              <p className="case-study__body mt-2">
+                But walking into that first meeting with sales and support armed with
+                &ldquo;only 23% of our listings are fairly priced&rdquo; instead of a
+                hypothesis might have changed the outcome. The idea may never have been
+                shelved at all. Data doesn&apos;t just settle debates — sometimes it
+                prevents them.
+              </p>
+            </li>
+          </ul>
+        </section>
+
         <RelatedWorkSection excludeId="price-signal" />
 
         <p className="case-study__ui mt-12 text-center text-sm">

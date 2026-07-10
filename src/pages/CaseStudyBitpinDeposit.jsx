@@ -37,15 +37,6 @@ function PullQuote({ children }) {
   return <blockquote className="case-study__quote">{children}</blockquote>;
 }
 
-function Divider() {
-  return (
-    <hr
-      className="my-8 border-0 border-t border-zinc-200"
-      style={{ borderTopWidth: "0.5px" }}
-    />
-  );
-}
-
 function MetaItem({ label, value }) {
   return (
     <div
@@ -144,8 +135,6 @@ export default function CaseStudyBitpinDeposit() {
           </dl>
         </header>
 
-        <Divider />
-
         <Section title="Overview">
           <Paragraph>
             When a court order shut down payment gateways across Iran&apos;s crypto
@@ -187,10 +176,14 @@ export default function CaseStudyBitpinDeposit() {
             Over the following weeks, the deposit system expanded to include four
             methods, each with its own tradeoffs:
           </Paragraph>
-          <ImagePlaceholder
-            height={220}
-            label="📊 Image coming: Deposit method comparison — 4 methods, speed & ceiling"
-          />
+          <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
+            <img
+              src="/images/case-studies/bitpin-deposit-methods-tradeoff-map.png"
+              alt="Deposit method tradeoff map comparing speed and ceiling across account-to-account, SHEBA transfer, card-to-card, and direct debit"
+              className="block h-auto w-full rounded"
+              loading="lazy"
+            />
+          </figure>
           <Paragraph>
             Each method had its own tradeoffs and edge cases — and users needed to
             understand them to make the right choice. The flow we designed was
@@ -247,10 +240,14 @@ export default function CaseStudyBitpinDeposit() {
             one-tap purchase flow — since roughly 70% of first-time buyers used it, and
             many never switched to order-book trading.
           </Paragraph>
-          <ImagePlaceholder
-            height={180}
-            label="🔀 Image coming: Test scenario flow diagram — Registration → KYC → Deposit → Easy Buy → Withdrawal"
-          />
+          <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
+            <img
+              src="/images/case-studies/bitpin-usability-test-scenario-flow.jpg"
+              alt="Usability test scenario flow: Registration to KYC to Deposit to Easy Buy to Withdrawal"
+              className="block h-auto w-full rounded"
+              loading="lazy"
+            />
+          </figure>
           <Paragraph>
             Recruitment was harder than a typical usability study. Deposits required
             real bank transfers from users&apos; own accounts — I couldn&apos;t provide
