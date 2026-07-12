@@ -63,18 +63,6 @@ export const WORK_CARDS = [
     image: "/images/covers/price-signal.png",
   },
   {
-    id: "design-the-default",
-    filter: "article",
-    tag: "Article",
-    title: "Design the Default",
-    description:
-      "Pre-selection is a design decision with ethics. Here's how to think about it.",
-    href: "#",
-    external: true,
-    comingSoon: true,
-    image: "/images/covers/design-the-default.png",
-  },
-  {
     id: "prototype-before-meeting",
     filter: "article",
     tag: "Article",

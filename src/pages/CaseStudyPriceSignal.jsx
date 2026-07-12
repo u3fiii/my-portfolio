@@ -363,14 +363,14 @@ export default function CaseStudyPriceSignal() {
                 },
                 {
                   label: "Fair price",
-                  variant: "blue",
+                  variant: "green",
                   description: "aligned with market",
                 },
               ]}
             />
             <Paragraph>
-              Green was gone. Not because the idea was wrong, but because simplicity
-              mattered more than completeness at this stage.
+              Fair price landed on green — the color buyers already read as a good
+              deal in testing — rather than blue. Fewer states, clearer signal.
             </Paragraph>
             <SheypoorFinalFormScreen />
           </div>

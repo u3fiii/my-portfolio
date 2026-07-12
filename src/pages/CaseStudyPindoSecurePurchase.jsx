@@ -4,7 +4,10 @@ import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
 import { ROUTES } from "../routes/paths.js";
 import pindoAsIsFlow from "../assets/case-studies/pindo-escrow-as-is-flow.png";
+import pindoCheckoutAfter from "../assets/case-studies/pindo-checkout-after.png";
+import pindoCheckoutBefore from "../assets/case-studies/pindo-checkout-before.png";
 import pindoFunnelBeforeAfter from "../assets/case-studies/pindo-escrow-funnel-before-after.png";
+import pindoShippingStatesFlow from "../assets/case-studies/pindo-shipping-states-flow.jpg";
 
 function Section({ title, children }) {
   return (
@@ -205,7 +208,7 @@ function BaselineFunnel() {
 const RESULTS_FUNNEL_STAGES = [
   { label: "Cart created", before: 100, after: 100 },
   { label: "Paid", before: 24, after: 39 },
-  { label: "Delivered", before: 16, after: 28 },
+  { label: "Delivered", before: 16, after: 34 },
   { label: "Confirmed item OK", before: 10, after: 23 },
 ];
 
@@ -342,7 +345,7 @@ export default function CaseStudyPindoSecurePurchase() {
 
           <dl className="mt-6 grid gap-3 min-[600px]:grid-cols-3">
             <MetaItem label="Role" value="Lead Product Designer" />
-            <MetaItem label="Timeframe" value="April 2023 – August 2023 (~5 months)" />
+            <MetaItem label="Timeframe" value="April – June 2023 (~2 months)" />
             <MetaItem
               label="Team"
               value="Product Design, 1 PM, 1 frontend, 1 backend, Support"
@@ -482,23 +485,85 @@ export default function CaseStudyPindoSecurePurchase() {
             terms buyers accepted before paying to include what had previously
             been unwritten, like return courier costs.
           </Paragraph>
-          <ImagePlaceholder label="Image coming: PDP and checkout screens showing shipping information before purchase" />
+          <figure className="case-study__ui my-8 rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
+            <div className="flex flex-wrap items-start justify-center gap-4 sm:gap-6">
+              <div className="min-w-0 flex-1 basis-[200px]">
+                <p className="mb-2 text-center text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-500">
+                  Before
+                </p>
+                <img
+                  src={pindoCheckoutBefore}
+                  alt="Checkout before: only items and a single total, no address, shipping method, time, or cost"
+                  className="mx-auto block w-full max-w-[240px] rounded"
+                />
+              </div>
+              <div className="min-w-0 flex-1 basis-[200px]">
+                <p className="mb-2 text-center text-[11px] font-medium uppercase tracking-[0.08em] text-[#0077A3]">
+                  After
+                </p>
+                <img
+                  src={pindoCheckoutAfter}
+                  alt="Checkout after: recipient address, seller info, and a payment summary itemizing items price, estimated shipping time, shipping cost, and total"
+                  className="mx-auto block w-full max-w-[240px] rounded"
+                />
+              </div>
+            </div>
+            <figcaption className="mx-auto mt-4 max-w-md text-center font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] leading-relaxed text-zinc-500">
+              Checkout before and after: the summary now itemizes estimated
+              shipping time and a location-based shipping cost, so buyers see the
+              full picture before paying.
+            </figcaption>
+          </figure>
 
           <h3 className="case-study__h3">
             Paid → Delivered (the invisible 8%).
           </h3>
           <Paragraph>
-            When marking an item as shipped, sellers now had to select the
-            shipping method and enter an estimated delivery window (e.g., under a
-            day for courier, 3–5 days for post). The buyer saw an &ldquo;in
-            transit&rdquo; state during that window; only after it ended did two
-            buttons appear — <em>received</em> / <em>not received</em> —
-            accompanied by a push notification prompting them to resolve the
-            order. &ldquo;Not received&rdquo; triggered a support follow-up and
-            extended the window. The 8% who used to vanish into phone calls were
-            now systematically counted and handled inside the flow.
+            Between payment and delivery, we had an 8pp leak: buyers had paid,
+            but sellers weren&apos;t shipping — or weren&apos;t shipping fast
+            enough for the order to ever reach &ldquo;delivered.&rdquo; Part of
+            the fix was operational, not just UI. Sellers already received a
+            push when a buyer paid, but the copy didn&apos;t convey urgency. We
+            rewrote it and asked the seller explicitly to ship. If a seller still
+            hadn&apos;t acted 24 hours after payment, support called to find out
+            why and remind them that fulfillment was overdue. We leaned on the
+            support team here deliberately — the drop was as much about seller
+            behavior as product gaps.
           </Paragraph>
-          <ImagePlaceholder label="Image coming: Shipping states diagram: seller side (method + ETA window) and buyer side (in-transit state, received/not-received buttons, notification)" />
+          <Paragraph>
+            Those calls surfaced a concrete reason. Shipping cost had never been
+            accounted for anywhere in the flow — sellers were expected to absorb
+            it into their asking price. For local deliveries that was negligible,
+            but inter-city shipping was expensive enough that many sellers simply
+            chose not to ship, and Pindo offered no mechanism to cover it. So we
+            made shipping a priced part of the transaction: based on the
+            buyer&apos;s address, we added a shipping fee to the amount the buyer
+            paid — 50,000 toman for local delivery and 200,000 toman inter-city
+            at the time — and had the sales team tell sellers directly that
+            shipping was now covered, so they could fulfill orders without eating
+            the cost. The buyer saw this itemized in their cart before paying
+            (above), but its real purpose was to unblock the drop between paid
+            and delivered.
+          </Paragraph>
+          <Paragraph>
+            On the product side, when marking an item as shipped, sellers now
+            had to select the shipping method and enter an estimated delivery
+            window (e.g., under a day for courier, 3–5 days for post). The buyer
+            saw an &ldquo;in transit&rdquo; state during that window; only after
+            it ended did two buttons appear — <em>received</em> /{" "}
+            <em>not received</em> — accompanied by a push notification prompting
+            them to resolve the order. &ldquo;Not received&rdquo; triggered a
+            support follow-up and extended the window. The buyers who used to
+            vanish into phone calls were now systematically counted and handled
+            inside the flow.
+          </Paragraph>
+          <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
+            <img
+              src={pindoShippingStatesFlow}
+              alt="Post-payment flow: buyer pays, seller is prompted to ship; if not shipped within 24 hours support follows up, otherwise the buyer's order moves to in transit"
+              className="block h-auto w-full rounded"
+            />
+          </figure>
 
           <h3 className="case-study__h3">Delivered → Confirmed.</h3>
           <Paragraph>
@@ -522,11 +587,13 @@ export default function CaseStudyPindoSecurePurchase() {
             20–25 calls a day to under 10.
           </Paragraph>
           <Paragraph>
-            One detail worth noting: the gap between &ldquo;delivered&rdquo; and
-            &ldquo;confirmed&rdquo; barely changed (6pp before, 5pp after). We
-            didn&apos;t nudge buyers into confirming — dissatisfaction still
-            surfaced at a similar rate. The difference was that it now surfaced{" "}
-            <em>inside the product</em>, where it could be counted and acted on.
+            One detail worth noting: among buyers who reached
+            &ldquo;delivered,&rdquo; the share who wouldn&apos;t confirm item
+            condition stayed in a similar range — roughly 38% before and 32%
+            after. We didn&apos;t nudge buyers into confirming — dissatisfaction
+            still surfaced at a comparable rate. The difference was that it now
+            surfaced <em>inside the product</em>, where it could be counted and
+            acted on.
           </Paragraph>
         </Section>
 
