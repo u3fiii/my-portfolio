@@ -8,6 +8,7 @@ import WorkDetailPage from "./pages/WorkDetailPage.jsx";
 import CaseStudyBitpinDeposit from "./pages/CaseStudyBitpinDeposit.jsx";
 import CaseStudyPindoSecurePurchase from "./pages/CaseStudyPindoSecurePurchase.jsx";
 import CaseStudyPriceSignal from "./pages/CaseStudyPriceSignal.jsx";
+import ArticleBitpinMotion from "./pages/ArticleBitpinMotion.jsx";
 
 export default function App() {
   return (
@@ -31,6 +32,10 @@ export default function App() {
             <Route
               path="/case-studies/pindo-secure-purchase"
               element={<CaseStudyPindoSecurePurchase />}
+            />
+            <Route
+              path="/case-studies/bitpin-motion"
+              element={<ArticleBitpinMotion />}
             />
           </Routes>
         </div>

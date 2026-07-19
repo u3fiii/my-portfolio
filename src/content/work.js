@@ -513,37 +513,6 @@ export const WORK_ITEMS = [
       },
     ],
   },
-  {
-    id: "prototype-before-meeting",
-    title: "Prototype Before the Meeting",
-    subtitle: "Why I stopped bringing slides to stakeholder reviews",
-    tag: "article",
-    thumbnail: thumb("Prototype First"),
-    body: [
-      {
-        type: "paragraph",
-        text: "Static frames invite opinion. Prototypes invite behavior. The difference shows up in the room: \"I don't like that blue\" versus \"I wouldn't tap that — I'd expect it to save first.\"",
-      },
-      { type: "heading", text: "What changed" },
-      {
-        type: "paragraph",
-        text: "I started sending a clickable link 24 hours before review meetings. Not as homework — as the agenda. Stakeholders arrived having already tried the flow. Meetings shifted from presentation to critique.",
-      },
-      { type: "heading", text: "How little is enough" },
-      {
-        type: "list",
-        items: [
-          "One happy path, fully clickable",
-          "Real copy, not lorem ipsum — words change decisions",
-          "One edge state you expect pushback on — error, empty, loading",
-        ],
-      },
-      {
-        type: "paragraph",
-        text: "The goal isn't polish. It's reducing the gap between what people imagine and what you're proposing. A rough prototype that behaves correctly beats a beautiful deck that leaves room for ten interpretations.",
-      },
-    ],
-  },
 ];
 
 export function getWorkItemById(id) {

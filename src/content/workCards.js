@@ -39,6 +39,18 @@ export const WORK_CARDS = [
     image: "/images/covers/design-the-default.png",
   },
   {
+    id: "bitpin-motion",
+    filter: "article",
+    tag: "Article · Bitpin",
+    title: "Bitpin — Motion",
+    description:
+      "Product and campaign motion loops I designed at Bitpin — hero, splash, banners, and seasonal identity.",
+    href: workDetailPath("bitpin-motion"),
+    external: false,
+    comingSoon: false,
+    image: "/images/covers/bitpin-motion.png",
+  },
+  {
     id: "verified-listings",
     filter: "case-study",
     tag: "Case Study",
@@ -61,18 +73,6 @@ export const WORK_CARDS = [
     external: true,
     comingSoon: true,
     image: "/images/covers/price-signal.png",
-  },
-  {
-    id: "prototype-before-meeting",
-    filter: "article",
-    tag: "Article",
-    title: "Prototype Before the Meeting",
-    description:
-      "Why I stopped bringing slides to stakeholder reviews — and what I do instead.",
-    href: "#",
-    external: true,
-    comingSoon: true,
-    image: "/images/covers/prototype-before-meeting.png",
   },
 ];
 
