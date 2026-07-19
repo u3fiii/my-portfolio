@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import StatsRow from "../components/case-study/StatsRow.jsx";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
 import { ROUTES } from "../routes/paths.js";
@@ -9,10 +8,6 @@ const LESSONS = [
   {
     title: "Test earlier in the constraint phase.",
     body: "The months between the gateway shutdown and the research were a period of legitimate urgency — but some earlier, lighter-weight testing (even 3 users, unrecruited, in a coffee shop) might have surfaced the trust gap before we spent cycles optimizing around it.",
-  },
-  {
-    title: "Separate the trust problem from the UX problem sooner.",
-    body: "In retrospect, the low conversion was a clear signal that something fundamental was wrong, not just something to be smoothed over through interaction design. I'd push harder, earlier, to distinguish between \"the flow is confusing\" and \"users don't believe this is legitimate.\"",
   },
   {
     title: "Measure more carefully.",
@@ -48,19 +43,6 @@ function MetaItem({ label, value }) {
       </dt>
       <dd className="mt-1.5 text-xs leading-relaxed text-zinc-700">{value}</dd>
     </div>
-  );
-}
-
-function ImagePlaceholder({ label, height = 280 }) {
-  return (
-    <figure
-      className="case-study__ui my-8 flex items-center justify-center rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] px-6 text-center"
-      style={{ height, borderWidth: "1px" }}
-    >
-      <figcaption className="max-w-md font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] leading-relaxed text-[#999]">
-        {label}
-      </figcaption>
-    </figure>
   );
 }
 
@@ -101,6 +83,111 @@ function ConversionComparison() {
         </p>
       </div>
     </div>
+  );
+}
+
+const REGISTRATION_FUNNEL_STAGES = [
+  { label: "Registration", value: "100%", pct: 100 },
+  { label: "KYC verified", value: "62%", pct: 62 },
+  { label: "Deposited", value: "8%", pct: 8 },
+];
+
+function RegistrationFunnel() {
+  const chartHeight = 148;
+  const baselineY = 148;
+  const segmentWidth = 640 / REGISTRATION_FUNNEL_STAGES.length;
+  const topYs = REGISTRATION_FUNNEL_STAGES.map(
+    (stage) => baselineY - (stage.pct / 100) * chartHeight,
+  );
+
+  return (
+    <figure className="case-study__ui my-2 rounded-xl border border-[#E2E1DC] bg-white px-5 py-6">
+      <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+        <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-500">
+          New-user funnel
+        </p>
+        <p className="rounded-lg border border-[#E2E1DC] bg-zinc-50 px-3 py-2 text-xs leading-snug text-zinc-600">
+          <span className="font-semibold text-zinc-900">8%</span> of registered
+          users deposited within 30 days
+        </p>
+      </div>
+
+      <svg
+        viewBox="0 0 640 160"
+        className="h-auto w-full"
+        role="img"
+        aria-label="New-user funnel from registration at 100 percent through KYC at 62 percent to deposit at 8 percent"
+      >
+        <defs>
+          <linearGradient
+            id="bitpinRegistrationFunnelFill"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="0%"
+          >
+            <stop offset="0%" stopColor="#7BC8DE" />
+            <stop offset="55%" stopColor="#2AADD0" />
+            <stop offset="100%" stopColor="#0099CC" />
+          </linearGradient>
+        </defs>
+
+        {REGISTRATION_FUNNEL_STAGES.map((stage, index) => {
+          const x0 = index * segmentWidth;
+          const x1 = (index + 1) * segmentWidth;
+          const yLeft = topYs[index];
+          const yRight =
+            index === REGISTRATION_FUNNEL_STAGES.length - 1
+              ? topYs[index]
+              : topYs[index + 1];
+
+          return (
+            <path
+              key={stage.label}
+              d={`M${x0} ${yLeft} L${x1} ${yRight} L${x1} ${baselineY} L${x0} ${baselineY} Z`}
+              fill="url(#bitpinRegistrationFunnelFill)"
+              fillOpacity={1 - index * 0.1}
+            />
+          );
+        })}
+
+        {REGISTRATION_FUNNEL_STAGES.slice(1).map((stage, index) => {
+          const x = (index + 1) * segmentWidth;
+          return (
+            <line
+              key={`divider-${stage.label}`}
+              x1={x}
+              y1={topYs[index + 1]}
+              x2={x}
+              y2={baselineY}
+              stroke="white"
+              strokeOpacity="0.55"
+              strokeWidth="1.5"
+            />
+          );
+        })}
+      </svg>
+
+      <ul className="mt-4 grid grid-cols-3 gap-3">
+        {REGISTRATION_FUNNEL_STAGES.map((stage) => (
+          <li key={stage.label} className="min-w-0 text-center">
+            <p className="text-xl font-semibold leading-none tracking-tight text-[#0077A3] sm:text-2xl">
+              {stage.value}
+            </p>
+            <p className="mt-1.5 text-[11px] font-medium leading-snug text-zinc-700 sm:text-xs">
+              {stage.label}
+            </p>
+            <p className="mt-0.5 text-[10px] leading-snug text-zinc-500">
+              of registered users
+            </p>
+          </li>
+        ))}
+      </ul>
+
+      <figcaption className="mt-5 text-center text-[12px] leading-relaxed text-zinc-500">
+        Deposit measured within 30 days of registration
+      </figcaption>
+    </figure>
   );
 }
 
@@ -162,7 +249,14 @@ export default function CaseStudyBitpinDeposit() {
             Iranian crypto exchange. No warning, no timeline for reversal. The path
             that 100% of depositing users relied on was gone.
           </Paragraph>
-          <ImagePlaceholder label="📷 Image coming: Gateway flow — screen before redirect + payment page" />
+          <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
+            <img
+              src="/images/case-studies/bitpin-gateway-flow.jpg"
+              alt="Bitpin easy-buy screen redirecting to the Shaparak payment gateway"
+              className="block h-auto w-full rounded"
+              loading="lazy"
+            />
+          </figure>
         </Section>
 
         <Section title="The Improvised Solution">
@@ -190,10 +284,19 @@ export default function CaseStudyBitpinDeposit() {
             straightforward: choose a method → select source and destination accounts
             → follow manual transfer instructions.
           </Paragraph>
-          <ImagePlaceholder
-            height={320}
-            label="📱 Image coming: Initial deposit flow (pre-research) — method selection, account picker, instructions screen"
-          />
+          <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
+            <img
+              src="/images/case-studies/bitpin-initial-deposit-flow.jpg"
+              alt="Initial deposit flow: method selection on the left, SHEBA transfer instructions on the right"
+              className="block h-auto w-full rounded"
+              loading="lazy"
+            />
+            <figcaption className="mx-auto mt-4 max-w-md text-center font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] leading-relaxed text-zinc-500">
+              Left: choose a deposit method. Right: the instructions screen for
+              SHEBA transfer — source account, destination bank, and transfer
+              rules.
+            </figcaption>
+          </figure>
           <Paragraph>
             Deposits recovered. In some periods, daily deposit volume even exceeded
             pre-shutdown levels — partly because SHEBA and account-to-account allowed
@@ -206,21 +309,31 @@ export default function CaseStudyBitpinDeposit() {
         <Section title="The Signal We Almost Missed">
           <Paragraph>
             A surface reading of the metrics looked fine. But when we looked more
-            carefully at the funnel, something was off.
+            carefully at the new-user funnel, something was off.
           </Paragraph>
-          <StatsRow
-            items={[
-              { value: "8%", label: "deposit flow conversion" },
-              { value: "2%", label: "registered users who deposited in 30 days" },
-            ]}
-          />
+          <RegistrationFunnel />
           <Paragraph>
-            The team&apos;s response was what you&apos;d expect: iterate on the flow. We
-            tested reordering the method selection screen, introduced a
-            &ldquo;recommended method&rdquo; based on declared deposit amount, and
-            prioritized same-bank options when we detected a match between the
-            user&apos;s source card and one of Bitpin&apos;s destination accounts.
+            Of everyone who registered, 62% completed KYC — and only 8% made a
+            deposit within 30 days. The team&apos;s response was what you&apos;d
+            expect: iterate on the flow. We tested reordering the method selection
+            screen, introduced a &ldquo;recommended method&rdquo; based on declared
+            deposit amount, and prioritized same-bank options when we detected a
+            match between the user&apos;s source card and one of Bitpin&apos;s
+            destination accounts.
           </Paragraph>
+          <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
+            <img
+              src="/images/case-studies/bitpin-assumption-iterations.jpg"
+              alt="Assumption-based deposit flow iterations: source card picker, regrouped method selection, granular methods, and destination bank matching"
+              className="block h-auto w-full rounded"
+              loading="lazy"
+            />
+            <figcaption className="mx-auto mt-4 max-w-md text-center font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] leading-relaxed text-zinc-500">
+              Iterations we tried before research — reordering methods, a
+              recommended option, and same-bank prioritization. All based on
+              assumptions.
+            </figcaption>
+          </figure>
           <Paragraph>
             Reasonable changes. But we were working from assumptions, not from watching
             real users.
@@ -326,22 +439,28 @@ export default function CaseStudyBitpinDeposit() {
               this for the first time.
             </p>
           </Callout>
-          <ImagePlaceholder
-            height={320}
-            label="📱 Image coming: Bottom sheet v1 — first draft with longer copy"
-          />
+          <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
+            <img
+              src="/images/case-studies/bitpin-bottom-sheet-revision.jpg"
+              alt="Bottom sheet before and after: longer copy with a Got it button, revised to shorter trust-focused copy with View deposit methods"
+              className="block h-auto w-full rounded"
+              loading="lazy"
+            />
+            <figcaption className="mx-auto mt-4 max-w-md text-center font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] leading-relaxed text-zinc-500">
+              Left: launched version. Right: revised after the data came in.
+            </figcaption>
+          </figure>
           <Paragraph>
-            My first draft was too long. In a follow-up round with 3 new participants, I
-            watched two of them start scrolling past the text before finishing it. I cut
-            the copy significantly and restructured it to lead with the most
-            trust-critical information first.
+            The left version shipped. Product data showed most users dismissed it
+            in under two seconds — nobody was reading it. Our working hypothesis:
+            the copy was too long. We also fixed the tone: the first draft made the
+            outage sound like a Bitpin-only problem. The revision clarified that
+            gateways were down across Iranian exchanges, shortened the text, and
+            changed the CTA from a passive &ldquo;Got it&rdquo; to &ldquo;View
+            deposit methods.&rdquo;
           </Paragraph>
-          <ImagePlaceholder
-            height={320}
-            label="📱 Image coming: Bottom sheet v2 — revised with shorter copy (before/after comparison preferred)"
-          />
           <Paragraph>
-            The revised bottom sheet tested well. Users read it, understood it, and moved
+            The revised sheet tested well. Users read it, understood it, and moved
             through the deposit flow without the &ldquo;Instagram seller&rdquo; moment.
           </Paragraph>
         </Section>
@@ -358,11 +477,6 @@ export default function CaseStudyBitpinDeposit() {
             Bitpin correlates as much with the dollar rate as with anything we ship.
             Attributing a conversion lift cleanly to one change, over a short window,
             requires caution.
-          </Paragraph>
-          <Paragraph>
-            What I can say: the number moved in the right direction, the change was
-            grounded in direct user evidence, and the behavior we observed in testing
-            matched exactly what the intervention was designed to address.
           </Paragraph>
           <Paragraph>
             The more important outcome might be structural: Bitpin ran its first usability
