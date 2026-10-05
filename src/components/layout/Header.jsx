@@ -1,4 +1,10 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
 import { Link, useMatch } from "react-router-dom";
 import { ArrowLeft, DownloadSimple, ICON_WEIGHT } from "../ui/icons.js";
 import { LogoMark } from "../ui/Logo.jsx";
@@ -11,6 +17,11 @@ import NavLink from "../ui/NavLink.jsx";
 const sectionIds = NAV_ITEMS.map((item) => item.id);
 
 const fadeTransition = { duration: 0.2, ease: [0.4, 0, 0.2, 1] };
+/** Header shrinks slightly while scrolling down, restores on scroll up. */
+const SCROLLED_DOWN_SCALE = 0.98;
+const SCROLL_DIRECTION_THRESHOLD = 4;
+const scaleTransition = { duration: 0.3, ease: [0.4, 0, 0.2, 1] };
+
 const headerEnterTransition = {
   delay: 1.5,
   duration: 0.55,
@@ -31,6 +42,15 @@ export default function Header() {
 
   const activeId = useActiveSection(isDetail ? [] : sectionIds);
 
+  const { scrollY } = useScroll();
+  const [scrollingDown, setScrollingDown] = useState(false);
+  useMotionValueEvent(scrollY, "change", (y) => {
+    const delta = y - (scrollY.getPrevious() ?? y);
+    if (y <= 0) setScrollingDown(false);
+    else if (Math.abs(delta) >= SCROLL_DIRECTION_THRESHOLD)
+      setScrollingDown(delta > 0);
+  });
+
   return (
     <motion.header
       className="pointer-events-none fixed top-4 right-0 left-0 z-[100] mx-auto w-full max-w-[680px] px-6"
@@ -38,8 +58,10 @@ export default function Header() {
       animate={{ y: 0, opacity: 1 }}
       transition={headerEnterTransition}
     >
-      <nav
-        className="pointer-events-auto flex w-full items-center overflow-hidden rounded-full border border-zinc-200/90 bg-white p-2 shadow-sm"
+      <motion.nav
+        animate={{ scale: scrollingDown ? SCROLLED_DOWN_SCALE : 1 }}
+        transition={scaleTransition}
+        className="pointer-events-auto flex w-full items-center overflow-hidden rounded-full border border-white/70 bg-white/55 p-2 shadow-[0_8px_32px_-8px_rgb(24_24_27/0.18),inset_0_1px_0_rgb(255_255_255/0.8)] ring-1 ring-zinc-900/5 backdrop-blur-xl backdrop-saturate-150"
         aria-label={isDetail ? "Work detail" : "Main"}
       >
         <AnimatePresence mode="wait" initial={false}>
@@ -79,7 +101,7 @@ export default function Header() {
             >
               <a
                 href={ROUTES.home}
-                className="inline-flex shrink-0 self-center items-stretch transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+                className="inline-flex shrink-0 self-center items-stretch rounded-full transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
                 aria-label={`${SITE.logoAlt} — home`}
               >
                 <LogoMark />
@@ -116,7 +138,7 @@ export default function Header() {
             </motion.div>
           )}
         </AnimatePresence>
-      </nav>
+      </motion.nav>
     </motion.header>
   );
 }

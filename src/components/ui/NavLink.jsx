@@ -26,7 +26,7 @@ export default function NavLink({
       className={`inline-flex origin-center items-center rounded-full font-['DM_Sans',ui-sans-serif,sans-serif] font-bold transition-[background-color,color] duration-200 ease-out ${sizeClass} ${className} ${
         active
           ? "bg-zinc-100 text-zinc-900"
-          : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-800"
+          : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-800"
       }`}
     >
       <NavIcon

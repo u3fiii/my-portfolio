@@ -3,6 +3,7 @@ import Button from "../ui/Button.jsx";
 import LottiePlayer from "../LottiePlayer.jsx";
 import TypewriterText from "../TypewriterText.jsx";
 import Section from "../layout/Section.jsx";
+import instagramAnimation from "../../assets/lottie/Instagram_.json";
 import { SOCIAL_ICONS } from "../ui/icons.js";
 import characterMotion from "../../assets/lottie/characterMotion.json";
 import { INTRO, SOCIAL_LINKS, TYPEWRITER_ROLES } from "../../content/me.js";
@@ -89,6 +90,7 @@ export default function Me() {
                   variant={id === "instagram" ? "instagram" : "secondary"}
                   external
                   icon={SOCIAL_ICONS[id]}
+                  lottie={id === "instagram" ? instagramAnimation : undefined}
                   iconOnlyMobile
                   ariaLabel={label}
                 >
