@@ -49,7 +49,7 @@ export default function Me() {
 
         <div className="flex w-full min-w-0 flex-col items-center justify-center gap-6 text-center md:max-lg:items-start md:max-lg:justify-start md:max-lg:text-left lg:items-start lg:justify-start lg:text-left">
           <div className="flex flex-col items-center gap-1 md:max-lg:items-start lg:items-start md:max-lg:gap-1">
-            <h1 className="flex flex-col items-center gap-1.5 text-3xl tracking-tight text-zinc-800 md:max-lg:items-start md:max-lg:text-4xl lg:items-start lg:text-5xl">
+            <h1 className="flex flex-col items-center gap-1.5 text-[clamp(1.5rem,7.5vw,1.875rem)] tracking-tight text-zinc-800 md:max-lg:items-start md:max-lg:text-4xl lg:items-start lg:text-5xl">
               <motion.span
                 className="font-['Source_Serif_4',Georgia,serif] text-[1.375rem] font-semibold tracking-[-0.02em] text-zinc-800 md:text-2xl md:text-zinc-800 lg:text-3xl"
                 {...revealProps(greetingStep)}

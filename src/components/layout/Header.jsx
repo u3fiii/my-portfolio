@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -22,6 +22,22 @@ const fadeTransition = { duration: 0.2, ease: [0.4, 0, 0.2, 1] };
 const SCROLLED_DOWN_SCALE = 0.98;
 const SCROLL_DIRECTION_THRESHOLD = 4;
 const scaleTransition = { duration: 0.3, ease: [0.4, 0, 0.2, 1] };
+/** Scroll-scale is desktop-only — matches Tailwind's `md` breakpoint. */
+const DESKTOP_QUERY = "(min-width: 48rem)";
+
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(
+    () => window.matchMedia?.(DESKTOP_QUERY).matches ?? true,
+  );
+  useEffect(() => {
+    const mql = window.matchMedia?.(DESKTOP_QUERY);
+    if (!mql) return undefined;
+    const onChange = (e) => setIsDesktop(e.matches);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
+  return isDesktop;
+}
 
 const headerEnterTransition = {
   delay: 1.5,
@@ -41,6 +57,7 @@ export default function Header() {
     if (!prefersReducedMotion()) homeLottieRef.current?.goToAndPlay(0, true);
   };
 
+  const isDesktop = useIsDesktop();
   const { scrollY } = useScroll();
   const [scrollingDown, setScrollingDown] = useState(false);
   useMotionValueEvent(scrollY, "change", (y) => {
@@ -52,13 +69,15 @@ export default function Header() {
 
   return (
     <motion.header
-      className="pointer-events-none fixed top-4 right-0 left-0 z-[100] mx-auto w-full max-w-[680px] px-6"
+      className="pointer-events-none fixed top-5 right-0 left-0 z-[100] mx-auto w-full max-w-[680px] px-6 md:top-4"
       initial={{ y: -28, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={headerEnterTransition}
     >
       <motion.nav
-        animate={{ scale: scrollingDown ? SCROLLED_DOWN_SCALE : 1 }}
+        animate={{
+          scale: isDesktop && scrollingDown ? SCROLLED_DOWN_SCALE : 1,
+        }}
         transition={scaleTransition}
         className="pointer-events-auto flex w-full items-center overflow-hidden rounded-full border border-white/70 bg-white/55 p-2 shadow-[0_8px_32px_-8px_rgb(24_24_27/0.18),inset_0_1px_0_rgb(255_255_255/0.8)] ring-1 ring-zinc-900/5 backdrop-blur-xl backdrop-saturate-150"
         aria-label={isDetail ? "Work detail" : "Main"}
@@ -116,7 +135,8 @@ export default function Header() {
                     active={activeId === id}
                     compact
                     iconOnly={false}
-                    className="max-md:[&_span]:sr-only"
+                    className="max-md:p-2 max-md:[&_[data-nav-label]]:sr-only"
+                    iconClassName="h-5 w-5 md:h-4 md:w-4"
                   />
                 ))}
               </div>
@@ -128,7 +148,7 @@ export default function Header() {
                 aria-label="Download CV"
               >
                 <DownloadSimple
-                  className="h-4 w-4 shrink-0"
+                  className="h-5 w-5 shrink-0 md:h-4 md:w-4"
                   weight={ICON_WEIGHT}
                   aria-hidden
                 />

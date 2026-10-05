@@ -8,6 +8,7 @@ export default function NavLink({
   compact = false,
   iconOnly = false,
   className = "",
+  iconClassName,
   onClick,
 }) {
   const sizeClass = compact
@@ -32,9 +33,12 @@ export default function NavLink({
       <NavIcon
         name={icon}
         active={active}
-        className={compact ? "h-4 w-4" : "h-[1.125rem] w-[1.125rem]"}
+        className={
+          iconClassName ??
+          (compact ? "h-4 w-4" : "h-[1.125rem] w-[1.125rem]")
+        }
       />
-      {!iconOnly && <span>{label}</span>}
+      {!iconOnly && <span data-nav-label>{label}</span>}
     </a>
   );
 }

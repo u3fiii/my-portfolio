@@ -120,7 +120,7 @@ function IconBook2({ className }) {
 function FilterTab({ active, onClick, label, Icon, size = "desktop" }) {
   const sizeClass =
     size === "mobile"
-      ? "px-3.5 py-1.5 text-sm"
+      ? "px-2.5 py-1.5 text-[0.8125rem] min-[375px]:px-3.5 min-[375px]:text-sm"
       : "px-4 py-2 text-sm md:gap-1.5";
 
   return (
@@ -184,7 +184,7 @@ export default function Projects() {
         </header>
 
         <div
-          className="flex w-full max-w-full flex-nowrap justify-center gap-2 md:hidden"
+          className="flex w-full max-w-full flex-wrap justify-center gap-1.5 min-[375px]:gap-2 md:hidden"
           role="group"
           aria-label="Filter work by type"
         >

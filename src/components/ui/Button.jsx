@@ -23,9 +23,13 @@ export default function Button({
 }) {
   const sizeClass = Icon
     ? iconOnlyMobile
-      ? "gap-0 p-2.5 max-lg:gap-1 max-lg:px-2.5 max-lg:py-1.5 max-lg:text-xs lg:gap-1 lg:px-3 lg:py-1.5 lg:text-xs xl:gap-1.5 xl:px-4 xl:py-2 xl:text-sm font-['DM_Sans',ui-sans-serif,sans-serif] font-semibold"
+      ? "gap-0 p-2.5 max-md:px-4 max-md:py-2.5 max-lg:gap-1 max-lg:px-2.5 max-lg:py-1.5 max-lg:text-xs lg:gap-1 lg:px-3 lg:py-1.5 lg:text-xs xl:gap-1.5 xl:px-4 xl:py-2 xl:text-sm font-['DM_Sans',ui-sans-serif,sans-serif] font-semibold"
       : "gap-1.5 px-4 py-2 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-semibold"
     : "px-6 py-3 text-sm";
+
+  const iconSize = iconOnlyMobile
+    ? "h-5 w-5 md:h-[1.125rem] md:w-[1.125rem]"
+    : "h-[1.125rem] w-[1.125rem]";
 
   const lottieRef = useRef(null);
   const playLottie = () => {
@@ -50,10 +54,10 @@ export default function Button({
         <LottieIcon
           animationData={lottie}
           lottieRef={lottieRef}
-          className="h-[1.125rem] w-[1.125rem]"
+          className={iconSize}
         />
       ) : Icon ? (
-        <Icon className="h-[1.125rem] w-[1.125rem] shrink-0" weight={ICON_WEIGHT} aria-hidden />
+        <Icon className={`${iconSize} shrink-0`} weight={ICON_WEIGHT} aria-hidden />
       ) : null}
       {children ? (
         <span className={iconOnlyMobile ? "hidden md:inline" : undefined}>
