@@ -1,10 +1,6 @@
 import { useRef } from "react";
-import Lottie from "lottie-react";
 import { ICON_WEIGHT } from "./icons.js";
-
-function prefersReducedMotion() {
-  return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-}
+import LottieIcon, { prefersReducedMotion } from "./LottieIcon.jsx";
 
 const variants = {
   primary:
@@ -51,21 +47,11 @@ export default function Button({
       })}
     >
       {lottie ? (
-        // Strokes and solid black fills follow the text color; mask shapes in
-        // <defs> keep theirs. Stroke 48/512 matches Phosphor's bold weight.
-        <span
-          className="inline-block h-[1.125rem] w-[1.125rem] shrink-0 [&_path[stroke]]:stroke-current [&_path[stroke]]:[stroke-width:48] [&_path[fill='rgb(0,0,0)']:not(defs_path)]:fill-current"
-          aria-hidden
-        >
-          <Lottie
-            lottieRef={lottieRef}
-            animationData={lottie}
-            loop={false}
-            autoplay={false}
-            style={{ width: "100%", height: "100%" }}
-            rendererSettings={{ preserveAspectRatio: "xMidYMid meet" }}
-          />
-        </span>
+        <LottieIcon
+          animationData={lottie}
+          lottieRef={lottieRef}
+          className="h-[1.125rem] w-[1.125rem]"
+        />
       ) : Icon ? (
         <Icon className="h-[1.125rem] w-[1.125rem] shrink-0" weight={ICON_WEIGHT} aria-hidden />
       ) : null}

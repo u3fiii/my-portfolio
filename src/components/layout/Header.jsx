@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -6,12 +6,13 @@ import {
   useScroll,
 } from "framer-motion";
 import { Link, useMatch } from "react-router-dom";
-import { ArrowLeft, DownloadSimple, ICON_WEIGHT } from "../ui/icons.js";
+import homeAnimation from "../../assets/lottie/Home 23_.json";
+import { DownloadSimple, ICON_WEIGHT } from "../ui/icons.js";
+import LottieIcon, { prefersReducedMotion } from "../ui/LottieIcon.jsx";
 import { LogoMark } from "../ui/Logo.jsx";
 import { NAV_ITEMS, SITE } from "../../content/site.js";
-import { getWorkItemById } from "../../content/work.js";
 import useActiveSection from "../../hooks/useActiveSection.js";
-import { CASE_STUDY_TITLES, ROUTES } from "../../routes/paths.js";
+import { ROUTES } from "../../routes/paths.js";
 import NavLink from "../ui/NavLink.jsx";
 
 const sectionIds = NAV_ITEMS.map((item) => item.id);
@@ -31,16 +32,14 @@ const headerEnterTransition = {
 export default function Header() {
   const workMatch = useMatch("/work/:id");
   const caseStudyMatch = useMatch("/case-studies/:slug");
-  const workId = workMatch?.params?.id;
-  const caseStudySlug = caseStudyMatch?.params?.slug;
-  const workItem = workId ? getWorkItemById(workId) : null;
   const isDetail = Boolean(workMatch || caseStudyMatch);
-  const detailTitle =
-    workItem?.title ??
-    (caseStudySlug ? CASE_STUDY_TITLES[caseStudySlug] : null) ??
-    (workId ? "Not found" : "");
 
   const activeId = useActiveSection(isDetail ? [] : sectionIds);
+
+  const homeLottieRef = useRef(null);
+  const playHomeIcon = () => {
+    if (!prefersReducedMotion()) homeLottieRef.current?.goToAndPlay(0, true);
+  };
 
   const { scrollY } = useScroll();
   const [scrollingDown, setScrollingDown] = useState(false);
@@ -76,19 +75,19 @@ export default function Header() {
             >
               <Link
                 to={ROUTES.home}
-                aria-label="Back to home"
-                className="inline-flex shrink-0 items-center justify-center rounded-full p-2 text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+                onMouseEnter={playHomeIcon}
+                onFocus={playHomeIcon}
+                className="group inline-flex max-w-full min-w-0 items-center gap-2 rounded-full py-1.5 pr-4 pl-2.5 text-zinc-900 transition-colors hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
               >
-                <ArrowLeft
-                  className="h-4 w-4 shrink-0"
-                  weight={ICON_WEIGHT}
-                  aria-hidden
+                <LottieIcon
+                  animationData={homeAnimation}
+                  lottieRef={homeLottieRef}
+                  className="h-4 w-4 text-zinc-600 transition-colors duration-200 group-hover:text-zinc-900"
                 />
+                <span className="min-w-0 truncate font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-medium">
+                  Back to Home
+                </span>
               </Link>
-
-              <h1 className="min-w-0 flex-1 truncate pr-2 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-semibold tracking-tight text-zinc-900 md:text-base">
-                {detailTitle}
-              </h1>
             </motion.div>
           ) : (
             <motion.div
