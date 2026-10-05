@@ -175,6 +175,20 @@ body {
   }
 }
 
+/* Cards: darken the border itself so the white background can't show between ring and image. */
+@utility card-hover-ring {
+  transition:
+    scale 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    scale: 1.01;
+    border-color: #18181b;
+    box-shadow: 0 0 0 2px #18181b;
+  }
+}
+
 @utility btn-instagram {
   position: relative;
   isolation: isolate;

@@ -148,7 +148,7 @@ const layoutTransition = { duration: 0.35, ease: [0.4, 0, 0.2, 1] };
 const itemTransition = { duration: 0.25, ease: [0.4, 0, 0.2, 1] };
 
 const cardWidth =
-  "w-full min-[600px]:w-[calc(50%-0.3125rem)] min-[900px]:w-[calc(33.333%-0.417rem)]";
+  "w-full min-[600px]:w-[calc(50%-0.3125rem)] min-[900px]:w-[calc(33.333%-0.417rem)] lg:w-[calc(25%-0.5625rem)]";
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState("all");
@@ -167,7 +167,7 @@ export default function Projects() {
       id="projects"
       className="mb-16 bg-transparent"
       align="start"
-      contentMaxWidth="max-w-xl min-[600px]:max-w-2xl min-[900px]:max-w-[42rem]"
+      contentMaxWidth="max-w-xl min-[600px]:max-w-2xl min-[900px]:max-w-[42rem] lg:max-w-[62rem]"
       tallOnMobile={false}
     >
       <div
@@ -218,7 +218,7 @@ export default function Projects() {
 
         <motion.ul
           layout
-          className="mx-auto flex w-full max-w-[42rem] flex-wrap justify-center gap-2.5"
+          className="mx-auto flex w-full max-w-[42rem] flex-wrap justify-center gap-4 min-[600px]:gap-2.5 lg:max-w-[62rem] lg:gap-3"
           transition={{ layout: layoutTransition }}
         >
           <AnimatePresence mode="popLayout">

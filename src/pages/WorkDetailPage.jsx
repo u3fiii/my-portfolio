@@ -71,7 +71,7 @@ export default function WorkDetailPage() {
 
     <div className="min-h-screen font-content">
 
-      <article className="mx-auto max-w-[680px] px-6 pb-24 pt-24 md:pt-28">
+      <article className="mx-auto max-w-[748px] px-6 pb-24 pt-24 md:pt-28">
 
         <header className="mb-10 border-b border-zinc-200 pb-10 md:mb-12 md:pb-12">
 

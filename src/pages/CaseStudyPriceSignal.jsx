@@ -75,7 +75,7 @@ export default function CaseStudyPriceSignal() {
 
   return (
     <div className="min-h-screen">
-      <article className="case-study mx-auto max-w-[680px] px-6 pb-20 pt-24 md:pt-28">
+      <article className="case-study mx-auto max-w-[748px] px-6 pb-20 pt-24 md:pt-28">
         <header className="mb-8 pb-6">
           <p className="case-study__eyebrow">Case Study · Sheypoor · 2020</p>
           <h1 className="case-study__title mt-4">Price Signal</h1>

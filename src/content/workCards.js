@@ -12,7 +12,7 @@ export const WORK_CARDS = [
     href: workDetailPath("price-signal"),
     external: false,
     comingSoon: false,
-    image: "/images/covers/metriwo.png",
+    image: "/images/covers/price-signal-sheypoor.jpg",
   },
   {
     id: "bitpin-deposit",
@@ -73,6 +73,30 @@ export const WORK_CARDS = [
     external: true,
     comingSoon: true,
     image: "/images/covers/price-signal.png",
+  },
+  {
+    id: "designing-for-low-trust",
+    filter: "article",
+    tag: "Article",
+    title: "Designing for Low Trust",
+    description:
+      "Notes on building products for users who expect the system to fail them — and how small signals earn it back.",
+    href: "#",
+    external: true,
+    comingSoon: true,
+    image: "/images/covers/designing-for-low-trust.jpg",
+  },
+  {
+    id: "icon-system",
+    filter: "project",
+    tag: "Project · Side Project",
+    title: "Open Icon Set",
+    description:
+      "A 400-icon open-source set built on a strict 24px grid, with RTL-aware variants for Persian interfaces.",
+    href: "#",
+    external: true,
+    comingSoon: true,
+    image: "/images/covers/open-icon-set.jpg",
   },
 ];
 

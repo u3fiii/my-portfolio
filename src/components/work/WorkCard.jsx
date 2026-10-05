@@ -38,7 +38,7 @@ export default function WorkCard({
 }) {
   const cardClass = comingSoon
     ? "flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)]"
-    : "pill-hover-ring group flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)] no-underline";
+    : "card-hover-ring group flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)] no-underline";
 
   const content = (
     <>
@@ -61,18 +61,17 @@ export default function WorkCard({
           </div>
         )}
         {comingSoon ? (
-          <span className="absolute right-2 top-2 rounded-full bg-zinc-900/90 px-2 py-0.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-[9px] font-semibold uppercase tracking-[0.08em] text-white">
+          <span className="absolute right-2 top-2 rounded-full bg-zinc-900/90 px-2 py-0.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-[9px] lg:text-[10px] font-semibold uppercase tracking-[0.08em] text-white">
             Coming soon
           </span>
         ) : null}
       </div>
 
-      <div className="p-3">
+      <div className="p-3 lg:p-3.5">
         <p
-          className="mb-1.5 text-[color:var(--color-text-tertiary)]"
+          className="mb-1.5 text-[9px] text-[color:var(--color-text-tertiary)] lg:text-[10px]"
           style={{
             fontFamily: FONT_UI,
-            fontSize: "9px",
             fontWeight: 500,
             letterSpacing: "0.1em",
             textTransform: "uppercase",
@@ -82,10 +81,9 @@ export default function WorkCard({
         </p>
         <h3
           title={title}
-          className="mb-1 line-clamp-1 text-zinc-900"
+          className="mb-1 line-clamp-1 text-[15px] text-zinc-900 lg:text-[16.5px]"
           style={{
             fontFamily: FONT_SERIF,
-            fontSize: "15px",
             fontWeight: 600,
             letterSpacing: "-0.01em",
             lineHeight: 1.25,
@@ -94,10 +92,9 @@ export default function WorkCard({
           {title}
         </h3>
         <p
-          className="line-clamp-2 text-zinc-500"
+          className="line-clamp-2 text-[12px] text-zinc-500 lg:text-[13px]"
           style={{
             fontFamily: FONT_UI,
-            fontSize: "12px",
             lineHeight: 1.45,
           }}
         >
