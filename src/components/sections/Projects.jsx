@@ -1,6 +1,11 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import allAnimation from "../../assets/lottie/all.json";
+import articlesAnimation from "../../assets/lottie/articles.json";
+import caseStudiesAnimation from "../../assets/lottie/case studies.json";
+import projectsAnimation from "../../assets/lottie/projects.json";
 import Section from "../layout/Section.jsx";
+import LottieIcon, { prefersReducedMotion } from "../ui/LottieIcon.jsx";
 import WorkCard from "../work/WorkCard.jsx";
 import { WORK_CARDS } from "../../content/workCards.js";
 
@@ -16,117 +21,29 @@ const SECTION_TOKENS = {
 };
 
 const TABS = [
-  { id: "all", label: "All", Icon: IconLayoutGrid },
-  { id: "project", label: "Projects", Icon: IconBriefcase },
-  { id: "article", label: "Articles", Icon: IconArticle },
-  { id: "case-study", label: "Case studies", Icon: IconBook2 },
+  { id: "all", label: "All", animation: allAnimation },
+  { id: "project", label: "Projects", animation: projectsAnimation },
+  { id: "article", label: "Articles", animation: articlesAnimation },
+  { id: "case-study", label: "Case studies", animation: caseStudiesAnimation },
 ];
 
-function IconLayoutGrid({ className }) {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
-      <path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
-      <path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
-      <path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
-    </svg>
-  );
-}
-
-function IconBriefcase({ className }) {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
-      <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
-      <path d="M12 12l0 .01" />
-      <path d="M3 13a20 20 0 0 0 18 0" />
-    </svg>
-  );
-}
-
-function IconArticle({ className }) {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
-      <path d="M7 8h10" />
-      <path d="M7 12h10" />
-      <path d="M7 16h10" />
-    </svg>
-  );
-}
-
-function IconBook2({ className }) {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z" />
-      <path d="M19 16h-12a2 2 0 0 0 -2 2" />
-      <path d="M9 8h6" />
-    </svg>
-  );
-}
-
-function FilterTab({ active, onClick, label, Icon, size = "desktop" }) {
+function FilterTab({ active, onClick, label, animation, size = "desktop" }) {
   const sizeClass =
     size === "mobile"
       ? "px-2.5 py-1.5 text-[0.8125rem] min-[375px]:px-3.5 min-[375px]:text-sm"
       : "px-4 py-2 text-sm md:gap-1.5";
 
+  const lottieRef = useRef(null);
+  /** Icon animates on click only — not on hover or focus. */
+  const handleClick = (event) => {
+    if (!prefersReducedMotion()) lottieRef.current?.goToAndPlay(0, true);
+    onClick?.(event);
+  };
+
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={handleClick}
       aria-pressed={active}
       className={`inline-flex shrink-0 cursor-pointer items-center whitespace-nowrap rounded-full font-['DM_Sans',ui-sans-serif,sans-serif] font-semibold ${sizeClass} ${
         active
@@ -134,8 +51,12 @@ function FilterTab({ active, onClick, label, Icon, size = "desktop" }) {
           : "pill-hover-ring border border-zinc-300 bg-white text-zinc-900"
       }`}
     >
-      {Icon ? (
-        <Icon className="hidden h-[1.125rem] w-[1.125rem] shrink-0 md:block" />
+      {animation ? (
+        <LottieIcon
+          animationData={animation}
+          lottieRef={lottieRef}
+          className="hidden h-[1.125rem] w-[1.125rem] md:block"
+        />
       ) : null}
       {label}
     </button>
@@ -175,7 +96,7 @@ export default function Projects() {
         style={SECTION_TOKENS}
       >
         <header className="w-full max-w-lg text-center">
-          <h2 className="font-['Source_Serif_4',Georgia,serif] text-[1.375rem] font-semibold tracking-[-0.02em] text-zinc-900 md:text-2xl lg:text-3xl">
+          <h2 className="font-['Source_Serif_4',Georgia,serif] text-[1.375rem] font-bold tracking-[-0.02em] text-zinc-900 md:text-2xl lg:text-3xl">
             Work
           </h2>
           <p className="mx-auto mt-3 max-w-lg font-['DM_Sans',ui-sans-serif,sans-serif] text-lg font-medium leading-relaxed text-zinc-700">
@@ -188,14 +109,14 @@ export default function Projects() {
           role="group"
           aria-label="Filter work by type"
         >
-          {MOBILE_TABS.map(({ id, label, Icon }) => (
+          {MOBILE_TABS.map(({ id, label, animation }) => (
             <FilterTab
               key={id}
               size="mobile"
               active={activeFilter === id}
               onClick={() => handleMobileFilterClick(id)}
               label={label}
-              Icon={Icon}
+              animation={animation}
             />
           ))}
         </div>
@@ -205,13 +126,13 @@ export default function Projects() {
           role="group"
           aria-label="Filter work by type"
         >
-          {TABS.map(({ id, label, Icon }) => (
+          {TABS.map(({ id, label, animation }) => (
             <FilterTab
               key={id}
               active={activeFilter === id}
               onClick={() => setActiveFilter(id)}
               label={label}
-              Icon={Icon}
+              animation={animation}
             />
           ))}
         </div>
