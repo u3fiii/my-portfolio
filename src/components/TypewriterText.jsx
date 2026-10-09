@@ -11,7 +11,7 @@ const PAUSE_MS = 2000;
 export default function TypewriterText({
   roles,
   className = "",
-  cursorClassName = "ml-0.5 inline-block h-[0.85em] w-[3px] translate-y-0.5 animate-cursor-blink bg-zinc-900",
+  cursorClassName = "typewriter-cursor ml-[0.1em] w-[3px] animate-cursor-blink bg-zinc-900 md:w-1 lg:w-[5px]",
   startDelay = 0,
 }) {
   const [started, setStarted] = useState(startDelay === 0);

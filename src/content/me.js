@@ -6,15 +6,15 @@
 
 /** @type {TypewriterRole[]} */
 export const TYPEWRITER_ROLES = [
-  { text: "Product Designer", fontClass: "font-role-product" },
-  { text: "Frontend Developer", fontClass: "font-role-code" },
-  { text: "Motion Designer", fontClass: "font-role-motion" },
+  { text: "Curious Generalist", fontClass: "font-role-curious" },
+  { text: "Systems Thinker", fontClass: "font-role-systems" },
+  { text: "Product Builder", fontClass: "font-role-builder" },
 ];
 
 export const INTRO = {
   name: "Ali",
   subtitle:
-    "I've spent years designing products that make hard things feel simple.",
+    "I design products, write some of the code, and obsess over the parts nobody notices.",
 };
 
 export const SOCIAL_LINKS = [

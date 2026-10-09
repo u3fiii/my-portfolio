@@ -13,9 +13,9 @@
   --font-sans: "Quicksand", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Quicksand", ui-sans-serif, system-ui, sans-serif;
   --font-content: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-product: "Gveret Levin", "Segoe Script", cursive;
-  --font-motion: "Windsor Pro Bold", "Quicksand", ui-sans-serif, serif;
-  --font-code: "Courier Prime", ui-monospace, monospace;
+  --font-curious: "Fraunces", Georgia, serif;
+  --font-systems: "Doto", ui-monospace, monospace;
+  --font-builder: "Big Shoulders Stencil", Impact, sans-serif;
   --font-case-ui: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-case-body: "Source Serif 4", Georgia, "Times New Roman", serif;
   --color-sheypoor: #0099cc;
@@ -95,9 +95,18 @@ body {
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: flex-start;
+  align-items: baseline;
   justify-content: flex-start;
   white-space: nowrap;
+}
+
+/* Caret sits on the baseline and spans the role font's cap height */
+.typewriter-cursor {
+  display: inline-block;
+  flex-shrink: 0;
+  height: 0.85em;
+  height: calc(1cap + 0.16em);
+  transform: translateY(0.08em);
 }
 
 @media (min-width: 768px) {
@@ -112,34 +121,37 @@ body {
   }
 }
 
-@utility font-role-product {
-  font-family: var(--font-product);
-  font-weight: 400;
-  font-size: 1.05em;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
-}
+/* Role fonts — each typeface acts out its phrase */
 
-@media (min-width: 768px) {
-  .font-role-product {
-    font-size: 0.95em;
-  }
-}
-
-@utility font-role-motion {
-  font-family: var(--font-motion);
-  font-weight: 400;
+/* Editorial italic with off-kilter ("wonky") letterforms */
+@utility font-role-curious {
+  font-family: var(--font-curious);
+  font-style: italic;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+  font-optical-sizing: auto;
   font-size: 1em;
   line-height: 1.2;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
 }
 
-@utility font-role-code {
-  font-family: var(--font-code);
-  font-weight: 700;
+/* Letters assembled from a dot grid */
+@utility font-role-systems {
+  font-family: var(--font-systems);
+  font-weight: 900;
   font-size: 0.95em;
   line-height: 1.2;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+}
+
+/* Stencil lettering, like a crate or a site sign */
+@utility font-role-builder {
+  font-family: var(--font-builder);
+  font-weight: 800;
+  font-size: 1.15em;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 /* Page content above dot grid background */
