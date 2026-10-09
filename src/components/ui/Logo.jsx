@@ -9,7 +9,7 @@ export function LogoMark({ className = "" }) {
         src={SITE.logo}
         alt=""
         aria-hidden
-        className="h-full w-full object-contain"
+        className="h-full w-full object-contain dark:invert"
         decoding="async"
       />
     </span>

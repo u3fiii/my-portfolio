@@ -9,7 +9,7 @@ export default function PageBackground() {
 
   return (
     <>
-      <div className="fixed inset-0 z-0 bg-white" aria-hidden />
+      <div className="fixed inset-0 z-0 bg-white dark:bg-[#0e0e10]" aria-hidden />
       <DotBackground variant={isContentPage ? "content" : "default"} />
     </>
   );

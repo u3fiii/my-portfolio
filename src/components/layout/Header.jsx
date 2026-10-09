@@ -13,7 +13,8 @@ import { LogoMark } from "../ui/Logo.jsx";
 import { NAV_ITEMS, SITE } from "../../content/site.js";
 import useActiveSection from "../../hooks/useActiveSection.js";
 import { ROUTES } from "../../routes/paths.js";
-import NavLink from "../ui/NavLink.jsx";
+import GooeyNav from "../ui/GooeyNav.jsx";
+import ThemeToggle from "../ui/ThemeToggle.jsx";
 
 const sectionIds = NAV_ITEMS.map((item) => item.id);
 
@@ -38,6 +39,44 @@ function useIsDesktop() {
   }, []);
   return isDesktop;
 }
+
+/** Frosted-glass surface shared by the header bar and the theme button. */
+const GLASS =
+  "border border-white/70 bg-white/55 shadow-[0_8px_32px_-8px_rgb(24_24_27/0.18),inset_0_1px_0_rgb(255_255_255/0.8)] ring-1 ring-zinc-900/5 backdrop-blur-xl backdrop-saturate-150 dark:shadow-[0_8px_32px_-8px_rgb(0_0_0/0.6),inset_0_1px_0_rgb(255_255_255/0.06)] dark:ring-white/5";
+
+/**
+ * The logo and theme buttons float either side of the bar and tuck into it
+ * while scrolling down: the gaps close and the facing corners square off
+ * into one shape. Scrolling up (or reaching the top) pops them back out.
+ */
+const BAR_RADIUS = 28;
+const POD_GAP = 8;
+const gooeySpring = { type: "spring", stiffness: 420, damping: 26, mass: 0.8 };
+
+/** Round glass button beside the bar; `side` is where it sits. */
+function SidePod({ side, joined, children }) {
+  const inner = joined ? 0 : BAR_RADIUS;
+  const isLeft = side === "left";
+  return (
+    <motion.div
+      initial={false}
+      animate={{
+        [isLeft ? "marginRight" : "marginLeft"]: joined ? -1 : POD_GAP,
+        borderTopLeftRadius: isLeft ? BAR_RADIUS : inner,
+        borderBottomLeftRadius: isLeft ? BAR_RADIUS : inner,
+        borderTopRightRadius: isLeft ? inner : BAR_RADIUS,
+        borderBottomRightRadius: isLeft ? inner : BAR_RADIUS,
+      }}
+      transition={gooeySpring}
+      className={`pointer-events-auto relative w-[3.375rem] shrink-0 overflow-hidden ${GLASS}`}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const LOGO_LINK_CLASS =
+  "flex h-full w-full items-center justify-center transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-zinc-900";
 
 const headerEnterTransition = {
   delay: 1.5,
@@ -69,95 +108,111 @@ export default function Header() {
 
   return (
     <motion.header
-      className="pointer-events-none fixed top-5 right-0 left-0 z-[100] mx-auto w-full max-w-[680px] px-6 md:top-4"
+      className="pointer-events-none fixed top-5 right-0 left-0 z-[100] mx-auto w-full max-w-[680px] px-4 min-[360px]:px-6 md:top-4"
       initial={{ y: -28, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={headerEnterTransition}
     >
-      <motion.nav
+      <motion.div
+        className="flex w-full items-stretch"
         animate={{
           scale: isDesktop && scrollingDown ? SCROLLED_DOWN_SCALE : 1,
         }}
         transition={scaleTransition}
-        className="pointer-events-auto flex w-full items-center overflow-hidden rounded-full border border-white/70 bg-white/55 p-2 shadow-[0_8px_32px_-8px_rgb(24_24_27/0.18),inset_0_1px_0_rgb(255_255_255/0.8)] ring-1 ring-zinc-900/5 backdrop-blur-xl backdrop-saturate-150"
-        aria-label={isDetail ? "Work detail" : "Main"}
       >
-        <AnimatePresence mode="wait" initial={false}>
+        <SidePod side="left" joined={scrollingDown}>
           {isDetail ? (
-            <motion.div
-              key="detail"
-              className="flex min-h-9 w-full min-w-0 items-center gap-2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={fadeTransition}
+            <Link
+              to={ROUTES.home}
+              className={LOGO_LINK_CLASS}
+              aria-label={`${SITE.logoAlt} — home`}
             >
-              <Link
-                to={ROUTES.home}
-                onMouseEnter={playHomeIcon}
-                onFocus={playHomeIcon}
-                className="group inline-flex max-w-full min-w-0 items-center gap-2 rounded-full py-1.5 pr-4 pl-2.5 text-zinc-900 transition-colors hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
-              >
-                <LottieIcon
-                  animationData={homeAnimation}
-                  lottieRef={homeLottieRef}
-                  className="h-4 w-4 text-zinc-600 transition-colors duration-200 group-hover:text-zinc-900"
-                />
-                <span className="min-w-0 truncate font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-medium">
-                  Back to Home
-                </span>
-              </Link>
-            </motion.div>
+              <LogoMark />
+            </Link>
           ) : (
-            <motion.div
-              key="home"
-              className="flex min-h-9 w-full min-w-0 items-stretch gap-1.5 md:gap-2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={fadeTransition}
+            <a
+              href={ROUTES.home}
+              className={LOGO_LINK_CLASS}
+              aria-label={`${SITE.logoAlt} — home`}
             >
-              <a
-                href={ROUTES.home}
-                className="inline-flex shrink-0 self-center items-stretch rounded-full transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
-                aria-label={`${SITE.logoAlt} — home`}
-              >
-                <LogoMark />
-              </a>
-
-              <div className="flex min-w-0 flex-1 items-center justify-center gap-0.5 self-center md:gap-1">
-                {NAV_ITEMS.map(({ id, label, icon }) => (
-                  <NavLink
-                    key={id}
-                    href={`#${id}`}
-                    label={label}
-                    icon={icon}
-                    active={activeId === id}
-                    compact
-                    iconOnly={false}
-                    className="max-md:p-2 max-md:[&_[data-nav-label]]:sr-only"
-                    iconClassName="h-5 w-5 md:h-4 md:w-4"
-                  />
-                ))}
-              </div>
-
-              <a
-                href={SITE.cvUrl}
-                download="Ali-Yousefi-CV.pdf"
-                className="inline-flex shrink-0 items-center justify-center gap-1.5 self-stretch rounded-full bg-zinc-100 px-2.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-xs font-bold tracking-wide text-zinc-900 uppercase transition-colors hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 md:px-3"
-                aria-label="Download CV"
-              >
-                <DownloadSimple
-                  className="h-5 w-5 shrink-0 md:h-4 md:w-4"
-                  weight={ICON_WEIGHT}
-                  aria-hidden
-                />
-                <span className="hidden md:inline">{SITE.cvLabel}</span>
-              </a>
-            </motion.div>
+              <LogoMark />
+            </a>
           )}
-        </AnimatePresence>
-      </motion.nav>
+        </SidePod>
+
+        <motion.nav
+          initial={false}
+          animate={{
+            borderTopLeftRadius: scrollingDown ? 0 : BAR_RADIUS,
+            borderBottomLeftRadius: scrollingDown ? 0 : BAR_RADIUS,
+            borderTopRightRadius: scrollingDown ? 0 : BAR_RADIUS,
+            borderBottomRightRadius: scrollingDown ? 0 : BAR_RADIUS,
+          }}
+          transition={gooeySpring}
+          className={`pointer-events-auto flex min-w-0 flex-1 items-center overflow-hidden p-2 ${GLASS}`}
+          aria-label={isDetail ? "Work detail" : "Main"}
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            {isDetail ? (
+              <motion.div
+                key="detail"
+                className="flex min-h-9 w-full min-w-0 items-center gap-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={fadeTransition}
+              >
+                <Link
+                  to={ROUTES.home}
+                  onMouseEnter={playHomeIcon}
+                  onFocus={playHomeIcon}
+                  className="group inline-flex max-w-full min-w-0 items-center gap-2 rounded-full py-1.5 pr-4 pl-2.5 text-zinc-900 transition-colors hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+                >
+                  <LottieIcon
+                    animationData={homeAnimation}
+                    lottieRef={homeLottieRef}
+                    className="h-4 w-4 text-zinc-600 transition-colors duration-200 group-hover:text-zinc-900"
+                  />
+                  <span className="min-w-0 truncate font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-medium">
+                    Back to Home
+                  </span>
+                </Link>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="home"
+                className="flex min-h-9 w-full min-w-0 items-stretch gap-1.5 md:gap-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={fadeTransition}
+              >
+                <div className="flex min-w-0 flex-1 items-center justify-start self-center">
+                  <GooeyNav items={NAV_ITEMS} activeId={activeId} />
+                </div>
+
+                <a
+                  href={SITE.cvUrl}
+                  download="Ali-Yousefi-CV.pdf"
+                  className="inline-flex shrink-0 items-center justify-center gap-1.5 self-stretch rounded-full bg-zinc-100 px-2.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-xs font-bold tracking-wide text-zinc-900 uppercase transition-colors hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 md:px-3"
+                  aria-label="Download CV"
+                >
+                  <DownloadSimple
+                    className="h-5 w-5 shrink-0 md:h-4 md:w-4"
+                    weight={ICON_WEIGHT}
+                    aria-hidden
+                  />
+                  <span className="hidden md:inline">{SITE.cvLabel}</span>
+                </a>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.nav>
+
+        <SidePod side="right" joined={scrollingDown}>
+          <ThemeToggle className="h-full w-full" />
+        </SidePod>
+      </motion.div>
     </motion.header>
   );
 }

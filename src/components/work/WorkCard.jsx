@@ -37,7 +37,7 @@ export default function WorkCard({
   comingSoon = false,
 }) {
   const cardClass = comingSoon
-    ? "flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)]"
+    ? "group flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)]"
     : "card-hover-ring group flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)] no-underline";
 
   const content = (
@@ -47,7 +47,7 @@ export default function WorkCard({
           <img
             src={image}
             alt=""
-            className={`h-full w-full object-cover ${comingSoon ? "grayscale" : ""}`}
+            className={`h-full w-full object-cover transition-transform duration-3000 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-105 group-focus-visible:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-focus-visible:scale-100 ${comingSoon ? "grayscale" : ""}`}
           />
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-1 text-[color:var(--color-text-tertiary)]">

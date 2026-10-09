@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "lenis/dist/lenis.css";
 
+/* Dark mode follows a `.dark` class on <html> (set before paint in index.html) */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @font-face {
   font-family: "Windsor Pro Bold";
   src: url("/fonts/windsor-pro/WindsorProBold.TTF") format("truetype");
@@ -31,6 +34,34 @@
 
 html {
   scroll-padding-top: 5rem;
+}
+
+/* Text selection: black with white text (inverts with the palette in dark mode) */
+::selection {
+  background-color: var(--color-zinc-900);
+  color: var(--color-white);
+}
+
+/*
+ * Dark mode: flip the neutral palette in one place. Every zinc/white/black
+ * utility and every var(--color-zinc-*) below re-resolves, so components
+ * don't need per-class dark: variants. "white" becomes the raised surface.
+ */
+html.dark {
+  color-scheme: dark;
+  --color-white: #161618;
+  --color-black: #fafafa;
+  --color-zinc-50: #1c1c1f;
+  --color-zinc-100: #232326;
+  --color-zinc-200: #2c2c30;
+  --color-zinc-300: #3a3a40;
+  --color-zinc-400: #6b6b74;
+  --color-zinc-500: #8b8b94;
+  --color-zinc-600: #a1a1aa;
+  --color-zinc-700: #c4c4cc;
+  --color-zinc-800: #dcdce0;
+  --color-zinc-900: #f2f2f3;
+  --color-zinc-950: #fafafa;
 }
 
 body {
@@ -154,6 +185,32 @@ body {
   text-transform: uppercase;
 }
 
+/*
+ * Avatar in dark mode: the face keeps its original look (white skin, dark
+ * outlines and features). Only the parts that would vanish on a dark page
+ * change: the outer ring and shirt become solid dark greys (the look of
+ * 5% and 15% white on the page),
+ * and the hair stays pitch black.
+ * Layers are tagged in Me.jsx.
+ */
+html.dark .avatar-art {
+  --avatar-ring: #1a1a1c; /* looks like 5% white on the page, but solid */
+  --avatar-shirt: #323234; /* looks like 15% white on the page, but solid */
+  --avatar-hair: #000000;
+}
+
+html.dark .avatar-art .av-circle path {
+  stroke: var(--avatar-ring);
+}
+
+html.dark .avatar-art .av-torso path:not(defs path) {
+  fill: var(--avatar-shirt);
+}
+
+html.dark .avatar-art .av-hair path:not(defs path) {
+  fill: var(--avatar-hair);
+}
+
 /* Page content above dot grid background */
 
 .page-content {
@@ -184,7 +241,7 @@ body {
   &:hover {
     scale: 1.01;
     border-color: transparent;
-    box-shadow: 0 0 0 3px #18181b;
+    box-shadow: 0 0 0 3px var(--color-zinc-900);
   }
 }
 
@@ -197,8 +254,8 @@ body {
 
   &:hover {
     scale: 1.01;
-    border-color: #18181b;
-    box-shadow: 0 0 0 2px #18181b;
+    border-color: var(--color-zinc-900);
+    box-shadow: 0 0 0 2px var(--color-zinc-900);
   }
 }
 
@@ -206,9 +263,11 @@ body {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background-color: #18181b;
-  color: #fff;
-  transition: scale 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: var(--color-zinc-900);
+  color: var(--color-white);
+  transition:
+    scale 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 300ms cubic-bezier(0.4, 0, 0.2, 1);
 
   &::before {
     content: "";
@@ -227,8 +286,10 @@ body {
     transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* White text and icon on the gradient — also in dark mode, where the resting button is light */
   &:hover {
     scale: 1.01;
+    color: #fff;
   }
 
   &:hover::before {
@@ -248,7 +309,7 @@ body {
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.75;
-  color: #18181b;
+  color: var(--color-zinc-900);
 }
 
 .case-study__ui {
@@ -261,7 +322,7 @@ body {
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #71717a;
+  color: var(--color-zinc-500);
 }
 
 .case-study__title {
@@ -270,7 +331,7 @@ body {
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.15;
-  color: #09090b;
+  color: var(--color-zinc-950);
 }
 
 @media (min-width: 600px) {
@@ -285,7 +346,7 @@ body {
   font-weight: 500;
   font-style: italic;
   line-height: 1.55;
-  color: #52525b;
+  color: var(--color-zinc-600);
 }
 
 @media (min-width: 600px) {
@@ -300,7 +361,7 @@ body {
   font-weight: 600;
   line-height: 1.3;
   letter-spacing: -0.01em;
-  color: #09090b;
+  color: var(--color-zinc-950);
 }
 
 @media (min-width: 600px) {
@@ -314,7 +375,7 @@ body {
   font-size: 1.125rem;
   font-weight: 600;
   line-height: 1.35;
-  color: #09090b;
+  color: var(--color-zinc-950);
 }
 
 .case-study__body {
@@ -322,11 +383,11 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.75;
-  color: #27272a;
+  color: var(--color-zinc-800);
 }
 
 .case-study__body--muted {
-  color: #52525b;
+  color: var(--color-zinc-600);
 }
 
 .case-study__quote {
@@ -335,8 +396,8 @@ body {
   font-weight: 500;
   font-style: italic;
   line-height: 1.5;
-  color: #52525b;
-  border-left: 3px solid #d4d4d8;
+  color: var(--color-zinc-600);
+  border-left: 3px solid var(--color-zinc-300);
   padding-left: 1.5rem;
   margin: 2.25rem 0;
 }
@@ -357,6 +418,6 @@ body {
 
 @media (hover: hover) {
   .case-study-related-card:hover {
-    border-color: #a1a1aa;
+    border-color: var(--color-zinc-400);
   }
 }

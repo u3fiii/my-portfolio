@@ -1,4 +1,5 @@
 import DotGrid from "./DotGrid.jsx";
+import useTheme from "../../hooks/useTheme.js";
 
 const PRESETS = {
   default: {
@@ -17,8 +18,16 @@ const PRESETS = {
   },
 };
 
+/** Canvas dots can't read CSS variables, so dark mode gets its own colours. */
+const DARK_COLORS = {
+  default: { baseColor: "#202024", activeColor: "#5c5c64" },
+  content: { baseColor: "#1c1c20", activeColor: "#46464d" },
+};
+
 export default function DotBackground({ variant = "default" }) {
-  const preset = PRESETS[variant] ?? PRESETS.default;
+  const { isDark } = useTheme();
+  const key = PRESETS[variant] ? variant : "default";
+  const preset = { ...PRESETS[key], ...(isDark ? DARK_COLORS[key] : null) };
 
   return (
     <div

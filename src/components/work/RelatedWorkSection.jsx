@@ -2,11 +2,11 @@ import { getRelatedWorkCards } from "../../content/workCards.js";
 import WorkCard from "./WorkCard.jsx";
 
 const SECTION_TOKENS = {
-  "--color-background-primary": "#ffffff",
-  "--color-background-secondary": "#f4f4f5",
-  "--color-text-tertiary": "#a1a1aa",
-  "--color-border-tertiary": "#e4e4e7",
-  "--color-border-secondary": "#71717a",
+  "--color-background-primary": "var(--color-white)",
+  "--color-background-secondary": "var(--color-zinc-100)",
+  "--color-text-tertiary": "var(--color-zinc-400)",
+  "--color-border-tertiary": "var(--color-zinc-200)",
+  "--color-border-secondary": "var(--color-zinc-500)",
 };
 
 export default function RelatedWorkSection({

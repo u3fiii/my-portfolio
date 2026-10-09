@@ -13,8 +13,10 @@ import {
   GridFour,
   InstagramLogo,
   LinkedinLogo,
+  Moon,
   PaperPlaneTilt,
   SquaresFour,
+  Sun,
   User,
 } from "@phosphor-icons/react";
 
@@ -46,4 +48,4 @@ export const SOCIAL_ICONS = {
   linkedin: LinkedinLogo,
 };
 
-export { ArrowLeft, DownloadSimple };
+export { ArrowLeft, DownloadSimple, Moon, Sun };

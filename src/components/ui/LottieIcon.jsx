@@ -13,7 +13,7 @@ export function prefersReducedMotion() {
 export default function LottieIcon({ animationData, lottieRef, className = "" }) {
   return (
     <span
-      className={`inline-block shrink-0 [&_path[stroke]]:stroke-current [&_path[stroke]]:[stroke-width:48] [&_path[fill='rgb(0,0,0)']:not(defs_path)]:fill-current ${className}`}
+      className={`inline-block shrink-0 [&_path[stroke]]:stroke-current [&_path[stroke]]:[stroke-width:48] [&_path[fill='rgb(0,0,0)']:not(defs_path)]:fill-current dark:[&_path[fill='rgb(232,232,232)']]:fill-zinc-300 dark:[&_path[fill='rgb(225,225,225)']]:fill-zinc-300 ${className}`}
       aria-hidden
     >
       <Lottie

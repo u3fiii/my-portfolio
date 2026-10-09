@@ -13,11 +13,11 @@ const FONT_SERIF = '"Source Serif 4", Georgia, serif';
 const FONT_UI = '"DM Sans", ui-sans-serif, system-ui, sans-serif';
 
 const SECTION_TOKENS = {
-  "--color-background-primary": "#ffffff",
-  "--color-background-secondary": "#f4f4f5",
-  "--color-text-tertiary": "#a1a1aa",
-  "--color-border-tertiary": "#e4e4e7",
-  "--color-border-secondary": "#71717a",
+  "--color-background-primary": "var(--color-white)",
+  "--color-background-secondary": "var(--color-zinc-100)",
+  "--color-text-tertiary": "var(--color-zinc-400)",
+  "--color-border-tertiary": "var(--color-zinc-200)",
+  "--color-border-secondary": "var(--color-zinc-500)",
 };
 
 const TABS = [
