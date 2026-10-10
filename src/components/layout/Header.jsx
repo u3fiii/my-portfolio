@@ -7,7 +7,7 @@ import {
 } from "framer-motion";
 import { Link, useMatch } from "react-router-dom";
 import downloadAnimation from "../../assets/lottie/Download.json";
-import homeAnimation from "../../assets/lottie/Home 23_.json";
+import backAnimation from "../../assets/lottie/Left.json";
 import LottieIcon, { prefersReducedMotion } from "../ui/LottieIcon.jsx";
 import { LogoMark } from "../ui/Logo.jsx";
 import { NAV_ITEMS, SITE } from "../../content/site.js";
@@ -94,9 +94,9 @@ export default function Header() {
 
   const activeId = useActiveSection(isDetail ? [] : sectionIds);
 
-  const homeLottieRef = useRef(null);
-  const playHomeIcon = () => {
-    if (!prefersReducedMotion()) homeLottieRef.current?.goToAndPlay(0, true);
+  const backLottieRef = useRef(null);
+  const playBackIcon = () => {
+    if (!prefersReducedMotion()) backLottieRef.current?.goToAndPlay(0, true);
   };
 
   const downloadLottieRef = useRef(null);
@@ -173,13 +173,13 @@ export default function Header() {
               >
                 <Link
                   to={ROUTES.home}
-                  onMouseEnter={playHomeIcon}
-                  onFocus={playHomeIcon}
+                  onMouseEnter={playBackIcon}
+                  onFocus={playBackIcon}
                   className="group inline-flex max-w-full min-w-0 items-center gap-2 rounded-full py-1.5 pr-4 pl-2.5 text-zinc-900 transition-colors hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
                 >
                   <LottieIcon
-                    animationData={homeAnimation}
-                    lottieRef={homeLottieRef}
+                    animationData={backAnimation}
+                    lottieRef={backLottieRef}
                     className="h-4 w-4 text-zinc-600 transition-colors duration-200 group-hover:text-zinc-900"
                   />
                   <span className="min-w-0 truncate font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-medium">

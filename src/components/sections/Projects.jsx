@@ -90,7 +90,7 @@ export default function Projects() {
           <h2 className="font-['Source_Serif_4',Georgia,serif] text-[1.375rem] font-bold tracking-[-0.02em] text-zinc-900 md:text-2xl lg:text-3xl">
             Work
           </h2>
-          <p className="mx-auto mt-3 max-w-lg font-['DM_Sans',ui-sans-serif,sans-serif] text-lg font-medium leading-relaxed text-zinc-700">
+          <p className="mx-auto mt-3 max-w-lg font-['Quicksand',ui-sans-serif,sans-serif] text-lg font-medium leading-relaxed text-zinc-700">
             Case studies, projects, and writing from the field.
           </p>
         </header>

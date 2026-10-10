@@ -20,8 +20,8 @@ const PRESETS = {
 
 /** Canvas dots can't read CSS variables, so dark mode gets its own colours. */
 const DARK_COLORS = {
-  default: { baseColor: "#202024", activeColor: "#5c5c64" },
-  content: { baseColor: "#1c1c20", activeColor: "#46464d" },
+  default: { baseColor: "#25252a", activeColor: "#66666e" },
+  content: { baseColor: "#202024", activeColor: "#4e4e56" },
 };
 
 export default function DotBackground({ variant = "default" }) {
