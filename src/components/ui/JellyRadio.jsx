@@ -3,8 +3,8 @@
  * Copyright (c) 2026 David Haz. MIT + Commons Clause License Condition v1.0.
  *
  * The selected chip stretches wider on a bouncy spring; its neighbours slide
- * along with it. Only the width changes — the chip grows horizontally by
- * gaining side padding, so its text never gets distorted.
+ * along with it. The selected chip also gains 4px of height, while its text
+ * remains undistorted.
  *
  * Changes from the original: framer-motion import, width-only stretch (no
  * scale, no shrinking neighbours), outlined chips styled like the site's pill
@@ -196,8 +196,8 @@ export default function JellyRadio({
             <ChipFace
               extra={mvFor(i)}
               basePadding={px}
-              style={{ height: h, fontSize: font }}
-              className="relative inline-flex items-center justify-center gap-1.5 rounded-full border border-zinc-300 bg-white font-['DM_Sans',ui-sans-serif,sans-serif] leading-none font-semibold whitespace-nowrap text-zinc-900 [transition:transform_160ms_cubic-bezier(0.23,1,0.32,1),background-color_200ms_ease,color_200ms_ease,border-color_200ms_ease,box-shadow_200ms_cubic-bezier(0.4,0,0.2,1)] group-active/chip:scale-[0.97] group-focus-visible/chip:ring-2 group-focus-visible/chip:ring-zinc-900 group-focus-visible/chip:ring-offset-2 group-data-[on=true]/chip:border-zinc-900 group-data-[on=true]/chip:bg-zinc-900 group-data-[on=true]/chip:text-white motion-reduce:group-active/chip:scale-100 [@media(hover:hover)_and_(pointer:fine)]:group-hover/chip:group-data-[on=false]/chip:border-transparent [@media(hover:hover)_and_(pointer:fine)]:group-hover/chip:group-data-[on=false]/chip:shadow-[0_0_0_3px_var(--color-zinc-900)]"
+              style={{ height: on ? h + 4 : h, fontSize: font }}
+              className="relative inline-flex items-center justify-center gap-1.5 rounded-full border border-zinc-300 bg-white font-['DM_Sans',ui-sans-serif,sans-serif] leading-none font-semibold whitespace-nowrap text-zinc-900 [transition:transform_160ms_cubic-bezier(0.23,1,0.32,1),height_200ms_cubic-bezier(0.23,1,0.32,1),background-color_200ms_ease,color_200ms_ease,border-color_200ms_ease,box-shadow_200ms_cubic-bezier(0.4,0,0.2,1)] group-active/chip:scale-[0.97] group-focus-visible/chip:ring-2 group-focus-visible/chip:ring-zinc-900 group-focus-visible/chip:ring-offset-2 group-data-[on=true]/chip:border-zinc-900 group-data-[on=true]/chip:bg-zinc-900 group-data-[on=true]/chip:text-white motion-reduce:group-active/chip:scale-100 [@media(hover:hover)_and_(pointer:fine)]:group-hover/chip:group-data-[on=false]/chip:border-transparent [@media(hover:hover)_and_(pointer:fine)]:group-hover/chip:group-data-[on=false]/chip:shadow-[0_0_0_3px_var(--color-zinc-900)]"
             >
               {it.icon ? (
                 <span className="relative inline-flex">

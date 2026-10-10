@@ -1,4 +1,10 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import Button from "../ui/Button.jsx";
 import { ParallaxLayer, ParallaxProvider } from "../ui/Parallax.jsx";
 import LottiePlayer from "../LottiePlayer.jsx";
@@ -58,6 +64,13 @@ function stepDelayMs(step) {
 }
 
 export default function Me() {
+  const heroRef = useRef(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const scrollY = useTransform(scrollYProgress, [0, 1], [0, 44]);
   const greetingStep = 0;
   const typewriterStep = 1;
   const lottieStep = 2;
@@ -67,7 +80,14 @@ export default function Me() {
   return (
     <Section id="me" className="overflow-visible bg-transparent">
       <ParallaxProvider>
-        <div className="flex h-full w-full flex-col items-center justify-center gap-8 min-[550px]:max-[767px]:gap-6 md:max-lg:grid md:max-lg:h-auto md:max-lg:mx-auto md:max-lg:w-full md:max-lg:max-w-[720px] md:max-lg:grid-cols-[auto_minmax(0,1fr)] md:max-lg:items-center md:max-lg:gap-x-5 md:max-lg:gap-y-4 lg:grid lg:h-auto lg:w-full lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-0 lg:pr-42">
+        <motion.div
+          ref={heroRef}
+          className="flex h-full w-full flex-col items-center justify-center gap-8 min-[550px]:max-[767px]:gap-6 md:max-lg:grid md:max-lg:h-auto md:max-lg:mx-auto md:max-lg:w-full md:max-lg:max-w-[720px] md:max-lg:grid-cols-[auto_minmax(0,1fr)] md:max-lg:items-center md:max-lg:gap-x-5 md:max-lg:gap-y-4 lg:grid lg:h-auto lg:w-full lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-0 lg:pr-42"
+          style={{
+            y: reduceMotion ? 0 : scrollY,
+            willChange: reduceMotion ? "auto" : "transform",
+          }}
+        >
           <motion.div
             className="flex w-2/3 justify-center min-[550px]:max-[767px]:w-[52%] min-[550px]:max-[767px]:max-w-[190px] md:max-lg:w-auto md:max-lg:shrink-0 md:max-lg:justify-self-center lg:w-1/2"
             {...revealProps(lottieStep)}
@@ -163,7 +183,7 @@ export default function Me() {
               ))}
             </nav>
           </div>
-        </div>
+        </motion.div>
       </ParallaxProvider>
     </Section>
   );

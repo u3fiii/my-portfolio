@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import BadgeColorTest from "../components/case-study/BadgeColorTest.jsx";
 import FormReorderDiagram from "../components/case-study/FormReorderDiagram.jsx";
 import PriceBadgeList from "../components/case-study/PriceBadgeList.jsx";
-import PriceSignalHero from "../components/case-study/PriceSignalHero.jsx";
 import PriceSignalResultsGraphic from "../components/case-study/PriceSignalResultsGraphic.jsx";
 import SheypoorFinalFormScreen from "../components/case-study/SheypoorFinalFormScreen.jsx";
 import SheypoorFormComparison from "../components/case-study/SheypoorFormComparison.jsx";
@@ -11,6 +10,7 @@ import StatsRow from "../components/case-study/StatsRow.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
 import { ROUTES } from "../routes/paths.js";
+import priceSignalThumbnail from "../assets/thumbnails/price-signal.png";
 
 const LEARNINGS = [
   {
@@ -79,6 +79,15 @@ export default function CaseStudyPriceSignal() {
         <header className="mb-8 pb-6">
           <p className="case-study__eyebrow">Case Study · Sheypoor · 2020</p>
           <h1 className="case-study__title mt-4">Price Signal</h1>
+
+          <figure className="case-study__ui my-8 overflow-hidden rounded-xl border border-zinc-300 bg-zinc-100">
+            <img
+              src={priceSignalThumbnail}
+              alt="Price Signal case study cover"
+              className="block h-auto w-full"
+            />
+          </figure>
+
           <p className="case-study__deck mt-4">
             How Sheypoor helped buyers and sellers find fair ground in a volatile
             market.
@@ -112,7 +121,6 @@ export default function CaseStudyPriceSignal() {
             />
           </dl>
 
-          <PriceSignalHero />
         </header>
 
         <Section title="Buyers were losing trust — and the market was slowing down">

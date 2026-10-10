@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
 import { ROUTES } from "../routes/paths.js";
+import rialDepositThumbnail from "../assets/thumbnails/Rial Deposit.png";
 
 const LESSONS = [
   {
@@ -210,6 +211,15 @@ export default function CaseStudyBitpinDeposit() {
           <h1 className="case-study__title mt-4">
             Rebuilding Trust in a Broken Deposit Flow
           </h1>
+
+          <figure className="case-study__ui my-8 overflow-hidden rounded-xl border border-zinc-300 bg-zinc-100">
+            <img
+              src={rialDepositThumbnail}
+              alt="Bitpin Rial deposit case study cover"
+              className="block h-auto w-full"
+            />
+          </figure>
+
           <p className="case-study__deck mt-4">Bitpin · Product Design · 2024</p>
 
           <dl className="mt-6 grid gap-3 min-[600px]:grid-cols-3">

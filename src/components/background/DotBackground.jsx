@@ -1,3 +1,4 @@
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import DotGrid from "./DotGrid.jsx";
 import useTheme from "../../hooks/useTheme.js";
 
@@ -26,21 +27,27 @@ const DARK_COLORS = {
 
 export default function DotBackground({ variant = "default" }) {
   const { isDark } = useTheme();
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const driftY = useTransform(scrollYProgress, [0, 1], [-18, 18]);
   const key = PRESETS[variant] ? variant : "default";
   const preset = { ...PRESETS[key], ...(isDark ? DARK_COLORS[key] : null) };
 
   return (
-    <div
+    <motion.div
       className="transition-opacity duration-300"
       style={{
         position: "fixed",
-        top: 0,
+        top: -24,
         left: 0,
         width: "100%",
-        height: "100%",
+        height: "calc(100% + 48px)",
         zIndex: 0,
         pointerEvents: "none",
         opacity: preset.opacity,
+        y: reduceMotion || key !== "default" ? 0 : driftY,
+        willChange:
+          reduceMotion || key !== "default" ? "auto" : "transform",
       }}
       aria-hidden
     >
@@ -56,6 +63,6 @@ export default function DotBackground({ variant = "default" }) {
         returnDuration={1.5}
         style={{ width: "100%", height: "100%" }}
       />
-    </div>
+    </motion.div>
   );
 }

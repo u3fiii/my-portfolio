@@ -1,4 +1,8 @@
 import { workDetailPath } from "../routes/paths.js";
+import bitpinMotionThumbnail from "../assets/thumbnails/Bitpin motion.png";
+import escrowThumbnail from "../assets/thumbnails/escrow.png";
+import priceSignalThumbnail from "../assets/thumbnails/price-signal.png";
+import rialDepositThumbnail from "../assets/thumbnails/Rial Deposit.png";
 
 /** Homepage work grid — single source for Projects section and related links. */
 export const WORK_CARDS = [
@@ -12,7 +16,7 @@ export const WORK_CARDS = [
     href: workDetailPath("price-signal"),
     external: false,
     comingSoon: false,
-    image: "/images/covers/price-signal-sheypoor.jpg",
+    image: priceSignalThumbnail,
   },
   {
     id: "bitpin-deposit",
@@ -24,7 +28,7 @@ export const WORK_CARDS = [
     href: workDetailPath("bitpin-deposit"),
     external: false,
     comingSoon: false,
-    image: "/images/covers/quiet-checkout.png",
+    image: rialDepositThumbnail,
   },
   {
     id: "pindo-secure-purchase",
@@ -36,7 +40,7 @@ export const WORK_CARDS = [
     href: workDetailPath("pindo-secure-purchase"),
     external: false,
     comingSoon: false,
-    image: "/images/covers/design-the-default.png",
+    image: escrowThumbnail,
   },
   {
     id: "bitpin-motion",
@@ -48,7 +52,7 @@ export const WORK_CARDS = [
     href: workDetailPath("bitpin-motion"),
     external: false,
     comingSoon: false,
-    image: "/images/covers/bitpin-motion.png",
+    image: bitpinMotionThumbnail,
   },
   {
     id: "verified-listings",

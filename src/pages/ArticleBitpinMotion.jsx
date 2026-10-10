@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
 import { ROUTES } from "../routes/paths.js";
+import bitpinMotionThumbnail from "../assets/thumbnails/Bitpin motion.png";
 
 const HERO_PIECES = [
   {
@@ -181,6 +182,15 @@ export default function ArticleBitpinMotion() {
           <h1 className="case-study__title mt-4">
             Motion at Bitpin: product and campaign loops
           </h1>
+
+          <figure className="case-study__ui my-8 overflow-hidden rounded-xl border border-zinc-300 bg-zinc-100">
+            <img
+              src={bitpinMotionThumbnail}
+              alt="Bitpin motion article cover"
+              className="block h-auto w-full"
+            />
+          </figure>
+
           <p className="case-study__deck mt-4">
             A selection of motion pieces I designed and shipped while at Bitpin —
             from splash and hero to campaign and seasonal identity.
@@ -191,6 +201,7 @@ export default function ArticleBitpinMotion() {
             <MetaItem label="Company" value="Bitpin" />
             <MetaItem label="Timeframe" value="2023 – 2024 (placeholder)" />
           </dl>
+
         </header>
 
         <Section title="Overview">

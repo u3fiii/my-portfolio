@@ -8,6 +8,7 @@ import pindoCheckoutAfter from "../assets/case-studies/pindo-checkout-after.png"
 import pindoCheckoutBefore from "../assets/case-studies/pindo-checkout-before.png";
 import pindoFunnelBeforeAfter from "../assets/case-studies/pindo-escrow-funnel-before-after.png";
 import pindoShippingStatesFlow from "../assets/case-studies/pindo-shipping-states-flow.jpg";
+import escrowThumbnail from "../assets/thumbnails/escrow.png";
 
 function Section({ title, children }) {
   return (
@@ -339,6 +340,15 @@ export default function CaseStudyPindoSecurePurchase() {
             Making the invisible measurable: redesigning Pindo&apos;s Secure
             Purchase flow
           </h1>
+
+          <figure className="case-study__ui my-8 overflow-hidden rounded-xl border border-zinc-300 bg-zinc-100">
+            <img
+              src={escrowThumbnail}
+              alt="Pindo Secure Purchase case study cover"
+              className="block h-auto w-full"
+            />
+          </figure>
+
           <p className="case-study__deck mt-4">
             Pindo · Lead Product Designer · Marketplace
           </p>
@@ -351,6 +361,7 @@ export default function CaseStudyPindoSecurePurchase() {
               value="Product Design, 1 PM, 1 frontend, 1 backend, Support"
             />
           </dl>
+
         </header>
 
         <section>
