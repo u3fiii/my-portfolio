@@ -8,7 +8,7 @@ import pindoCheckoutAfter from "../assets/case-studies/pindo-checkout-after.png"
 import pindoCheckoutBefore from "../assets/case-studies/pindo-checkout-before.png";
 import pindoFunnelBeforeAfter from "../assets/case-studies/pindo-escrow-funnel-before-after.png";
 import pindoShippingStatesFlow from "../assets/case-studies/pindo-shipping-states-flow.jpg";
-import escrowThumbnail from "../assets/thumbnails/escrow.png";
+import escrowThumbnail from "../assets/thumbnails/escrow.jpg";
 
 function Section({ title, children }) {
   return (
@@ -345,6 +345,10 @@ export default function CaseStudyPindoSecurePurchase() {
             <img
               src={escrowThumbnail}
               alt="Pindo Secure Purchase case study cover"
+              width="1536"
+              height="1024"
+              decoding="async"
+              fetchPriority="high"
               className="block h-auto w-full"
             />
           </figure>

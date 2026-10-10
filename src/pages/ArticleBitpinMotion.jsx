@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
 import { ROUTES } from "../routes/paths.js";
-import bitpinMotionThumbnail from "../assets/thumbnails/Bitpin motion.png";
+import bitpinMotionThumbnail from "../assets/thumbnails/bitpin-motion.jpg";
 
 const HERO_PIECES = [
   {
@@ -187,6 +187,10 @@ export default function ArticleBitpinMotion() {
             <img
               src={bitpinMotionThumbnail}
               alt="Bitpin motion article cover"
+              width="1536"
+              height="1024"
+              decoding="async"
+              fetchPriority="high"
               className="block h-auto w-full"
             />
           </figure>

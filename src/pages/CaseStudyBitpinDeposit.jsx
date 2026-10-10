@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
 import { ROUTES } from "../routes/paths.js";
-import rialDepositThumbnail from "../assets/thumbnails/Rial Deposit.png";
+import rialDepositThumbnail from "../assets/thumbnails/rial-deposit.jpg";
 
 const LESSONS = [
   {
@@ -216,6 +216,10 @@ export default function CaseStudyBitpinDeposit() {
             <img
               src={rialDepositThumbnail}
               alt="Bitpin Rial deposit case study cover"
+              width="1672"
+              height="941"
+              decoding="async"
+              fetchPriority="high"
               className="block h-auto w-full"
             />
           </figure>

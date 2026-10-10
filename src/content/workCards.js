@@ -1,8 +1,8 @@
 import { workDetailPath } from "../routes/paths.js";
-import bitpinMotionThumbnail from "../assets/thumbnails/Bitpin motion.png";
-import escrowThumbnail from "../assets/thumbnails/escrow.png";
-import priceSignalThumbnail from "../assets/thumbnails/price-signal.png";
-import rialDepositThumbnail from "../assets/thumbnails/Rial Deposit.png";
+import bitpinMotionThumbnail from "../assets/thumbnails/bitpin-motion-card.jpg";
+import escrowThumbnail from "../assets/thumbnails/escrow-card.jpg";
+import priceSignalThumbnail from "../assets/thumbnails/price-signal-card.jpg";
+import rialDepositThumbnail from "../assets/thumbnails/rial-deposit-card.jpg";
 
 /** Homepage work grid — single source for Projects section and related links. */
 export const WORK_CARDS = [

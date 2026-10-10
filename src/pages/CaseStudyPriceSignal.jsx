@@ -10,7 +10,7 @@ import StatsRow from "../components/case-study/StatsRow.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
 import { ROUTES } from "../routes/paths.js";
-import priceSignalThumbnail from "../assets/thumbnails/price-signal.png";
+import priceSignalThumbnail from "../assets/thumbnails/price-signal.jpg";
 
 const LEARNINGS = [
   {
@@ -84,6 +84,10 @@ export default function CaseStudyPriceSignal() {
             <img
               src={priceSignalThumbnail}
               alt="Price Signal case study cover"
+              width="1536"
+              height="1024"
+              decoding="async"
+              fetchPriority="high"
               className="block h-auto w-full"
             />
           </figure>
