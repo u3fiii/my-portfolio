@@ -37,7 +37,7 @@ export default function WorkCard({
   comingSoon = false,
 }) {
   const cardClass = comingSoon
-    ? "group flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)]"
+    ? "flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)]"
     : "card-hover-ring group flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)] no-underline";
 
   const content = (

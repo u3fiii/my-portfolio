@@ -222,7 +222,7 @@ export default function FormReorderDiagram() {
       </div>
 
       <figcaption
-        className="mt-6 border-t border-[#E2E1DC] pt-5 text-center text-xs italic text-zinc-500"
+        className="mt-6 border-t border-[#E2E1DC] dark:border-zinc-200 pt-5 text-center text-xs italic text-zinc-500"
         style={{ fontFamily: FONT_UI }}
       >
         A small reorder in the form — but it changed everything about when the signal

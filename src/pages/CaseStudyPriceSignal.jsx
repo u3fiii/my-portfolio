@@ -51,7 +51,7 @@ function PullQuote({ children }) {
 function MetaItem({ label, value }) {
   return (
     <div
-      className="case-study__ui h-full rounded-xl border border-[#E2E1DC] bg-white px-5 py-4"
+      className="case-study__ui h-full rounded-xl border border-[#E2E1DC] dark:border-zinc-200 bg-white px-5 py-4"
       style={{ borderWidth: "0.5px" }}
     >
       <dt className="text-xs font-medium uppercase tracking-[0.06em] text-zinc-500">

@@ -81,7 +81,7 @@ function MiddleArrow() {
 export default function PriceSignalResultsGraphic() {
   return (
     <figure
-      className="case-study__ui mx-auto my-9 w-full max-w-[720px] rounded-2xl border border-[#E2E1DC] bg-white px-14 py-12"
+      className="case-study__ui mx-auto my-9 w-full max-w-[720px] rounded-2xl border border-[#E2E1DC] dark:border-zinc-200 bg-white px-14 py-12"
       style={{ borderWidth: "0.5px" }}
     >
       <div className="flex flex-wrap items-center justify-center">
@@ -101,7 +101,7 @@ export default function PriceSignalResultsGraphic() {
       </div>
 
       <div
-        className="mt-9 flex flex-col border-t border-[#E2E1DC] pt-6 min-[520px]:flex-row"
+        className="mt-9 flex flex-col border-t border-[#E2E1DC] dark:border-zinc-200 pt-6 min-[520px]:flex-row"
         style={{ borderTopWidth: "0.5px" }}
       >
         {BOTTOM_STATS.map(({ value, label }, index) => (
@@ -109,7 +109,7 @@ export default function PriceSignalResultsGraphic() {
             key={label}
             className={`flex-1 px-4 py-3 text-center min-[520px]:py-0 ${
               index < BOTTOM_STATS.length - 1
-                ? "min-[520px]:border-r min-[520px]:border-[#E2E1DC]"
+                ? "min-[520px]:border-r min-[520px]:border-[#E2E1DC] dark:border-zinc-200"
                 : ""
             }`}
             style={

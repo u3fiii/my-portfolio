@@ -25,7 +25,7 @@ function Paragraph({ children }) {
 function MetaItem({ label, value }) {
   return (
     <div
-      className="case-study__ui h-full rounded-xl border border-[#E2E1DC] bg-white px-5 py-4"
+      className="case-study__ui h-full rounded-xl border border-[#E2E1DC] dark:border-zinc-200 bg-white px-5 py-4"
       style={{ borderWidth: "0.5px" }}
     >
       <dt className="text-xs font-medium uppercase tracking-[0.06em] text-zinc-500">
@@ -132,12 +132,12 @@ function BaselineFunnel() {
   const topYs = funnelTopYs(pcts, baselineY, chartHeight);
 
   return (
-    <figure className="case-study__ui my-2 rounded-xl border border-[#E2E1DC] bg-white px-5 py-6">
+    <figure className="case-study__ui my-2 rounded-xl border border-[#E2E1DC] dark:border-zinc-200 bg-white px-5 py-6">
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
         <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-500">
           Baseline funnel
         </p>
-        <p className="rounded-lg border border-[#E2E1DC] bg-zinc-50 px-3 py-2 text-xs leading-snug text-zinc-600">
+        <p className="rounded-lg border border-[#E2E1DC] dark:border-zinc-200 bg-zinc-50 px-3 py-2 text-xs leading-snug text-zinc-600">
           <span className="font-semibold text-zinc-900">10%</span> of created
           carts confirmed item OK
         </p>
@@ -221,7 +221,7 @@ function ResultsComparisonFunnel() {
   const afterTopYs = funnelTopYs(afterPcts, baselineY, chartHeight);
 
   return (
-    <figure className="case-study__ui my-2 rounded-xl border border-[#E2E1DC] bg-white px-5 py-6">
+    <figure className="case-study__ui my-2 rounded-xl border border-[#E2E1DC] dark:border-zinc-200 bg-white px-5 py-6">
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
         <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-500">
           Results funnel
