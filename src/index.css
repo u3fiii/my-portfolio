@@ -36,12 +36,6 @@ html {
   scroll-padding-top: 5rem;
 }
 
-/* Custom cursor (CustomCursor.jsx) — native cursor hidden only while it is active */
-html.custom-cursor-active,
-html.custom-cursor-active * {
-  cursor: none !important;
-}
-
 /* Text selection: black with white text (inverts with the palette in dark mode) */
 ::selection {
   background-color: var(--color-zinc-900);

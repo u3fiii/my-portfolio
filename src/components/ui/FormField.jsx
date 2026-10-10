@@ -1,8 +1,9 @@
+/** Focus mirrors the pill buttons: the thin border gives way to a thick 3px ring. */
 const inputStyles = {
   light:
-    "w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-base text-zinc-900 placeholder:text-zinc-400 transition-colors focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-200",
+    "w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-base text-zinc-900 placeholder:text-zinc-400 transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] focus:border-transparent focus:shadow-[0_0_0_3px_var(--color-zinc-900)] focus:outline-none",
   dark:
-    "w-full rounded-xl border border-zinc-600 bg-zinc-900 px-4 py-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-base text-white placeholder:text-zinc-500 transition-colors focus:border-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-700",
+    "w-full rounded-xl border border-zinc-600 bg-zinc-900 px-4 py-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-base text-white placeholder:text-zinc-500 transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] focus:border-transparent focus:shadow-[0_0_0_3px_var(--color-zinc-100)] focus:outline-none",
 };
 
 export function formInputClassName(theme = "light") {
