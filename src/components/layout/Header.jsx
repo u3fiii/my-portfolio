@@ -219,10 +219,10 @@ export default function Header() {
                   <span className="relative hidden overflow-hidden md:inline-flex">
                     <span className={CV_ROLL_CLASS}>{SITE.cvLabel}</span>
                     <span
-                      className={`absolute inset-x-0 bottom-full ${CV_ROLL_CLASS}`}
+                      className={`absolute inset-x-0 bottom-full tracking-[0.1em] ${CV_ROLL_CLASS}`}
                       aria-hidden="true"
                     >
-                      {SITE.cvLabel}
+                      Take a look
                     </span>
                   </span>
                 </a>
