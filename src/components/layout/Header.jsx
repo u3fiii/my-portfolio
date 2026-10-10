@@ -6,8 +6,8 @@ import {
   useScroll,
 } from "framer-motion";
 import { Link, useMatch } from "react-router-dom";
+import downloadAnimation from "../../assets/lottie/Download.json";
 import homeAnimation from "../../assets/lottie/Home 23_.json";
-import { DownloadSimple, ICON_WEIGHT } from "../ui/icons.js";
 import LottieIcon, { prefersReducedMotion } from "../ui/LottieIcon.jsx";
 import { LogoMark } from "../ui/Logo.jsx";
 import { NAV_ITEMS, SITE } from "../../content/site.js";
@@ -75,6 +75,9 @@ function SidePod({ side, joined, children }) {
   );
 }
 
+const CV_ROLL_CLASS =
+  "block transition-transform duration-[400ms] ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-full group-focus-visible:translate-y-full motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-focus-visible:translate-y-0";
+
 const LOGO_LINK_CLASS =
   "flex h-full w-full items-center justify-center transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-zinc-900";
 
@@ -94,6 +97,12 @@ export default function Header() {
   const homeLottieRef = useRef(null);
   const playHomeIcon = () => {
     if (!prefersReducedMotion()) homeLottieRef.current?.goToAndPlay(0, true);
+  };
+
+  const downloadLottieRef = useRef(null);
+  const playDownloadIcon = () => {
+    if (!prefersReducedMotion())
+      downloadLottieRef.current?.goToAndPlay(0, true);
   };
 
   const isDesktop = useIsDesktop();
@@ -194,15 +203,28 @@ export default function Header() {
                 <a
                   href={SITE.cvUrl}
                   download="Ali-Yousefi-CV.pdf"
-                  className="inline-flex shrink-0 items-center justify-center gap-1.5 self-stretch rounded-full bg-zinc-100 px-2.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-xs font-bold tracking-wide text-zinc-900 uppercase transition-colors hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 md:px-3"
+                  onMouseEnter={playDownloadIcon}
+                  onFocus={playDownloadIcon}
+                  onClick={playDownloadIcon}
+                  className="group inline-flex shrink-0 items-center justify-center gap-1.5 self-stretch rounded-full glass-chip px-2.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-xs font-bold tracking-wide text-zinc-900 uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 md:px-3"
                   aria-label="Download CV"
                 >
-                  <DownloadSimple
-                    className="h-5 w-5 shrink-0 md:h-4 md:w-4"
-                    weight={ICON_WEIGHT}
-                    aria-hidden
+                  <LottieIcon
+                    animationData={downloadAnimation}
+                    lottieRef={downloadLottieRef}
+                    className="h-5 w-5 md:h-4 md:w-4"
                   />
-                  <span className="hidden md:inline">{SITE.cvLabel}</span>
+                  {/* Text roll: on hover the label drops out of view and an
+                      identical copy slides in from above. */}
+                  <span className="relative hidden overflow-hidden md:inline-flex">
+                    <span className={CV_ROLL_CLASS}>{SITE.cvLabel}</span>
+                    <span
+                      className={`absolute inset-x-0 bottom-full ${CV_ROLL_CLASS}`}
+                      aria-hidden="true"
+                    >
+                      {SITE.cvLabel}
+                    </span>
+                  </span>
                 </a>
               </motion.div>
             )}

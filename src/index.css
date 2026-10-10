@@ -228,6 +228,31 @@ html.dark .avatar-art .av-hair path:not(defs path) {
   animation: cursor-blink 0.55s step-end infinite;
 }
 
+/* Glass chip — translucent fill + top highlight; sits on the header's frosted blur.
+   No outer ring, so joined segments (gooey nav) read as one continuous piece. */
+@utility glass-chip {
+  background-color: rgb(24 24 27 / 0.045);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    inset 0 -1px 0 rgb(24 24 27 / 0.05);
+  transition:
+    background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background-color: rgb(24 24 27 / 0.08);
+  }
+
+  :where(html.dark) & {
+    background-color: rgb(255 255 255 / 0.06);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08);
+  }
+
+  :where(html.dark) &:hover {
+    background-color: rgb(255 255 255 / 0.11);
+  }
+}
+
 /* Bordered pills — thick black ring on hover without layout shift (shadow, not border-width) */
 
 @utility pill-hover-ring {

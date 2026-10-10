@@ -1,10 +1,11 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import allAnimation from "../../assets/lottie/all.json";
 import articlesAnimation from "../../assets/lottie/articles.json";
 import caseStudiesAnimation from "../../assets/lottie/case studies.json";
 import projectsAnimation from "../../assets/lottie/projects.json";
 import Section from "../layout/Section.jsx";
+import JellyRadio from "../ui/JellyRadio.jsx";
 import LottieIcon, { prefersReducedMotion } from "../ui/LottieIcon.jsx";
 import WorkCard from "../work/WorkCard.jsx";
 import { WORK_CARDS } from "../../content/workCards.js";
@@ -27,43 +28,37 @@ const TABS = [
   { id: "case-study", label: "Case studies", animation: caseStudiesAnimation },
 ];
 
-function FilterTab({ active, onClick, label, animation, size = "desktop" }) {
-  const sizeClass =
-    size === "mobile"
-      ? "px-2.5 py-1.5 text-[0.8125rem] min-[375px]:px-3.5 min-[375px]:text-sm"
-      : "px-4 py-2 text-sm md:gap-1.5";
-
+/** Lottie filter icon — plays once each time its chip becomes selected. */
+function FilterIcon({ animation, active }) {
   const lottieRef = useRef(null);
-  /** Icon animates on click only — not on hover or focus. */
-  const handleClick = (event) => {
-    if (!prefersReducedMotion()) lottieRef.current?.goToAndPlay(0, true);
-    onClick?.(event);
-  };
-
+  const mountedRef = useRef(false);
+  useEffect(() => {
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+      return;
+    }
+    if (active && !prefersReducedMotion())
+      lottieRef.current?.goToAndPlay(0, true);
+  }, [active]);
   return (
-    <button
-      type="button"
-      onClick={handleClick}
-      aria-pressed={active}
-      className={`inline-flex shrink-0 cursor-pointer items-center whitespace-nowrap rounded-full font-['DM_Sans',ui-sans-serif,sans-serif] font-semibold ${sizeClass} ${
-        active
-          ? "border border-zinc-900 bg-zinc-900 text-white"
-          : "pill-hover-ring border border-zinc-300 bg-white text-zinc-900"
-      }`}
-    >
-      {animation ? (
-        <LottieIcon
-          animationData={animation}
-          lottieRef={lottieRef}
-          className="hidden h-[1.125rem] w-[1.125rem] md:block"
-        />
-      ) : null}
-      {label}
-    </button>
+    <LottieIcon
+      animationData={animation}
+      lottieRef={lottieRef}
+      className="h-[1.125rem] w-[1.125rem]"
+    />
   );
 }
 
-const MOBILE_TABS = TABS.filter((tab) => tab.id !== "all");
+const DESKTOP_ITEMS = TABS.map(({ id, label, animation }) => ({
+  value: id,
+  label,
+  icon: (active) => <FilterIcon animation={animation} active={active} />,
+}));
+
+/** Phones skip "All": tapping the selected chip again clears the filter. */
+const MOBILE_ITEMS = TABS.filter((tab) => tab.id !== "all").map(
+  ({ id, label }) => ({ value: id, label }),
+);
 
 const layoutTransition = { duration: 0.35, ease: [0.4, 0, 0.2, 1] };
 const itemTransition = { duration: 0.25, ease: [0.4, 0, 0.2, 1] };
@@ -78,10 +73,6 @@ export default function Projects() {
     if (activeFilter === "all") return WORK_CARDS;
     return WORK_CARDS.filter((card) => card.filter === activeFilter);
   }, [activeFilter]);
-
-  const handleMobileFilterClick = (id) => {
-    setActiveFilter((prev) => (prev === id ? "all" : id));
-  };
 
   return (
     <Section
@@ -104,37 +95,26 @@ export default function Projects() {
           </p>
         </header>
 
-        <div
-          className="flex w-full max-w-full flex-wrap justify-center gap-1.5 min-[375px]:gap-2 md:hidden"
-          role="group"
-          aria-label="Filter work by type"
-        >
-          {MOBILE_TABS.map(({ id, label, animation }) => (
-            <FilterTab
-              key={id}
-              size="mobile"
-              active={activeFilter === id}
-              onClick={() => handleMobileFilterClick(id)}
-              label={label}
-              animation={animation}
-            />
-          ))}
+        <div className="flex w-full justify-center md:hidden">
+          <JellyRadio
+            items={MOBILE_ITEMS}
+            value={activeFilter === "all" ? null : activeFilter}
+            onChange={(id) => setActiveFilter(id ?? "all")}
+            allowDeselect
+            size="sm"
+            gap={4}
+            swell={0.1}
+            ariaLabel="Filter work by type"
+          />
         </div>
 
-        <div
-          className="hidden w-full flex-wrap justify-center gap-2 md:flex"
-          role="group"
-          aria-label="Filter work by type"
-        >
-          {TABS.map(({ id, label, animation }) => (
-            <FilterTab
-              key={id}
-              active={activeFilter === id}
-              onClick={() => setActiveFilter(id)}
-              label={label}
-              animation={animation}
-            />
-          ))}
+        <div className="hidden w-full justify-center md:flex">
+          <JellyRadio
+            items={DESKTOP_ITEMS}
+            value={activeFilter}
+            onChange={setActiveFilter}
+            ariaLabel="Filter work by type"
+          />
         </div>
 
         <motion.ul

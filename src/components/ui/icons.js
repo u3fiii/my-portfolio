@@ -6,7 +6,6 @@ import {
   ArrowLeft,
   Article,
   BookOpen,
-  DownloadSimple,
   DribbbleLogo,
   Folder,
   GithubLogo,
@@ -48,4 +47,4 @@ export const SOCIAL_ICONS = {
   linkedin: LinkedinLogo,
 };
 
-export { ArrowLeft, DownloadSimple, Moon, Sun };
+export { ArrowLeft, Moon, Sun };

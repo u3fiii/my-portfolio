@@ -117,7 +117,7 @@ export default function Me() {
                 </motion.span>
               </h1>
               <motion.p
-                className="max-w-lg font-['DM_Sans',ui-sans-serif,sans-serif] text-lg font-medium leading-relaxed text-zinc-700 md:max-lg:max-w-none md:max-lg:text-[0.9375rem] md:max-lg:leading-snug"
+                className="max-w-lg font-['Quicksand',ui-sans-serif,sans-serif] text-lg font-medium leading-relaxed text-zinc-700 md:max-lg:max-w-none md:max-lg:text-[0.9375rem] md:max-lg:leading-snug"
                 {...revealProps(descriptionStep)}
               >
                 <ParallaxLayer

@@ -45,7 +45,7 @@ export default function GooeyNav({ items, activeId }) {
             className={`relative inline-flex h-9 items-center gap-1.5 px-1 min-[360px]:px-1.5 min-[375px]:px-2 font-['DM_Sans',ui-sans-serif,sans-serif] text-xs font-bold transition-colors duration-200 ease-out focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 md:px-3 ${
               active
                 ? "bg-zinc-900 text-white"
-                : "bg-zinc-100 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-800"
+                : "glass-chip text-zinc-500 hover:text-zinc-800"
             }`}
           >
             <NavIcon
