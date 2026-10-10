@@ -206,7 +206,7 @@ export default function Header() {
                   onMouseEnter={playDownloadIcon}
                   onFocus={playDownloadIcon}
                   onClick={playDownloadIcon}
-                  className="group inline-flex shrink-0 items-center justify-center gap-1.5 self-stretch rounded-full glass-chip px-2.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-xs font-bold tracking-wide text-zinc-900 uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 md:px-3"
+                  className="group cv-download-chip inline-flex shrink-0 items-center justify-center gap-1.5 self-stretch rounded-full glass-chip px-2.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-xs font-bold tracking-wide text-zinc-900 uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 md:px-3"
                   aria-label="Download CV"
                 >
                   <LottieIcon
