@@ -1,11 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import allAnimation from "../../assets/lottie/all.json";
 import articlesAnimation from "../../assets/lottie/articles.json";
 import caseStudiesAnimation from "../../assets/lottie/case studies.json";
@@ -72,48 +66,8 @@ const itemTransition = { duration: 0.25, ease: [0.4, 0, 0.2, 1] };
 const cardWidth =
   "w-full min-[600px]:w-[calc(50%-0.3125rem)] min-[900px]:w-[calc(33.333%-0.417rem)] lg:w-[calc(25%-0.5625rem)]";
 
-function gridColumns() {
-  if (window.innerWidth >= 1024) return 4;
-  if (window.innerWidth >= 900) return 3;
-  if (window.innerWidth >= 600) return 2;
-  return 1;
-}
-
-function ParallaxWorkItem({ card, index, columns, scrollProgress }) {
-  const reduceMotion = useReducedMotion();
-  const row = Math.floor(index / columns);
-  const depth = 2 + row * 2;
-  const y = useTransform(scrollProgress, [0, 1], [-depth, depth]);
-
-  return (
-    <motion.li
-      layout
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.98 }}
-      transition={itemTransition}
-      style={{ y: reduceMotion || columns === 1 ? 0 : y }}
-      className={`min-h-0 min-w-0 ${cardWidth}`}
-    >
-      <WorkCard {...card} />
-    </motion.li>
-  );
-}
-
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState("all");
-  const [columns, setColumns] = useState(gridColumns);
-  const gridRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: gridRef,
-    offset: ["start end", "end start"],
-  });
-
-  useEffect(() => {
-    const updateColumns = () => setColumns(gridColumns());
-    window.addEventListener("resize", updateColumns, { passive: true });
-    return () => window.removeEventListener("resize", updateColumns);
-  }, []);
 
   const filteredCards = useMemo(() => {
     if (activeFilter === "all") return WORK_CARDS;
@@ -161,20 +115,23 @@ export default function Projects() {
         </div>
 
         <motion.ul
-          ref={gridRef}
           layout
           className="mx-auto flex w-full max-w-[42rem] flex-wrap justify-center gap-4 min-[600px]:gap-2.5 lg:max-w-[62rem] lg:gap-3"
           transition={{ layout: layoutTransition }}
         >
           <AnimatePresence mode="popLayout">
-            {filteredCards.map((card, index) => (
-              <ParallaxWorkItem
+            {filteredCards.map((card) => (
+              <motion.li
                 key={card.id}
-                card={card}
-                index={index}
-                columns={columns}
-                scrollProgress={scrollYProgress}
-              />
+                layout
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={itemTransition}
+                className={`min-h-0 min-w-0 ${cardWidth}`}
+              >
+                <WorkCard {...card} />
+              </motion.li>
             ))}
           </AnimatePresence>
         </motion.ul>

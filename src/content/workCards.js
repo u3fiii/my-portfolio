@@ -24,7 +24,7 @@ export const WORK_CARDS = [
     tag: "Case Study · 2024",
     title: "Bitpin — Deposit Flow Redesign",
     description:
-      "Rebuilding user trust in a payment flow after Iran's crypto exchanges lost access to payment gateways overnight.",
+      "How Bitpin's first usability study revealed a trust gap shaped outside the product.",
     href: workDetailPath("bitpin-deposit"),
     external: false,
     comingSoon: false,

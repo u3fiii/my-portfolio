@@ -1,10 +1,3 @@
-import { useRef } from "react";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
 import { Link } from "react-router-dom";
 
 const FONT_SERIF = '"Source Serif 4", Georgia, serif';
@@ -43,39 +36,21 @@ export default function WorkCard({
   image,
   comingSoon = false,
 }) {
-  const mediaRef = useRef(null);
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: mediaRef,
-    offset: ["start end", "end start"],
-  });
-  const mediaY = useTransform(scrollYProgress, [0, 1], [-10, 10]);
   const cardClass = comingSoon
     ? "flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)]"
     : "card-hover-ring group flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)] no-underline";
 
   const content = (
     <>
-      <div
-        ref={mediaRef}
-        className="relative aspect-[4/2] w-full shrink-0 overflow-hidden bg-[color:var(--color-background-secondary)]"
-      >
+      <div className="relative aspect-[4/2] w-full shrink-0 overflow-hidden bg-[color:var(--color-background-secondary)]">
         {image ? (
-          <motion.div
-            className="absolute inset-x-0 -inset-y-3"
-            style={{
-              y: reduceMotion ? 0 : mediaY,
-              willChange: reduceMotion ? "auto" : "transform",
-            }}
-          >
-            <img
-              src={image}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              className={`h-full w-full object-cover transition-transform duration-3000 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-105 group-focus-visible:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-focus-visible:scale-100 ${comingSoon ? "grayscale" : ""}`}
-            />
-          </motion.div>
+          <img
+            src={image}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className={`h-full w-full object-cover transition-transform duration-3000 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-105 group-focus-visible:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-focus-visible:scale-100 ${comingSoon ? "grayscale" : ""}`}
+          />
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-1 text-[color:var(--color-text-tertiary)]">
             <IconPhoto />

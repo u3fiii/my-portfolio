@@ -7,12 +7,12 @@ import rialDepositThumbnail from "../assets/thumbnails/rial-deposit.jpg";
 
 const LESSONS = [
   {
-    title: "Test earlier in the constraint phase.",
-    body: "The months between the gateway shutdown and the research were a period of legitimate urgency — but some earlier, lighter-weight testing (even 3 users, unrecruited, in a coffee shop) might have surfaced the trust gap before we spent cycles optimizing around it.",
+    title: "Test the mental model before refining the interface.",
+    body: "We spent time improving method selection before confirming that users understood why those methods existed. A few early conversations with people outside Bitpin would have exposed that gap sooner.",
   },
   {
-    title: "Measure more carefully.",
-    body: "A longer measurement window and a cleaner control period would have made the post-ship data more interpretable. In a volatile market, a two-week snapshot isn't conclusive.",
+    title: "Separate product impact from market movement.",
+    body: "Deposit behavior in a volatile crypto market moves with exchange rates, news, and regulation. I would plan qualitative follow-up and a cleaner measurement window together instead of asking a short-term conversion change to carry the whole story.",
   },
 ];
 
@@ -61,132 +61,37 @@ function Callout({ title, children }) {
   );
 }
 
-function ConversionComparison() {
-  return (
-    <div className="case-study__ui my-8 flex flex-wrap items-center justify-center gap-4">
-      <div className="min-w-[140px] flex-1 rounded-xl bg-zinc-100 px-4 py-6 text-center">
-        <p className="text-[2rem] font-medium leading-none text-[#0099CC]">8%</p>
-        <p className="mx-auto mt-3 max-w-[12rem] text-xs leading-normal text-zinc-500">
-          conversion before
-        </p>
-      </div>
-      <span
-        className="text-xl text-zinc-400"
-        style={{ fontFamily: '"DM Sans", ui-sans-serif, system-ui, sans-serif' }}
-        aria-hidden
-      >
-        →
-      </span>
-      <div className="min-w-[140px] flex-1 rounded-xl bg-zinc-100 px-4 py-6 text-center">
-        <p className="text-[2rem] font-medium leading-none text-[#0099CC]">10%</p>
-        <p className="mx-auto mt-3 max-w-[12rem] text-xs leading-normal text-zinc-500">
-          conversion after
-        </p>
-      </div>
-    </div>
-  );
-}
-
-const REGISTRATION_FUNNEL_STAGES = [
-  { label: "Registration", value: "100%", pct: 100 },
-  { label: "KYC verified", value: "62%", pct: 62 },
-  { label: "Deposited", value: "8%", pct: 8 },
+const RESEARCH_JOURNEY = [
+  "Sign up",
+  "KYC",
+  "Deposit",
+  "Easy buy",
+  "Withdraw",
 ];
 
-function RegistrationFunnel() {
-  const chartHeight = 148;
-  const baselineY = 148;
-  const segmentWidth = 640 / REGISTRATION_FUNNEL_STAGES.length;
-  const topYs = REGISTRATION_FUNNEL_STAGES.map(
-    (stage) => baselineY - (stage.pct / 100) * chartHeight,
-  );
-
+function ResearchJourney() {
   return (
     <figure className="case-study__ui my-2 rounded-xl border border-[#E2E1DC] dark:border-zinc-200 bg-white px-5 py-6">
-      <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
-        <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-500">
-          New-user funnel
-        </p>
-        <p className="rounded-lg border border-[#E2E1DC] dark:border-zinc-200 bg-zinc-50 px-3 py-2 text-xs leading-snug text-zinc-600">
-          <span className="font-semibold text-zinc-900">8%</span> of registered
-          users deposited within 30 days
-        </p>
-      </div>
-
-      <svg
-        viewBox="0 0 640 160"
-        className="h-auto w-full"
-        role="img"
-        aria-label="New-user funnel from registration at 100 percent through KYC at 62 percent to deposit at 8 percent"
-      >
-        <defs>
-          <linearGradient
-            id="bitpinRegistrationFunnelFill"
-            x1="0%"
-            y1="0%"
-            x2="100%"
-            y2="0%"
-          >
-            <stop offset="0%" stopColor="#7BC8DE" />
-            <stop offset="55%" stopColor="#2AADD0" />
-            <stop offset="100%" stopColor="#0099CC" />
-          </linearGradient>
-        </defs>
-
-        {REGISTRATION_FUNNEL_STAGES.map((stage, index) => {
-          const x0 = index * segmentWidth;
-          const x1 = (index + 1) * segmentWidth;
-          const yLeft = topYs[index];
-          const yRight =
-            index === REGISTRATION_FUNNEL_STAGES.length - 1
-              ? topYs[index]
-              : topYs[index + 1];
-
+      <ol className="grid gap-2 min-[600px]:grid-cols-5">
+        {RESEARCH_JOURNEY.map((step) => {
+          const isDeposit = step === "Deposit";
           return (
-            <path
-              key={stage.label}
-              d={`M${x0} ${yLeft} L${x1} ${yRight} L${x1} ${baselineY} L${x0} ${baselineY} Z`}
-              fill="url(#bitpinRegistrationFunnelFill)"
-              fillOpacity={1 - index * 0.1}
-            />
+            <li
+              key={step}
+              className={`flex min-h-14 items-center justify-center rounded-lg border px-3 text-center text-xs font-semibold ${
+                isDeposit
+                  ? "border-[#0099CC] bg-[#0099CC]/10 text-[#0077A3]"
+                  : "border-zinc-200 bg-zinc-50 text-zinc-700"
+              }`}
+            >
+              {step}
+            </li>
           );
         })}
-
-        {REGISTRATION_FUNNEL_STAGES.slice(1).map((stage, index) => {
-          const x = (index + 1) * segmentWidth;
-          return (
-            <line
-              key={`divider-${stage.label}`}
-              x1={x}
-              y1={topYs[index + 1]}
-              x2={x}
-              y2={baselineY}
-              stroke="white"
-              strokeOpacity="0.55"
-              strokeWidth="1.5"
-            />
-          );
-        })}
-      </svg>
-
-      <ul className="mt-4 grid grid-cols-3 gap-3">
-        {REGISTRATION_FUNNEL_STAGES.map((stage) => (
-          <li key={stage.label} className="min-w-0 text-center">
-            <p className="text-xl font-semibold leading-none tracking-tight text-[#0077A3] sm:text-2xl">
-              {stage.value}
-            </p>
-            <p className="mt-1.5 text-[11px] font-medium leading-snug text-zinc-700 sm:text-xs">
-              {stage.label}
-            </p>
-            <p className="mt-0.5 text-[10px] leading-snug text-zinc-500">
-              of registered users
-            </p>
-          </li>
-        ))}
-      </ul>
-
-      <figcaption className="mt-5 text-center text-[12px] leading-relaxed text-zinc-500">
-        Deposit measured within 30 days of registration
+      </ol>
+      <figcaption className="mt-4 text-center text-[12px] leading-relaxed text-zinc-500">
+        Testing the complete journey revealed that the hesitation at deposit was
+        shaped by expectations formed before users reached this screen.
       </figcaption>
     </figure>
   );
@@ -224,14 +129,16 @@ export default function CaseStudyBitpinDeposit() {
             />
           </figure>
 
-          <p className="case-study__deck mt-4">Bitpin · Product Design · 2024</p>
+          <p className="case-study__deck mt-4">
+            Bitpin · Usability Research &amp; Design Collaboration · 2024
+          </p>
 
           <dl className="mt-6 grid gap-3 min-[600px]:grid-cols-3">
             <MetaItem
               label="Role"
-              value="End-to-end product design, usability research, synthesis, redesign"
+              value="Usability research lead, synthesis, and design input"
             />
-            <MetaItem label="Timeline" value="~4 months" />
+            <MetaItem label="Focus" value="Trust, first-time use, research practice" />
             <MetaItem label="Platform" value="iOS, Android, Web" />
           </dl>
         </header>
@@ -240,10 +147,21 @@ export default function CaseStudyBitpinDeposit() {
           <Paragraph>
             When a court order shut down payment gateways across Iran&apos;s crypto
             exchanges overnight, Bitpin had days to build an alternative deposit system
-            from scratch. We shipped it. Users came back. But the numbers quietly
-            told a different story — and it took the company&apos;s first-ever usability
-            test to understand why.
+            from scratch. The replacement worked operationally, but new users still
+            hesitated at the moment they were asked to move money. Bitpin&apos;s first
+            formal usability study showed that the problem was larger than the deposit
+            interface: users were comparing it with a trusted payment convention they
+            had learned outside Bitpin.
           </Paragraph>
+          <Callout title="My role in this work">
+            <p className="case-study__ui text-sm leading-relaxed text-zinc-700">
+              I led the usability study end to end, synthesized the findings, and
+              stayed closely involved as the deposit experience evolved. The product
+              designer for this area owned the interface and final design execution;
+              my contribution was research direction, product context, and continuous
+              input into the design decisions.
+            </p>
+          </Callout>
         </Section>
 
         <Section title="The Crisis">
@@ -260,8 +178,8 @@ export default function CaseStudyBitpinDeposit() {
           </Paragraph>
           <Paragraph>
             In January 2024, a judicial order shut down payment gateways across every
-            Iranian crypto exchange. No warning, no timeline for reversal. The path
-            that 100% of depositing users relied on was gone.
+            Iranian crypto exchange. No warning, no timeline for reversal. The familiar
+            route from intent to payment disappeared at once.
           </Paragraph>
           <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
             <img
@@ -281,22 +199,15 @@ export default function CaseStudyBitpinDeposit() {
             for the system to match the transfer and credit their wallet.
           </Paragraph>
           <Paragraph>
-            Over the following weeks, the deposit system expanded to include four
-            methods, each with its own tradeoffs:
+            Over the following weeks, the deposit system expanded to include several
+            methods. None combined the familiarity, instant confirmation, and perceived
+            safety of the old gateway. Each option asked users to understand a different
+            tradeoff before they could move forward.
           </Paragraph>
-          <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
-            <img
-              src="/images/case-studies/bitpin-deposit-methods-tradeoff-map.png"
-              alt="Deposit method tradeoff map comparing speed and ceiling across account-to-account, SHEBA transfer, card-to-card, and direct debit"
-              className="block h-auto w-full rounded"
-              loading="lazy"
-            />
-          </figure>
           <Paragraph>
-            Each method had its own tradeoffs and edge cases — and users needed to
-            understand them to make the right choice. The flow we designed was
-            straightforward: choose a method → select source and destination accounts
-            → follow manual transfer instructions.
+            The flow built by the deposit team made that complexity explicit: choose a
+            method → select source and destination accounts → follow manual transfer
+            instructions.
           </Paragraph>
           <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
             <img
@@ -312,28 +223,27 @@ export default function CaseStudyBitpinDeposit() {
             </figcaption>
           </figure>
           <Paragraph>
-            Deposits recovered. In some periods, daily deposit volume even exceeded
-            pre-shutdown levels — partly because SHEBA and account-to-account allowed
-            transfers up to 100M IRR, higher than the old gateway&apos;s 25M ceiling, and
-            partly because a weak Rial was driving a wave of people toward Tether as
-            a store of value.
+            Deposits resumed, which made the solution look successful from an
+            operational perspective. That recovery also made it easy to overlook the
+            experience of someone arriving for the first time, without the context the
+            team had accumulated during the crisis.
           </Paragraph>
         </Section>
 
-        <Section title="The Signal We Almost Missed">
+        <Section title="We Were Optimizing the Wrong Layer">
           <Paragraph>
-            A surface reading of the metrics looked fine. But when we looked more
-            carefully at the new-user funnel, something was off.
+            Product analytics and session recordings suggested that deposit was a
+            fragile point in the new-user journey, but they could not tell us what users
+            believed was happening. We treated it as an information-architecture
+            problem and began refining the choices inside the flow.
           </Paragraph>
-          <RegistrationFunnel />
           <Paragraph>
-            Of everyone who registered, 62% completed KYC — and only 8% made a
-            deposit within 30 days. The team&apos;s response was what you&apos;d
-            expect: iterate on the flow. We tested reordering the method selection
-            screen, introduced a &ldquo;recommended method&rdquo; based on declared
-            deposit amount, and prioritized same-bank options when we detected a
-            match between the user&apos;s source card and one of Bitpin&apos;s
-            destination accounts.
+            I worked closely with the product designer as they explored reordering the
+            method selection screen, recommending a method based on the intended
+            deposit, and prioritizing same-bank options when the product detected a
+            match between the user&apos;s source card and one of Bitpin&apos;s destination
+            accounts. The designer owned these explorations and their final execution;
+            I contributed product and research input throughout.
           </Paragraph>
           <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
             <img
@@ -343,18 +253,19 @@ export default function CaseStudyBitpinDeposit() {
               loading="lazy"
             />
             <figcaption className="mx-auto mt-4 max-w-md text-center font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] leading-relaxed text-zinc-500">
-              Iterations we tried before research — reordering methods, a
-              recommended option, and same-bank prioritization. All based on
-              assumptions.
+              Design explorations before the usability study — reordering methods, a
+              recommended option, and same-bank prioritization. I reviewed these closely
+              with the product designer, who owned the final interface work.
             </figcaption>
           </figure>
           <Paragraph>
-            Reasonable changes. But we were working from assumptions, not from watching
-            real users.
+            These were reasonable improvements to the interface we had built. They did
+            not challenge the more important assumption: that users understood why a
+            crypto exchange was asking them to make a manual transfer at all.
           </Paragraph>
         </Section>
 
-        <Section title="Proposing the Research">
+        <Section title="Bitpin&apos;s First Usability Study">
           <Paragraph>
             There had never been a formal usability test at Bitpin. I made the case
             that we were flying blind — Metabase dashboards and Clarity session
@@ -363,18 +274,11 @@ export default function CaseStudyBitpinDeposit() {
           <Paragraph>
             I designed a study that would cover the full critical path for new users:
             registration → KYC verification → deposit → purchase → withdrawal. I
-            scoped it to the most common use case — &ldquo;easy buy,&rdquo; Bitpin&apos;s
-            one-tap purchase flow — since roughly 70% of first-time buyers used it, and
-            many never switched to order-book trading.
+            centered the task on &ldquo;easy buy,&rdquo; Bitpin&apos;s simplest purchase
+            route, so participants could approach the journey without needing trading
+            knowledge.
           </Paragraph>
-          <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
-            <img
-              src="/images/case-studies/bitpin-usability-test-scenario-flow.jpg"
-              alt="Usability test scenario flow: Registration to KYC to Deposit to Easy Buy to Withdrawal"
-              className="block h-auto w-full rounded"
-              loading="lazy"
-            />
-          </figure>
+          <ResearchJourney />
           <Paragraph>
             Recruitment was harder than a typical usability study. Deposits required
             real bank transfers from users&apos; own accounts — I couldn&apos;t provide
@@ -383,44 +287,41 @@ export default function CaseStudyBitpinDeposit() {
             as part of the session.
           </Paragraph>
           <Paragraph>
-            To make this work, I recruited through internal referrals — posting in the
-            company Telegram group and asking team members to refer acquaintances who
-            fit the profile: digitally active, not current Bitpin users, open to crypto
-            as a savings tool.
+            I deliberately recruited people from outside the existing Bitpin user base,
+            using internal referrals to reach digitally active participants with little
+            or no familiarity with the product. That external perspective mattered:
+            they arrived with expectations formed by Iranian banking and e-commerce,
+            not by our product vocabulary.
           </Paragraph>
-          <Callout title="Participant breakdown — 10 total">
-            <ul className="case-study__ui list-disc space-y-1.5 pl-4 text-sm leading-relaxed text-zinc-700">
-              <li>7 participants: first-time crypto exchange users</li>
-              <li>2 participants: had used Nobitex before</li>
-              <li>1 participant: experienced trader</li>
-            </ul>
-          </Callout>
           <Paragraph>
-            Sessions ran over two weeks at the office. The task brief was intentionally
-            open: based on a quick conversation about what they&apos;d want to invest in
-            (Bitcoin, Tether, gold), I&apos;d ask them to go ahead and buy a small amount
-            on their own.
+            The task brief was intentionally open. After a short conversation about what
+            they might want to save or invest in, I asked them to use their own account
+            and complete the journey as naturally as possible.
           </Paragraph>
         </Section>
 
-        <Section title="What We Saw">
+        <Section title="The Problem Came From Outside the Flow">
           <Paragraph>
-            The deposit flow was where things broke down — consistently and clearly.
+            The deposit screen was where hesitation became visible, but it was not where
+            the underlying expectation had been created.
           </Paragraph>
           <Paragraph>
-            The 7 first-time users all hit the same wall. They expected a payment
-            gateway. That&apos;s how every e-commerce site in Iran works. When they
-            reached the deposit screen instead, they were confused — and then
-            suspicious.
+            First-time users expected to be redirected to Shaparak, the payment gateway
+            pattern they already trusted from everyday online purchases in Iran. When
+            Bitpin presented bank details and manual transfer instructions instead,
+            they did not interpret it as a set of deposit options. They interpreted it
+            as a break from a familiar safety signal.
           </Paragraph>
           <PullQuote>
             Why do I have to card-to-card? This looks like an Instagram seller.
           </PullQuote>
           <Paragraph>
             That line captured something we hadn&apos;t fully articulated as a design
-            problem. These users didn&apos;t understand why the normal payment flow
-            didn&apos;t exist. From their perspective, they had landed on a screen
-            asking them to manually wire money to a stranger&apos;s account number.
+            problem. The critical comparison was not between Bitpin&apos;s deposit
+            methods. It was between Bitpin and an external payment convention the
+            product no longer controlled. From the user&apos;s perspective, they had
+            landed on a screen asking them to manually wire money to a stranger&apos;s
+            account number.
           </Paragraph>
           <Paragraph>
             We had spent months optimizing the deposit flow — method comparison, smart
@@ -428,24 +329,34 @@ export default function CaseStudyBitpinDeposit() {
             users actually needed to know first: why the gateway was gone.
           </Paragraph>
           <Paragraph>
-            The trust wasn&apos;t missing because the flow was confusing. It was missing
-            because the context was missing.
+            The interface could make the options clearer, but clarity alone could not
+            repair that break in trust. The missing piece was context: what had changed
+            outside Bitpin, why the gateway was unavailable, and why these unfamiliar
+            methods were legitimate.
           </Paragraph>
         </Section>
 
-        <Section title="The Fix">
-          <Paragraph>The solution was deliberately minimal.</Paragraph>
+        <Section title="Designing a Context Bridge">
           <Paragraph>
-            I added a bottom sheet that appeared before users entered the deposit flow
-            — but only for users who had never completed a deposit before. It explained,
-            briefly and plainly, that payment gateways across Iranian exchanges had been
-            suspended by court order, and that the methods shown were the compliant
-            alternatives Bitpin had built.
+            The solution was deliberately small because the insight was no longer about
+            redesigning the whole deposit flow. The design needed to bridge an external
+            change in the financial ecosystem with the screen users were seeing inside
+            Bitpin.
+          </Paragraph>
+          <Paragraph>
+            I brought the trust finding into the design process and proposed that the
+            missing context appear before users entered the deposit flow. In close
+            collaboration, the product designer translated that direction into the
+            bottom sheet and owned the final interaction and visual design. I contributed
+            the research synthesis, content hierarchy, copy feedback, and iteration
+            input. The sheet appeared only for people who had never completed a deposit
+            and briefly explained that payment gateways across Iranian exchanges had
+            been suspended by court order.
           </Paragraph>
           <Callout>
             <p className="case-study__ui text-sm leading-relaxed text-zinc-700">
               <span className="font-semibold text-zinc-900">
-                Why a bottom sheet, why only for new depositors:
+                Why we recommended context only for new depositors:
               </span>{" "}
               Experienced users didn&apos;t need this explanation — they&apos;d already
               navigated it. Surfacing it to everyone would add friction for users who
@@ -461,41 +372,46 @@ export default function CaseStudyBitpinDeposit() {
               loading="lazy"
             />
             <figcaption className="mx-auto mt-4 max-w-md text-center font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] leading-relaxed text-zinc-500">
-              Left: launched version. Right: revised after the data came in.
+              Left: the initial explanation. Right: a shorter, more direct bridge to
+              the available deposit methods.
             </figcaption>
           </figure>
           <Paragraph>
-            The left version shipped. Product data showed most users dismissed it
-            in under two seconds — nobody was reading it. Our working hypothesis:
-            the copy was too long. We also fixed the tone: the first draft made the
-            outage sound like a Bitpin-only problem. The revision clarified that
-            gateways were down across Iranian exchanges, shortened the text, and
-            changed the CTA from a passive &ldquo;Got it&rdquo; to &ldquo;View
-            deposit methods.&rdquo;
+            Follow-up observation suggested that the first version was too long and easy
+            to dismiss. More importantly, its tone could make the outage sound like a
+            Bitpin-only problem. I shared those findings and copy recommendations with
+            the product designer, who revised the final design to clarify that gateways
+            were unavailable across Iranian exchanges, shorten the explanation, and
+            replace the passive &ldquo;Got it&rdquo; CTA with the more concrete
+            &ldquo;View deposit methods.&rdquo;
           </Paragraph>
           <Paragraph>
-            The revised sheet tested well. Users read it, understood it, and moved
-            through the deposit flow without the &ldquo;Instagram seller&rdquo; moment.
+            In follow-up observation, the revised sheet gave users enough context to
+            interpret the manual methods as a legitimate response to the shutdown,
+            rather than as a suspicious request from Bitpin.
           </Paragraph>
         </Section>
 
-        <Section title="The Result">
-          <ConversionComparison />
+        <Section title="What Changed">
           <Paragraph>
-            Two percentage points sounds modest. It&apos;s worth being honest about what
-            that number does and doesn&apos;t mean.
+            The product outcome was a clearer first-deposit experience: the flow now
+            acknowledged the expectation users brought with them before presenting an
+            alternative. Follow-up sessions showed less confusion at the transition
+            from buying intent to manual deposit.
           </Paragraph>
           <Paragraph>
             Iran&apos;s crypto market is heavily influenced by macroeconomic conditions
             — exchange rate movements, inflation anxiety, news cycles. Deposit volume at
             Bitpin correlates as much with the dollar rate as with anything we ship.
-            Attributing a conversion lift cleanly to one change, over a short window,
-            requires caution.
+            We saw a positive directional signal after the change, but the available
+            window was not clean enough to claim a precise conversion lift. I would
+            rather state that limitation than turn a noisy number into the headline.
           </Paragraph>
           <Paragraph>
-            The more important outcome might be structural: Bitpin ran its first usability
-            study, built the muscle for doing it again, and a team that had been iterating
-            on assumptions now had a method for getting out of the building.
+            The durable outcome was structural: Bitpin ran its first usability study,
+            created a repeatable way to recruit and observe people outside the existing
+            customer base, and strengthened the collaboration between research input
+            and the designers responsible for turning it into shipped product work.
           </Paragraph>
         </Section>
 
@@ -513,13 +429,16 @@ export default function CaseStudyBitpinDeposit() {
 
         <Section title="Takeaway">
           <Paragraph>
-            The deposit flow wasn&apos;t broken because of poor information architecture
-            or weak microcopy. It was broken because we forgot to tell users that the
-            world had changed.
+            The deposit flow was not failing only because of information architecture
+            or microcopy. It was inheriting a trust problem created outside the product:
+            a familiar national payment pattern had disappeared, while users still
+            expected to see it.
           </Paragraph>
           <Paragraph>
-            That&apos;s the thing usability testing surfaces that dashboards don&apos;t:
-            not where users fail, but why they hesitate.
+            That is what the first usability study made visible. Dashboards could point
+            to the screen where hesitation happened; observing people revealed the
+            external expectation behind it and changed the direction I brought into the
+            design collaboration.
           </Paragraph>
         </Section>
 
