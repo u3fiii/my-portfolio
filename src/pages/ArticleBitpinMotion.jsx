@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
 import { ROUTES } from "../routes/paths.js";
-import bitpinMotionThumbnail from "../assets/thumbnails/bitpin-motion.jpg";
+import bitpinMotionThumbnail from "../assets/thumbnails/bitpin-motion-new.jpg";
 
 const HERO_PIECES = [
   {

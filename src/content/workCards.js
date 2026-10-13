@@ -1,5 +1,5 @@
 import { workDetailPath } from "../routes/paths.js";
-import bitpinMotionThumbnail from "../assets/thumbnails/bitpin-motion-card.jpg";
+import bitpinMotionThumbnail from "../assets/thumbnails/bitpin-motion-new-card.jpg";
 import escrowThumbnail from "../assets/thumbnails/escrow-card.jpg";
 import priceSignalThumbnail from "../assets/thumbnails/price-signal-card.jpg";
 import rialDepositThumbnail from "../assets/thumbnails/rial-deposit-card.jpg";
