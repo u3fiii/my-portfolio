@@ -14,7 +14,7 @@ const CARD_BADGES = ["red", "yellow", "test", "yellow"];
 function SkeletonLine({ width }) {
   return (
     <div
-      className="rounded"
+      className="badge-color-test__line rounded"
       style={{ height: "7px", background: "#EBEBEB", width, borderRadius: "4px" }}
     />
   );
@@ -23,6 +23,7 @@ function SkeletonLine({ width }) {
 function BadgePill({ variant }) {
   return (
     <div
+      className={`badge-color-test__pill badge-color-test__pill--${variant}`}
       style={{
         height: "16px",
         borderRadius: "100px",
@@ -43,7 +44,7 @@ function SkeletonCard({ badgeVariant, highlighted }) {
 
   return (
     <div
-      className="mb-[7px] flex gap-2 rounded-lg bg-white py-[9px] pl-2.5 pr-2.5"
+      className="badge-color-test__card mb-[7px] flex gap-2 rounded-lg bg-white py-[9px] pl-2.5 pr-2.5"
       style={{
         border: "0.5px solid #EBEBEB",
         ...highlightStyle,
@@ -76,26 +77,26 @@ function SkeletonPhoneScreen({ fairBadgeVariant, highlightVariant }) {
   });
 
   return (
-    <div className="overflow-hidden rounded-[26px] bg-[#F5F5F5]" style={{ direction: "rtl" }}>
+    <div className="badge-color-test__screen overflow-hidden rounded-[26px] bg-[#F5F5F5]" style={{ direction: "rtl" }}>
       <div
-        className="flex justify-between px-3.5 pb-0.5 pt-[7px] text-[7px] font-bold text-[#111]"
+        className="badge-color-test__status flex justify-between px-3.5 pb-0.5 pt-[7px] text-[7px] font-bold text-[#111]"
         style={{ background: "#F5F5F5", fontFamily: FONT_UI, direction: "ltr" }}
       >
         <span>21:04</span>
         <span>20%</span>
       </div>
 
-      <div className="flex items-center justify-between gap-2 border-b border-[#EBEBEB] bg-white px-3 py-2">
+      <div className="badge-color-test__nav flex items-center justify-between gap-2 border-b border-[#EBEBEB] bg-white px-3 py-2">
         <div className="h-2 rounded bg-[#EBEBEB]" style={{ width: "16px" }} />
         <div className="h-2 rounded bg-[#EBEBEB]" style={{ width: "90px" }} />
         <div className="h-2 rounded bg-[#EBEBEB]" style={{ width: "28px" }} />
       </div>
 
-      <div className="bg-white px-3 py-2">
-        <div className="h-[30px] rounded-lg bg-[#F0F0EE]" />
+      <div className="badge-color-test__search bg-white px-3 py-2">
+        <div className="badge-color-test__search-field h-[30px] rounded-lg bg-[#F0F0EE]" />
       </div>
 
-      <div className="flex gap-1.5 border-b border-[#F0F0F0] bg-white px-3 py-[7px]">
+      <div className="badge-color-test__filters flex gap-1.5 border-b border-[#F0F0F0] bg-white px-3 py-[7px]">
         <div className="h-5 rounded-full bg-[#EBEBEB]" style={{ width: "44px" }} />
         <div className="h-5 rounded-full bg-[#EBEBEB]" style={{ width: "36px" }} />
         <div className="h-5 rounded-full bg-[#EBEBEB]" style={{ width: "56px" }} />
@@ -122,11 +123,12 @@ function PhoneColumn({
   showWinnerTag,
   resultPct,
   resultStyle,
+  tone,
 }) {
   return (
     <div className="flex flex-col items-center gap-2.5">
       <span
-        className="rounded-full px-3.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em]"
+        className={`badge-color-test__tone badge-color-test__tone--${tone} rounded-full px-3.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em]`}
         style={{ fontFamily: FONT_UI, ...versionLabelStyle }}
       >
         {versionLabel}
@@ -153,7 +155,7 @@ function PhoneColumn({
         />
       </div>
       <span
-        className="inline-flex items-center gap-1 rounded-full px-3.5 py-[5px] text-[11px] font-semibold"
+        className={`badge-color-test__tone badge-color-test__tone--${tone} inline-flex items-center gap-1 rounded-full px-3.5 py-[5px] text-[11px] font-semibold`}
         style={{ fontFamily: FONT_UI, ...resultStyle }}
       >
         <span className="text-sm font-bold">{resultPct}</span>
@@ -165,7 +167,7 @@ function PhoneColumn({
 
 export default function BadgeColorTest() {
   return (
-    <figure className="case-study__ui my-8">
+    <figure className="badge-color-test case-study__ui my-8">
       <p
         className="mb-5 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-[#888898]"
         style={{ fontFamily: FONT_UI }}
@@ -183,6 +185,7 @@ export default function BadgeColorTest() {
           fairBadgeVariant="blue"
           highlightVariant="blue"
           resultPct="~30%"
+          tone="blue"
           resultStyle={{
             background: "#EEF6FF",
             color: "#0077A3",
@@ -200,6 +203,7 @@ export default function BadgeColorTest() {
           highlightVariant="green"
           showWinnerTag
           resultPct="~70%"
+          tone="green"
           resultStyle={{
             background: "#EAF3DE",
             color: "#27500A",

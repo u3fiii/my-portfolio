@@ -42,7 +42,7 @@ export default function Button({
   return (
     <a
       href={href}
-      className={`inline-flex shrink-0 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${sizeClass} ${variants[variant] ?? variants.primary}`}
+      className={`button-ready-bounce inline-flex shrink-0 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${sizeClass} ${variants[variant] ?? variants.primary}`}
       aria-label={iconOnlyMobile ? accessibleName : undefined}
       onMouseEnter={playLottie}
       {...(external && {

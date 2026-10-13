@@ -64,6 +64,24 @@ html.dark {
   --color-zinc-950: #fafafa;
 }
 
+/* Product screenshots and reconstructed UI keep their original light palette. */
+.case-study-artwork {
+  color-scheme: light;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-500: #71717a;
+  --color-zinc-600: #52525b;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+}
+
 body {
   margin: 0;
   overflow-x: clip;
@@ -228,6 +246,68 @@ html.dark .avatar-art .av-hair path:not(defs path) {
   animation: cursor-blink 0.55s step-end infinite;
 }
 
+@keyframes ambient-cover-zoom {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(var(--ambient-cover-zoom-scale, 1.1));
+  }
+}
+
+.ambient-cover-zoom {
+  --ambient-cover-zoom-duration: 18s;
+  --ambient-cover-zoom-scale: 1.1;
+  animation: ambient-cover-zoom var(--ambient-cover-zoom-duration)
+    cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  transform-origin: center;
+  will-change: transform;
+}
+
+@keyframes detail-copy-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.detail-reveal {
+  animation: detail-copy-reveal 450ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.detail-reveal--eyebrow {
+  animation-delay: 0ms;
+}
+
+.detail-reveal--title {
+  animation-delay: 100ms;
+}
+
+.detail-reveal--image {
+  animation-delay: 200ms;
+}
+
+.detail-reveal--text {
+  animation-delay: 300ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-cover-zoom {
+    animation: none;
+    will-change: auto;
+  }
+
+  .detail-reveal {
+    animation: none;
+  }
+}
+
 /* Glass chip — translucent fill + top highlight; sits on the header's frosted blur.
    No outer ring, so joined segments (gooey nav) read as one continuous piece. */
 @utility glass-chip {
@@ -257,33 +337,49 @@ html.dark .avatar-art .av-hair path:not(defs path) {
 .cv-download-chip:hover {
   background-color: #fbbf24;
   color: #18181b;
-  animation: cv-download-pulse 280ms cubic-bezier(0.4, 0, 0.2, 1) both;
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.2),
     0 5px 16px rgb(251 191 36 / 0.3);
 }
 
-@keyframes cv-download-pulse {
-  35% {
-    transform: scale(0.98);
+/* Bordered pills — thick black ring on hover without layout shift (shadow, not border-width) */
+
+@keyframes button-ready-bounce {
+  0% {
+    scale: 1;
   }
 
-  70% {
-    transform: scale(1.015);
+  30% {
+    scale: 0.97;
+  }
+
+  68% {
+    scale: 1.01;
   }
 
   100% {
-    transform: scale(1);
+    scale: 1;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button-ready-bounce:hover:not(:disabled) {
+    animation: button-ready-bounce 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  .button-ready-bounce:active:not(:disabled) {
+    animation: none;
+    scale: 0.97;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cv-download-chip:hover {
+  .button-ready-bounce:hover,
+  .button-ready-bounce:active {
     animation: none;
+    scale: 1;
   }
 }
-
-/* Bordered pills — thick black ring on hover without layout shift (shadow, not border-width) */
 
 @utility pill-hover-ring {
   transition:
@@ -317,7 +413,7 @@ html.dark .avatar-art .av-hair path:not(defs path) {
 @utility btn-instagram {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  overflow: visible;
   background-color: var(--color-zinc-900);
   color: var(--color-white);
   transition:
@@ -328,7 +424,8 @@ html.dark .avatar-art .av-hair path:not(defs path) {
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: inherit;
+    border-radius: 9999px;
+    clip-path: inset(0 round 9999px);
     background-image: linear-gradient(
       45deg,
       #f09433 0%,
@@ -341,6 +438,24 @@ html.dark .avatar-art .av-hair path:not(defs path) {
     transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    inset: -3px;
+    pointer-events: none;
+    border-radius: 9999px;
+    padding: 3px;
+    background: linear-gradient(45deg, #fdba74, #f9a8d4);
+    opacity: 0;
+    transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
   /* White text and icon on the gradient — also in dark mode, where the resting button is light */
   &:hover {
     scale: 1.01;
@@ -349,6 +464,10 @@ html.dark .avatar-art .av-hair path:not(defs path) {
 
   &:hover::before {
     opacity: 1;
+  }
+
+  &:hover::after {
+    opacity: 0.72;
   }
 
   & > * {

@@ -19,7 +19,7 @@ export default function ThemeToggle({ className = "" }) {
       onClick={toggleTheme}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       title={isDark ? "Light mode" : "Dark mode"}
-      className={`relative inline-flex shrink-0 cursor-pointer items-center justify-center text-zinc-900 transition-colors hover:bg-zinc-900/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-zinc-900 ${className}`}
+      className={`button-ready-bounce relative inline-flex shrink-0 cursor-pointer items-center justify-center text-zinc-900 transition-colors hover:bg-zinc-900/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-zinc-900 ${className}`}
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span

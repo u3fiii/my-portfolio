@@ -96,7 +96,7 @@ function MetaItem({ label, value }) {
 
 function DesktopFrame({ src, title }) {
   return (
-    <div className="overflow-hidden rounded-[32px] border-[10px] border-[#D4D4D8] bg-[#D4D4D8]">
+    <div className="overflow-hidden rounded-[clamp(16px,4vw,32px)] border-[clamp(5px,1.4vw,10px)] border-[#D4D4D8] bg-[#D4D4D8]">
       <video
         src={src}
         title={title}
@@ -130,7 +130,7 @@ function MobileFrame({ src, title, startOffset = 0 }) {
   }, [src, startOffset]);
 
   return (
-    <div className="aspect-[39/85] w-full overflow-hidden rounded-[20px] border-[8px] border-[#D4D4D8] bg-[#D4D4D8]">
+    <div className="aspect-[39/85] w-full overflow-hidden rounded-[clamp(14px,3.5vw,20px)] border-[clamp(5px,1.25vw,8px)] border-[#D4D4D8] bg-[#D4D4D8]">
       <video
         ref={videoRef}
         src={src}
@@ -148,7 +148,7 @@ function MobileFrame({ src, title, startOffset = 0 }) {
 
 function SquareFrame({ src, title }) {
   return (
-    <div className="aspect-square w-full max-w-[300px] overflow-hidden rounded-[20px] border-[6px] border-[#D4D4D8] bg-[#D4D4D8]">
+    <div className="aspect-square w-full max-w-[300px] overflow-hidden rounded-[clamp(14px,3vw,20px)] border-[clamp(4px,1vw,6px)] border-[#D4D4D8] bg-[#D4D4D8]">
       <video
         src={src}
         title={title}
@@ -178,12 +178,14 @@ export default function ArticleBitpinMotion() {
     <div className="min-h-screen">
       <article className="case-study mx-auto max-w-[748px] px-6 pb-20 pt-24 md:pt-28">
         <header className="mb-8 pb-6">
-          <p className="case-study__eyebrow">Article · Bitpin · 2024</p>
-          <h1 className="case-study__title mt-4">
+          <p className="case-study__eyebrow detail-reveal detail-reveal--eyebrow">Article · Bitpin · 2024</p>
+          <h1 className="case-study__title detail-reveal detail-reveal--title mt-4">
             Motion at Bitpin: product and campaign loops
           </h1>
 
-          <figure className="case-study__ui my-8 overflow-hidden rounded-xl border border-zinc-300 bg-zinc-100">
+          <figure
+            className="case-study__ui detail-reveal detail-reveal--image my-8 overflow-hidden rounded-xl border border-zinc-300 bg-zinc-100"
+          >
             <img
               src={bitpinMotionThumbnail}
               alt="Bitpin motion article cover"
@@ -191,11 +193,11 @@ export default function ArticleBitpinMotion() {
               height="1024"
               decoding="async"
               fetchPriority="high"
-              className="block h-auto w-full"
+              className="ambient-cover-zoom block h-auto w-full"
             />
           </figure>
 
-          <p className="case-study__deck mt-4">
+          <p className="case-study__deck detail-reveal detail-reveal--text mt-4">
             A selection of motion pieces I designed and shipped while at Bitpin —
             from splash and hero to campaign and seasonal identity.
           </p>

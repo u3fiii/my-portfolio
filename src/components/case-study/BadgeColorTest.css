@@ -3,6 +3,64 @@
   overflow: hidden;
 }
 
+html.dark .badge-color-test__screen,
+html.dark .badge-color-test__status {
+  background: #202023 !important;
+  color: #f4f4f5 !important;
+}
+
+html.dark .badge-color-test__nav,
+html.dark .badge-color-test__search,
+html.dark .badge-color-test__filters {
+  background: #27272a !important;
+  border-color: #3f3f46 !important;
+}
+
+html.dark .badge-color-test__search-field,
+html.dark .badge-color-test__line,
+html.dark .badge-color-test__thumb,
+html.dark .badge-color-test__filters > div,
+html.dark .badge-color-test__nav > div {
+  background: #3f3f46 !important;
+}
+
+html.dark .badge-color-test__card {
+  background: #2d2d31 !important;
+  border-color: #45454a !important;
+}
+
+html.dark .badge-color-test__pill--red {
+  background: #3a1d1d !important;
+  border-color: #713333 !important;
+}
+
+html.dark .badge-color-test__pill--yellow {
+  background: #352711 !important;
+  border-color: #71511e !important;
+}
+
+html.dark .badge-color-test__pill--blue {
+  background: #132a40 !important;
+  border-color: #28618a !important;
+}
+
+html.dark .badge-color-test__pill--green {
+  background: #1d2d16 !important;
+  border-color: #496f35 !important;
+}
+
+html.dark .badge-color-test__tone--blue {
+  background: #132a40 !important;
+  color: #9dccfa !important;
+  border-color: #28618a !important;
+}
+
+html.dark .badge-color-test__tone--green {
+  background: #1d2d16 !important;
+  color: #b8dd9b !important;
+  border-color: #496f35 !important;
+}
+
 .badge-color-test__thumb::after {
   content: "";
   position: absolute;

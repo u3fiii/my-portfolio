@@ -128,7 +128,7 @@ function StepColumn({ children }) {
 export default function FormReorderDiagram() {
   return (
     <figure
-      className="my-9 rounded-xl px-6 py-7"
+      className="case-study-artwork my-9 rounded-xl px-6 py-7"
       style={{ background: "#F2F1EE", fontFamily: FONT_UI }}
     >
       <p

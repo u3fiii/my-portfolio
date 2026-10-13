@@ -8,7 +8,7 @@ function ScreenImage({ src, alt }) {
 
 export default function SheypoorFormComparison() {
   return (
-    <figure className="case-study__ui my-8">
+    <figure className="case-study-artwork case-study__ui my-8">
       <div
         className="flex flex-wrap items-start justify-center"
         style={{ gap: "40px" }}

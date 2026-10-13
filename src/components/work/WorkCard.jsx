@@ -42,7 +42,9 @@ export default function WorkCard({
 
   const content = (
     <>
-      <div className="relative aspect-[4/2] w-full shrink-0 overflow-hidden bg-[color:var(--color-background-secondary)]">
+      <div
+        className="relative aspect-[4/2] w-full shrink-0 overflow-hidden bg-[color:var(--color-background-secondary)]"
+      >
         {image ? (
           <img
             src={image}

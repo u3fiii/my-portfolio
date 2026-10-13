@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useLenis } from "../../hooks/useLenis.jsx";
-import { resetScroll, resetScrollAfterPaint } from "../../utils/resetScroll.js";
+import { resetScrollAfterPaint } from "../../utils/resetScroll.js";
 
 /** Resets scroll on route change; hash anchors are handled by ScrollToHash. */
 export default function ScrollRestoration() {
@@ -14,7 +14,7 @@ export default function ScrollRestoration() {
     }
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (hash) return;
 
     const timeoutId = resetScrollAfterPaint(lenis);

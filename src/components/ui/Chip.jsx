@@ -22,7 +22,7 @@ export default function Chip({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`inline-flex cursor-pointer items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${size} ${stateClass}`}
+      className={`button-ready-bounce inline-flex cursor-pointer items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${size} ${stateClass}`}
     >
       {Icon ? (
         <Icon

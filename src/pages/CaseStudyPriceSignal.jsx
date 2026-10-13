@@ -77,10 +77,12 @@ export default function CaseStudyPriceSignal() {
     <div className="min-h-screen">
       <article className="case-study mx-auto max-w-[748px] px-6 pb-20 pt-24 md:pt-28">
         <header className="mb-8 pb-6">
-          <p className="case-study__eyebrow">Case Study · Sheypoor · 2020</p>
-          <h1 className="case-study__title mt-4">Price Signal</h1>
+          <p className="case-study__eyebrow detail-reveal detail-reveal--eyebrow">Case Study · Sheypoor · 2020</p>
+          <h1 className="case-study__title detail-reveal detail-reveal--title mt-4">Price Signal</h1>
 
-          <figure className="case-study__ui my-8 overflow-hidden rounded-xl border border-zinc-300 bg-zinc-100">
+          <figure
+            className="case-study__ui detail-reveal detail-reveal--image my-8 overflow-hidden rounded-xl border border-zinc-300 bg-zinc-100"
+          >
             <img
               src={priceSignalThumbnail}
               alt="Price Signal case study cover"
@@ -88,11 +90,11 @@ export default function CaseStudyPriceSignal() {
               height="1024"
               decoding="async"
               fetchPriority="high"
-              className="block h-auto w-full"
+              className="ambient-cover-zoom block h-auto w-full"
             />
           </figure>
 
-          <p className="case-study__deck mt-4">
+          <p className="case-study__deck detail-reveal detail-reveal--text mt-4">
             How Sheypoor helped buyers and sellers find fair ground in a volatile
             market.
           </p>

@@ -188,7 +188,7 @@ export default function JellyRadio({
             role="radio"
             aria-checked={on}
             tabIndex={on || (at < 0 && i === 0) ? 0 : -1}
-            className="group/chip relative m-0 shrink-0 cursor-pointer touch-manipulation border-0 bg-transparent p-0 text-inherit outline-none [-webkit-tap-highlight-color:transparent]"
+            className="button-ready-bounce group/chip relative m-0 shrink-0 cursor-pointer touch-manipulation border-0 bg-transparent p-0 text-inherit outline-none [-webkit-tap-highlight-color:transparent]"
             data-on={on ? "true" : "false"}
             onClick={(e) => commit(i, e.detail === 0)}
             onKeyDown={(e) => onKeyDown(e, i)}

@@ -79,12 +79,12 @@ const CV_ROLL_CLASS =
   "block transition-transform duration-[400ms] ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-full group-focus-visible:translate-y-full motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-focus-visible:translate-y-0";
 
 const LOGO_LINK_CLASS =
-  "flex h-full w-full items-center justify-center transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-zinc-900";
+  "button-ready-bounce flex h-full w-full items-center justify-center transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-zinc-900";
 
 const headerEnterTransition = {
-  delay: 1.5,
-  duration: 0.55,
-  ease: [0.4, 0, 0.2, 1],
+  delay: 1.1,
+  duration: 0.7,
+  ease: [0.16, 1, 0.3, 1],
 };
 
 export default function Header() {
@@ -175,7 +175,7 @@ export default function Header() {
                   to={ROUTES.home}
                   onMouseEnter={playBackIcon}
                   onFocus={playBackIcon}
-                  className="group inline-flex max-w-full min-w-0 items-center gap-2 rounded-full py-1.5 pr-4 pl-2.5 text-zinc-900 transition-colors hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+                  className="button-ready-bounce group inline-flex max-w-full min-w-0 items-center gap-2 rounded-full py-1.5 pr-4 pl-2.5 text-zinc-900 transition-colors hover:bg-zinc-900/[0.035] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:hover:bg-white/[0.07]"
                 >
                   <LottieIcon
                     animationData={backAnimation}
@@ -206,7 +206,7 @@ export default function Header() {
                   onMouseEnter={playDownloadIcon}
                   onFocus={playDownloadIcon}
                   onClick={playDownloadIcon}
-                  className="group cv-download-chip inline-flex shrink-0 items-center justify-center gap-1.5 self-stretch rounded-full glass-chip px-2.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-xs font-bold tracking-wide text-zinc-900 uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 md:px-3"
+                  className="button-ready-bounce group cv-download-chip inline-flex shrink-0 items-center justify-center gap-1.5 self-stretch rounded-full glass-chip px-2.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-xs font-bold tracking-wide text-zinc-900 uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 md:px-3"
                   aria-label="Download CV"
                 >
                   <LottieIcon

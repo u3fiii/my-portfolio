@@ -24,7 +24,7 @@ const avatarAnimation = {
   }),
 };
 
-const BASE_DELAY_S = 1;
+const BASE_DELAY_S = 0.5;
 const STAGGER_S = 0.1;
 const REVEAL_TRANSITION = { duration: 0.45, ease: [0.4, 0, 0.2, 1] };
 

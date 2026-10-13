@@ -1,8 +1,8 @@
 const BADGE_STYLES = {
-  red: "bg-[#FCEBEB] text-[#A32D2D]",
-  yellow: "bg-[#FAEEDA] text-[#633806]",
-  blue: "bg-[#E6F1FB] text-[#0C447C]",
-  green: "bg-[#EAF3DE] text-[#27500A]",
+  red: "bg-[#FCEBEB] text-[#A32D2D] dark:bg-[#3A1D1D] dark:text-[#FFB4B4]",
+  yellow: "bg-[#FAEEDA] text-[#633806] dark:bg-[#352711] dark:text-[#F3C982]",
+  blue: "bg-[#E6F1FB] text-[#0C447C] dark:bg-[#132A40] dark:text-[#9DCCFA]",
+  green: "bg-[#EAF3DE] text-[#27500A] dark:bg-[#1D2D16] dark:text-[#B8DD9B]",
 };
 
 export default function PriceBadgeList({ items }) {

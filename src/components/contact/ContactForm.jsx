@@ -63,8 +63,8 @@ export default function ContactForm({ theme = "light" }) {
     : "rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm text-amber-900";
 
   const submitClass = isDark
-    ? "inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-semibold text-zinc-950 transition-colors hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
-    : "inline-flex w-full items-center justify-center rounded-full bg-zinc-900 px-6 py-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-semibold text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto";
+    ? "button-ready-bounce inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-semibold text-zinc-950 transition-colors hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+    : "button-ready-bounce inline-flex w-full items-center justify-center rounded-full bg-zinc-900 px-6 py-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-semibold text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto";
 
   const successClass = isDark
     ? "rounded-2xl border border-green-500/40 bg-green-500/10 px-5 py-4 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm text-green-300"
