@@ -10,9 +10,9 @@ export function isContactFormConfigured() {
 }
 
 /**
- * @param {{ name: string, email: string, message: string }} data
+ * @param {{ email: string, message: string }} data
  */
-export async function sendContactMessage({ name, email, message }) {
+export async function sendContactMessage({ email, message }) {
   const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 
   if (!accessKey) {
@@ -27,11 +27,10 @@ export async function sendContactMessage({ name, email, message }) {
     },
     body: JSON.stringify({
       access_key: accessKey,
-      name,
       email,
       replyto: email,
       message,
-      subject: `Portfolio message from ${name}`,
+      subject: `Portfolio message from ${email}`,
     }),
   });
 

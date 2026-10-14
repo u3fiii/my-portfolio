@@ -4,15 +4,14 @@
  */
 
 export const CONTACT_HEADING = {
-  beforeHighlight: "Let’s turn your ",
-  highlight: "next thing",
-  afterHighlight: " into something real.",
+  beforeHighlight: "Want to ",
+  highlight: "talk about",
+  afterHighlight: " your project?",
 };
 export const CONTACT_DESCRIPTION =
-  "A project, a half-formed idea, or just a hello. Send it my way and I’ll get back to you by email.";
+  "Send me a few lines about it and I’ll get back to you soon.";
 
 export const FORM = {
-  name: { label: "Name", placeholder: "Your name" },
   email: { label: "Email", placeholder: "you@example.com" },
   message: { label: "Message", placeholder: "Tell me about your project or question…" },
   submit: "Send message",

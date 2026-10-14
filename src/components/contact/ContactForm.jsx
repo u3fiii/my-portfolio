@@ -9,7 +9,7 @@ import {
   sendContactMessage,
 } from "../../lib/contactForm.js";
 
-const initialValues = { name: "", email: "", message: "" };
+const initialValues = { email: "", message: "" };
 
 export default function ContactForm({ theme = "light" }) {
   const [values, setValues] = useState(initialValues);
@@ -28,7 +28,6 @@ export default function ContactForm({ theme = "light" }) {
 
   function validate() {
     const next = {};
-    if (!values.name.trim()) next.name = "Name is required.";
     if (!values.email.trim()) {
       next.email = "Email is required.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
@@ -47,7 +46,6 @@ export default function ContactForm({ theme = "light" }) {
 
     try {
       await sendContactMessage({
-        name: values.name.trim(),
         email: values.email.trim(),
         message: values.message.trim(),
       });
@@ -82,25 +80,6 @@ export default function ContactForm({ theme = "light" }) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
-      <FormField
-        id="contact-name"
-        label={FORM.name.label}
-        error={errors.name}
-        theme={theme}
-      >
-        <input
-          id="contact-name"
-          name="name"
-          type="text"
-          autoComplete="name"
-          value={values.name}
-          onChange={handleChange}
-          placeholder={FORM.name.placeholder}
-          className={inputClass}
-          disabled={status === "submitting"}
-        />
-      </FormField>
-
       <FormField
         id="contact-email"
         label={FORM.email.label}
