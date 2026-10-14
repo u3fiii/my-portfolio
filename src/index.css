@@ -64,6 +64,10 @@ html.dark {
   --color-zinc-950: #fafafa;
 }
 
+html.dark .detail-back-link:hover {
+  background-color: rgb(255 255 255 / 5%);
+}
+
 /* Product screenshots and reconstructed UI keep their original light palette. */
 .case-study-artwork {
   color-scheme: light;
@@ -149,6 +153,137 @@ body {
   white-space: nowrap;
 }
 
+/* Two imperfect marker passes create a hand-drawn editorial highlight. */
+.marker-highlight {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  white-space: nowrap;
+}
+
+.contact-marker {
+  --marker-color: #ffdb4b;
+}
+
+html.dark .contact-marker {
+  --marker-color: #9c7200;
+  color: #fff;
+}
+
+.marker-highlight::before,
+.marker-highlight::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--marker-color, #facc15);
+  background-blend-mode: multiply;
+  -webkit-mask-image: linear-gradient(
+    100deg,
+    #000 0 94%,
+    rgb(0 0 0 / 82%) 97%,
+    transparent 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 0% 100%;
+  mask-image: linear-gradient(
+    100deg,
+    #000 0 94%,
+    rgb(0 0 0 / 82%) 97%,
+    transparent 100%
+  );
+  mask-repeat: no-repeat;
+  mask-size: 0% 100%;
+  will-change: mask-size;
+}
+
+.marker-highlight::before {
+  inset: 9% -0.13em 2% -0.1em;
+  opacity: 0.7;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgb(255 255 255 / 12%),
+      transparent 18%,
+      rgb(20 20 20 / 7%) 47%,
+      transparent 72%,
+      rgb(255 255 255 / 10%)
+    ),
+    radial-gradient(circle at 14% 34%, rgb(255 255 255 / 20%) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 73% 68%, rgb(20 20 20 / 13%) 0 0.8px, transparent 1.7px),
+    repeating-linear-gradient(3deg, transparent 0 2px, rgb(255 255 255 / 9%) 2px 3px);
+  clip-path: polygon(
+    0 18%, 18% 15%, 38% 16%, 60% 14%, 80% 16%, 100% 15%,
+    100% 86%, 81% 88%, 61% 86%, 40% 89%, 20% 87%, 0 89%
+  );
+  transform: rotate(-0.35deg) skewX(-0.6deg);
+}
+
+.marker-highlight::after {
+  inset: 21% -0.08em 9% -0.04em;
+  opacity: 0.24;
+  background-image: repeating-linear-gradient(
+    -3deg,
+    transparent 0 4px,
+    rgb(255 255 255 / 18%) 4px 5px
+  );
+  clip-path: polygon(
+    0 19%, 22% 17%, 43% 19%, 66% 16%, 84% 18%, 100% 17%,
+    100% 83%, 78% 85%, 57% 83%, 34% 86%, 15% 84%, 0 86%
+  );
+  transform: rotate(0.25deg);
+}
+
+html.dark .contact-marker::before {
+  opacity: 0.84;
+}
+
+html.dark .contact-marker::after {
+  opacity: 0.3;
+}
+
+.marker-highlight.is-active::before {
+  animation: marker-swipe var(--marker-duration, 600ms)
+    var(--marker-delay, 300ms) linear both;
+}
+
+.marker-highlight.is-active::after {
+  animation: marker-swipe var(--marker-duration, 600ms)
+    var(--marker-delay, 300ms) linear both;
+}
+
+@keyframes marker-swipe {
+  0% {
+    -webkit-mask-size: 0% 100%;
+    mask-size: 0% 100%;
+  }
+
+  14% {
+    -webkit-mask-size: 7% 100%;
+    mask-size: 7% 100%;
+  }
+
+  36% {
+    -webkit-mask-size: 34% 100%;
+    mask-size: 34% 100%;
+  }
+
+  78% {
+    -webkit-mask-size: 83% 100%;
+    mask-size: 83% 100%;
+  }
+
+  94% {
+    -webkit-mask-size: 98% 100%;
+    mask-size: 98% 100%;
+  }
+
+  100% {
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
+}
+
 /* Caret sits on the baseline and spans the role font's cap height */
 .typewriter-cursor {
   display: inline-block;
@@ -167,6 +302,15 @@ body {
 @media (max-width: 767px) {
   .typewriter-line--center-mobile .typewriter-visible {
     justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marker-highlight.is-active::before,
+  .marker-highlight.is-active::after {
+    animation: none;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
   }
 }
 
@@ -257,8 +401,8 @@ html.dark .avatar-art .av-hair path:not(defs path) {
 }
 
 .ambient-cover-zoom {
-  --ambient-cover-zoom-duration: 18s;
-  --ambient-cover-zoom-scale: 1.1;
+  --ambient-cover-zoom-duration: 8s;
+  --ambient-cover-zoom-scale: 1.03;
   animation: ambient-cover-zoom var(--ambient-cover-zoom-duration)
     cubic-bezier(0.19, 1, 0.22, 1) forwards;
   transform-origin: center;
@@ -297,13 +441,47 @@ html.dark .avatar-art .av-hair path:not(defs path) {
   animation-delay: 300ms;
 }
 
+@media (max-width: 599px) {
+  .detail-mobile-reveal,
+  .detail-mobile-stagger > * {
+    animation: detail-copy-reveal 450ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  .detail-mobile-reveal--author,
+  .detail-mobile-stagger > :nth-child(1) {
+    animation-delay: 400ms;
+  }
+
+  .detail-mobile-stagger > :nth-child(2) {
+    animation-delay: 475ms;
+  }
+
+  .detail-mobile-stagger > :nth-child(3) {
+    animation-delay: 550ms;
+  }
+
+  .detail-mobile-stagger--after-author > :nth-child(1) {
+    animation-delay: 500ms;
+  }
+
+  .detail-mobile-stagger--after-author > :nth-child(2) {
+    animation-delay: 575ms;
+  }
+
+  .detail-mobile-stagger--after-author > :nth-child(3) {
+    animation-delay: 650ms;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ambient-cover-zoom {
     animation: none;
     will-change: auto;
   }
 
-  .detail-reveal {
+  .detail-reveal,
+  .detail-mobile-reveal,
+  .detail-mobile-stagger > * {
     animation: none;
   }
 }
@@ -411,6 +589,9 @@ html.dark .avatar-art .av-hair path:not(defs path) {
 }
 
 @utility btn-instagram {
+  --instagram-ring-start: #fdba74;
+  --instagram-ring-end: #f9a8d4;
+  --instagram-ring-opacity: 0.72;
   position: relative;
   isolation: isolate;
   overflow: visible;
@@ -446,7 +627,11 @@ html.dark .avatar-art .av-hair path:not(defs path) {
     pointer-events: none;
     border-radius: 9999px;
     padding: 3px;
-    background: linear-gradient(45deg, #fdba74, #f9a8d4);
+    background: linear-gradient(
+      45deg,
+      var(--instagram-ring-start),
+      var(--instagram-ring-end)
+    );
     opacity: 0;
     transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
     -webkit-mask:
@@ -467,7 +652,13 @@ html.dark .avatar-art .av-hair path:not(defs path) {
   }
 
   &:hover::after {
-    opacity: 0.72;
+    opacity: var(--instagram-ring-opacity);
+  }
+
+  :where(html.dark) & {
+    --instagram-ring-start: #9a3412;
+    --instagram-ring-end: #831843;
+    --instagram-ring-opacity: 0.88;
   }
 
   & > * {

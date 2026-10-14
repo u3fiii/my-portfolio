@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import BadgeColorTest from "../components/case-study/BadgeColorTest.jsx";
 import FormReorderDiagram from "../components/case-study/FormReorderDiagram.jsx";
 import PriceBadgeList from "../components/case-study/PriceBadgeList.jsx";
@@ -9,7 +8,6 @@ import SheypoorFormComparison from "../components/case-study/SheypoorFormCompari
 import StatsRow from "../components/case-study/StatsRow.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
-import { ROUTES } from "../routes/paths.js";
 import priceSignalThumbnail from "../assets/thumbnails/price-signal.jpg";
 
 const LEARNINGS = [
@@ -78,7 +76,9 @@ export default function CaseStudyPriceSignal() {
       <article className="case-study mx-auto max-w-[748px] px-6 pb-20 pt-24 md:pt-28">
         <header className="mb-8 pb-6">
           <p className="case-study__eyebrow detail-reveal detail-reveal--eyebrow">Case Study · Sheypoor · 2020</p>
-          <h1 className="case-study__title detail-reveal detail-reveal--title mt-4">Price Signal</h1>
+          <h1 className="case-study__title detail-reveal detail-reveal--title mt-4">
+            Designing Price Signal: helping buyers and sellers find fair ground
+          </h1>
 
           <figure
             className="case-study__ui detail-reveal detail-reveal--image my-8 overflow-hidden rounded-xl border border-zinc-300 bg-zinc-100"
@@ -99,7 +99,7 @@ export default function CaseStudyPriceSignal() {
             market.
           </p>
 
-          <div className="mt-6 flex items-center gap-3">
+          <div className="detail-mobile-reveal detail-mobile-reveal--author mt-6 flex items-center gap-3">
             <span
               className="case-study__ui flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-xs font-semibold text-white"
               aria-hidden
@@ -112,7 +112,7 @@ export default function CaseStudyPriceSignal() {
             </p>
           </div>
 
-          <dl className="mt-6 grid gap-3 min-[600px]:grid-cols-3">
+          <dl className="detail-mobile-stagger detail-mobile-stagger--after-author mt-6 grid gap-3 min-[600px]:grid-cols-3">
             <MetaItem
               label="Role"
               value="Product Design — wireframes, prototypes, interaction + product thinking"
@@ -459,15 +459,6 @@ export default function CaseStudyPriceSignal() {
         </section>
 
         <RelatedWorkSection excludeId="price-signal" />
-
-        <p className="case-study__ui mt-12 text-center text-sm">
-          <Link
-            to={ROUTES.projects}
-            className="text-zinc-600 underline underline-offset-2 transition-colors hover:text-zinc-900"
-          >
-            Back to projects
-          </Link>
-        </p>
       </article>
     </div>
   );

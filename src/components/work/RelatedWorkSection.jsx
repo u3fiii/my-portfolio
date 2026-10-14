@@ -12,19 +12,19 @@ const SECTION_TOKENS = {
 export default function RelatedWorkSection({
   excludeId,
   heading = "More stuff to read",
-  count = 2,
+  count = 3,
 }) {
   const items = getRelatedWorkCards(excludeId, count);
 
   if (items.length === 0) return null;
 
   return (
-    <section className="mt-16 border-t border-zinc-200 pt-8">
-      <h2 className="font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] font-medium uppercase tracking-[0.08em] text-zinc-500">
+    <section className="mt-[92px]">
+      <h2 className="ml-2 font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] font-medium uppercase tracking-[0.08em] text-zinc-500">
         {heading}
       </h2>
       <ul
-        className="mt-5 grid grid-cols-1 gap-2.5 min-[520px]:grid-cols-2"
+        className="mt-5 grid grid-cols-1 gap-2.5 min-[520px]:grid-cols-2 min-[680px]:grid-cols-3"
         style={SECTION_TOKENS}
       >
         {items.map((card) => (

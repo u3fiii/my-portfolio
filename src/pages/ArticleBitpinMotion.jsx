@@ -1,8 +1,6 @@
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
-import { ROUTES } from "../routes/paths.js";
 import bitpinMotionThumbnail from "../assets/thumbnails/bitpin-motion-new.jpg";
 
 const HERO_PIECES = [
@@ -96,7 +94,7 @@ function MetaItem({ label, value }) {
 
 function DesktopFrame({ src, title }) {
   return (
-    <div className="overflow-hidden rounded-[clamp(16px,4vw,32px)] border-[clamp(5px,1.4vw,10px)] border-[#D4D4D8] bg-[#D4D4D8]">
+    <div className="overflow-hidden rounded-[clamp(16px,4vw,32px)] border-[clamp(5px,1.4vw,10px)] border-[#D4D4D8] bg-[#D4D4D8] dark:border-white/10 dark:bg-white/10">
       <video
         src={src}
         title={title}
@@ -130,7 +128,7 @@ function MobileFrame({ src, title, startOffset = 0 }) {
   }, [src, startOffset]);
 
   return (
-    <div className="aspect-[39/85] w-full overflow-hidden rounded-[clamp(14px,3.5vw,20px)] border-[clamp(5px,1.25vw,8px)] border-[#D4D4D8] bg-[#D4D4D8]">
+    <div className="aspect-[39/85] w-full overflow-hidden rounded-[clamp(14px,3.5vw,20px)] border-[clamp(5px,1.25vw,8px)] border-[#D4D4D8] bg-[#D4D4D8] dark:border-white/10 dark:bg-white/10">
       <video
         ref={videoRef}
         src={src}
@@ -148,7 +146,7 @@ function MobileFrame({ src, title, startOffset = 0 }) {
 
 function SquareFrame({ src, title }) {
   return (
-    <div className="aspect-square w-full max-w-[300px] overflow-hidden rounded-[clamp(14px,3vw,20px)] border-[clamp(4px,1vw,6px)] border-[#D4D4D8] bg-[#D4D4D8]">
+    <div className="aspect-square w-full max-w-[300px] overflow-hidden rounded-[clamp(14px,3vw,20px)] border-[clamp(4px,1vw,6px)] border-[#D4D4D8] bg-[#D4D4D8] dark:border-white/10 dark:bg-white/10">
       <video
         src={src}
         title={title}
@@ -202,7 +200,7 @@ export default function ArticleBitpinMotion() {
             from splash and hero to campaign and seasonal identity.
           </p>
 
-          <dl className="mt-6 grid gap-3 min-[600px]:grid-cols-3">
+          <dl className="detail-mobile-stagger mt-6 grid gap-3 min-[600px]:grid-cols-3">
             <MetaItem label="Role" value="Motion design · Brand and product" />
             <MetaItem label="Company" value="Bitpin" />
             <MetaItem label="Timeframe" value="2023 – 2024 (placeholder)" />
@@ -300,15 +298,6 @@ export default function ArticleBitpinMotion() {
         </Section>
 
         <RelatedWorkSection excludeId="bitpin-motion" />
-
-        <p className="case-study__ui mt-12 text-center text-sm">
-          <Link
-            to={ROUTES.projects}
-            className="text-zinc-600 underline underline-offset-2 transition-colors hover:text-zinc-900"
-          >
-            Back to projects
-          </Link>
-        </p>
       </article>
     </div>
   );

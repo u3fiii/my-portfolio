@@ -1,8 +1,6 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
-import { ROUTES } from "../routes/paths.js";
 import rialDepositThumbnail from "../assets/thumbnails/rial-deposit.jpg";
 
 const LESSONS = [
@@ -135,7 +133,7 @@ export default function CaseStudyBitpinDeposit() {
             Bitpin · Usability Research &amp; Design Collaboration · 2024
           </p>
 
-          <dl className="mt-6 grid gap-3 min-[600px]:grid-cols-3">
+          <dl className="detail-mobile-stagger mt-6 grid gap-3 min-[600px]:grid-cols-3">
             <MetaItem
               label="Role"
               value="Usability research lead, synthesis, and design input"
@@ -445,15 +443,6 @@ export default function CaseStudyBitpinDeposit() {
         </Section>
 
         <RelatedWorkSection excludeId="bitpin-deposit" />
-
-        <p className="case-study__ui mt-12 text-center text-sm">
-          <Link
-            to={ROUTES.projects}
-            className="text-zinc-600 underline underline-offset-2 transition-colors hover:text-zinc-900"
-          >
-            Back to projects
-          </Link>
-        </p>
       </article>
     </div>
   );

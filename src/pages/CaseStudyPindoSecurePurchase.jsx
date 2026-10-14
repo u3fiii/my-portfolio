@@ -1,8 +1,6 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
 import { useLenis } from "../hooks/useLenis.jsx";
-import { ROUTES } from "../routes/paths.js";
 import pindoAsIsFlow from "../assets/case-studies/pindo-escrow-as-is-flow.png";
 import pindoCheckoutAfter from "../assets/case-studies/pindo-checkout-after.png";
 import pindoCheckoutBefore from "../assets/case-studies/pindo-checkout-before.png";
@@ -37,14 +35,89 @@ function MetaItem({ label, value }) {
   );
 }
 
-function ImagePlaceholder({ label, height = 280 }) {
+function WireframePhone({ step, title, children }) {
   return (
-    <figure
-      className="case-study__ui my-8 flex items-center justify-center rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] px-6 text-center"
-      style={{ height, borderWidth: "1px" }}
-    >
-      <figcaption className="max-w-md font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] leading-relaxed text-[#999]">
-        {label}
+    <div className="mx-auto w-full max-w-[250px] rounded-[28px] bg-[#18181b] p-[7px] shadow-[0_16px_36px_rgb(0_0_0/0.18)]">
+      <div className="min-h-[390px] overflow-hidden rounded-[22px] bg-zinc-50">
+        <div className="flex items-center justify-between border-b border-zinc-200 bg-white px-4 py-3">
+          <span className="text-sm text-zinc-500" aria-hidden>
+            ←
+          </span>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-zinc-500">
+            {step}
+          </span>
+          <span className="w-3" aria-hidden />
+        </div>
+        <div className="p-4">
+          <div className="mb-4 h-20 rounded-xl border border-zinc-200 bg-zinc-100 p-3">
+            <div className="h-full w-16 rounded-lg bg-zinc-200" />
+          </div>
+          <h4 className="text-[15px] font-semibold leading-snug text-zinc-900">
+            {title}
+          </h4>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ReturnRequestWireframe() {
+  return (
+    <figure className="case-study__ui my-8 rounded-xl border border-zinc-300 bg-zinc-50 p-5 sm:p-7">
+      <div className="grid items-start gap-6 min-[580px]:grid-cols-2">
+        <WireframePhone step="Item received" title="Is the item as described?">
+          <p className="mt-2 text-[11px] leading-relaxed text-zinc-500">
+            Confirm the condition to complete the purchase or tell us what went
+            wrong.
+          </p>
+          <div className="mt-5 flex flex-col gap-2">
+            <div className="rounded-lg bg-zinc-900 px-3 py-2.5 text-center text-[11px] font-semibold text-white">
+              Everything is fine
+            </div>
+            <div className="rounded-lg border border-zinc-300 bg-white px-3 py-2.5 text-center text-[11px] font-semibold text-zinc-700">
+              Report an issue
+            </div>
+          </div>
+        </WireframePhone>
+
+        <WireframePhone step="Return request" title="What happened with the item?">
+          <div className="mt-4 flex flex-col gap-2">
+            {["Different from listing", "Damaged or incomplete", "Other issue"].map(
+              (reason, index) => (
+                <div
+                  key={reason}
+                  className={`flex items-center gap-2 rounded-lg border px-3 py-2.5 text-[10px] ${
+                    index === 0
+                      ? "border-zinc-900 bg-zinc-100 text-zinc-900"
+                      : "border-zinc-200 bg-white text-zinc-600"
+                  }`}
+                >
+                  <span
+                    className={`h-3 w-3 rounded-full border ${
+                      index === 0
+                        ? "border-[4px] border-zinc-900"
+                        : "border-zinc-300"
+                    }`}
+                    aria-hidden
+                  />
+                  {reason}
+                </div>
+              ),
+            )}
+          </div>
+          <div className="mt-3 h-12 rounded-lg border border-zinc-200 bg-white p-2">
+            <div className="h-1.5 w-3/4 rounded-full bg-zinc-200" />
+            <div className="mt-2 h-1.5 w-1/2 rounded-full bg-zinc-200" />
+          </div>
+          <div className="mt-3 rounded-lg bg-zinc-900 px-3 py-2.5 text-center text-[11px] font-semibold text-white">
+            Submit request
+          </div>
+        </WireframePhone>
+      </div>
+      <figcaption className="mx-auto mt-5 max-w-lg text-center text-[12px] leading-relaxed text-zinc-500">
+        Wireframe reconstruction: buyers confirm the item&apos;s condition or
+        open a traceable return request for support follow-up.
       </figcaption>
     </figure>
   );
@@ -359,7 +432,7 @@ export default function CaseStudyPindoSecurePurchase() {
             Pindo · Lead Product Designer · Marketplace
           </p>
 
-          <dl className="mt-6 grid gap-3 min-[600px]:grid-cols-3">
+          <dl className="detail-mobile-stagger mt-6 grid gap-3 min-[600px]:grid-cols-3">
             <MetaItem label="Role" value="Lead Product Designer" />
             <MetaItem label="Timeframe" value="April – June 2023 (~2 months)" />
             <MetaItem
@@ -591,7 +664,7 @@ export default function CaseStudyPindoSecurePurchase() {
             operation. It was a deliberate MVP decision: buyers got a visible
             path, and we got the data.
           </Paragraph>
-          <ImagePlaceholder label="Image coming: Item condition confirmation and return request UI" />
+          <ReturnRequestWireframe />
         </Section>
 
         <Section title="Results">
@@ -636,15 +709,6 @@ export default function CaseStudyPindoSecurePurchase() {
         </Section>
 
         <RelatedWorkSection excludeId="pindo-secure-purchase" />
-
-        <p className="case-study__ui mt-12 text-center text-sm">
-          <Link
-            to={ROUTES.projects}
-            className="text-zinc-600 underline underline-offset-2 transition-colors hover:text-zinc-900"
-          >
-            Back to projects
-          </Link>
-        </p>
       </article>
     </div>
   );

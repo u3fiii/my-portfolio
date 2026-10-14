@@ -175,7 +175,7 @@ export default function Header() {
                   to={ROUTES.home}
                   onMouseEnter={playBackIcon}
                   onFocus={playBackIcon}
-                  className="button-ready-bounce group inline-flex max-w-full min-w-0 items-center gap-2 rounded-full py-1.5 pr-4 pl-2.5 text-zinc-900 transition-colors hover:bg-zinc-900/[0.035] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:hover:bg-white/[0.07]"
+                  className="detail-back-link button-ready-bounce group inline-flex max-w-full min-w-0 self-stretch items-center gap-2 rounded-full pr-4 pl-2.5 text-zinc-900 transition-colors hover:bg-zinc-900/[0.035] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
                 >
                   <LottieIcon
                     animationData={backAnimation}

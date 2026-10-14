@@ -104,15 +104,6 @@ export default function WorkDetailPage() {
         <ContentBody blocks={item.body} />
 
         <RelatedWorkSection excludeId={id} />
-
-        <p className="mt-12 text-center text-sm">
-          <Link
-            to={ROUTES.projects}
-            className="text-zinc-600 underline underline-offset-2 transition-colors hover:text-zinc-900"
-          >
-            Back to projects
-          </Link>
-        </p>
       </article>
 
     </div>
@@ -120,5 +111,4 @@ export default function WorkDetailPage() {
   );
 
 }
-
 

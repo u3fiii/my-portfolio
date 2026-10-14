@@ -22,7 +22,7 @@ export const WORK_CARDS = [
     id: "bitpin-deposit",
     filter: "case-study",
     tag: "Case Study · 2024",
-    title: "Bitpin — Deposit Flow Redesign",
+    title: "Deposit Flow",
     description:
       "How Bitpin's first usability study revealed a trust gap shaped outside the product.",
     href: workDetailPath("bitpin-deposit"),
@@ -34,7 +34,7 @@ export const WORK_CARDS = [
     id: "pindo-secure-purchase",
     filter: "case-study",
     tag: "Case Study · Pindo",
-    title: "Pindo — Secure Purchase",
+    title: "Secure Purchase",
     description:
       "Making the invisible measurable: redesigning Pindo's escrow flow and growing successful completions from 10% to 23%.",
     href: workDetailPath("pindo-secure-purchase"),
@@ -46,7 +46,7 @@ export const WORK_CARDS = [
     id: "bitpin-motion",
     filter: "article",
     tag: "Article · Bitpin",
-    title: "Bitpin — Motion",
+    title: "Motion Loops",
     description:
       "Product and campaign motion loops I designed at Bitpin — hero, splash, banners, and seasonal identity.",
     href: workDetailPath("bitpin-motion"),

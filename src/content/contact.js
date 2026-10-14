@@ -3,9 +3,13 @@
  * Form delivery is configured via VITE_WEB3FORMS_ACCESS_KEY — see .env.example
  */
 
-export const CONTACT_HEADING = "Contact";
+export const CONTACT_HEADING = {
+  beforeHighlight: "Let’s turn your ",
+  highlight: "next thing",
+  afterHighlight: " into something real.",
+};
 export const CONTACT_DESCRIPTION =
-  "Have a project in mind or want to say hello? Send a message and I'll get back to you by email.";
+  "A project, a half-formed idea, or just a hello. Send it my way and I’ll get back to you by email.";
 
 export const FORM = {
   name: { label: "Name", placeholder: "Your name" },
