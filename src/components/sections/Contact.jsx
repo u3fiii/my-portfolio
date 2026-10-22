@@ -3,7 +3,8 @@ import { motion, useInView } from "framer-motion";
 import { Clock } from "@phosphor-icons/react";
 import Section from "../layout/Section.jsx";
 import ContactForm from "../contact/ContactForm.jsx";
-import { ICON_WEIGHT, SOCIAL_ICONS } from "../ui/icons.js";
+import SocialIconLink from "../ui/SocialIconLink.jsx";
+import { ICON_WEIGHT } from "../ui/icons.js";
 import {
   CONTACT_AVAILABILITY,
   CONTACT_DESCRIPTION,
@@ -12,35 +13,53 @@ import {
   CONTACT_SOCIALS_LABEL,
 } from "../../content/contact.js";
 import { SOCIAL_LINKS } from "../../content/me.js";
+import useSectionParallax, {
+  useDepth,
+  useDepthTranslate,
+} from "../../hooks/useSectionParallax.js";
 
-const REVEAL_EASE = [0.4, 0, 0.2, 1];
+const REVEAL_EASE = [0.22, 1, 0.36, 1];
 
 function reveal(hasEntered, step) {
   return {
-    initial: { opacity: 0, y: 8 },
+    initial: { opacity: 0, y: 14 },
     animate: hasEntered ? { opacity: 1, y: 0 } : undefined,
-    transition: { duration: 0.45, delay: step * 0.08, ease: REVEAL_EASE },
+    transition: { duration: 0.6, delay: step * 0.08, ease: REVEAL_EASE },
   };
 }
 
 export default function Contact() {
-  const sectionRef = useRef(null);
-  const hasEntered = useInView(sectionRef, { once: true, amount: 0.4 });
+  const sectionElRef = useRef(null);
+  const contentRef = useRef(null);
+  const hasEntered = useInView(contentRef, { once: true, amount: 0.4 });
+  // Each line of copy sits a little nearer than the one above, so the column
+  // fans open mid-glide; the message card is the nearest plane.
+  const parallax = useSectionParallax(sectionElRef);
+  const depth = {
+    badge: useDepthTranslate(parallax, 28),
+    heading: useDepthTranslate(parallax, 40),
+    description: useDepthTranslate(parallax, 54),
+    replyTime: useDepthTranslate(parallax, 64),
+    socials: useDepthTranslate(parallax, 76),
+  };
+  const cardY = useDepth(parallax, 120);
 
   return (
     <Section
       id="contact"
+      sectionRef={sectionElRef}
       className="min-h-[100dvh] justify-center bg-transparent py-24"
-      contentMaxWidth="max-w-lg lg:max-w-5xl"
+      contentMaxWidth="max-w-lg lg:max-w-[62rem]"
       tallOnMobile={false}
     >
       <div
-        ref={sectionRef}
+        ref={contentRef}
         className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] lg:gap-16"
       >
         <header className="flex flex-col items-center text-center lg:items-start lg:text-left">
           <motion.p
             {...reveal(hasEntered, 0)}
+            style={{ translate: depth.badge }}
             className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white py-1 pl-2.5 pr-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-[10px] font-semibold uppercase tracking-[0.1em] text-zinc-700"
           >
             <span className="relative flex h-2 w-2" aria-hidden>
@@ -52,6 +71,7 @@ export default function Contact() {
 
           <motion.h2
             {...reveal(hasEntered, 1)}
+            style={{ translate: depth.heading }}
             className="mt-5 font-['Source_Serif_4',Georgia,serif] text-[1.625rem] font-bold leading-[1.15] tracking-[-0.02em] text-zinc-900 md:text-3xl lg:text-[2.625rem]"
           >
             {CONTACT_HEADING.beforeHighlight}
@@ -69,6 +89,7 @@ export default function Contact() {
 
           <motion.p
             {...reveal(hasEntered, 2)}
+            style={{ translate: depth.description }}
             className="mt-4 max-w-sm font-['Quicksand',ui-sans-serif,sans-serif] text-lg font-medium leading-relaxed text-zinc-700"
           >
             {CONTACT_DESCRIPTION}
@@ -76,6 +97,7 @@ export default function Contact() {
 
           <motion.p
             {...reveal(hasEntered, 3)}
+            style={{ translate: depth.replyTime }}
             className="mt-3 inline-flex items-center gap-1.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm text-zinc-500"
           >
             <Clock className="h-4 w-4" weight={ICON_WEIGHT} aria-hidden />
@@ -84,6 +106,7 @@ export default function Contact() {
 
           <motion.nav
             {...reveal(hasEntered, 4)}
+            style={{ translate: depth.socials }}
             className="mt-8 flex flex-col items-center gap-3 lg:items-start"
             aria-label="Social links"
           >
@@ -91,34 +114,34 @@ export default function Contact() {
               {CONTACT_SOCIALS_LABEL}
             </span>
             <ul className="flex items-center gap-2">
-              {SOCIAL_LINKS.map(({ id, label, href }) => {
-                const Icon = SOCIAL_ICONS[id];
-                return (
-                  <li key={id}>
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={label}
-                      title={label}
-                      className="pill-hover-ring button-ready-bounce inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-300 bg-white text-zinc-900 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
-                    >
-                      <Icon className="h-[1.125rem] w-[1.125rem]" weight={ICON_WEIGHT} aria-hidden />
-                    </a>
-                  </li>
-                );
-              })}
+              {SOCIAL_LINKS.map(({ id, label, href }, index) => (
+                <motion.li
+                  key={id}
+                  initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                  animate={
+                    hasEntered ? { opacity: 1, y: 0, scale: 1 } : undefined
+                  }
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.42 + index * 0.06,
+                    ease: REVEAL_EASE,
+                  }}
+                >
+                  <SocialIconLink id={id} label={label} href={href} />
+                </motion.li>
+              ))}
             </ul>
           </motion.nav>
         </header>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={hasEntered ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 0.55, delay: 0.2, ease: REVEAL_EASE }}
-          className="w-full"
-        >
-          <ContactForm />
+        <motion.div style={{ y: cardY }} className="w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 36, scale: 0.97 }}
+            animate={hasEntered ? { opacity: 1, y: 0, scale: 1 } : undefined}
+            transition={{ duration: 0.8, delay: 0.16, ease: REVEAL_EASE }}
+          >
+            <ContactForm />
+          </motion.div>
         </motion.div>
       </div>
     </Section>

@@ -34,6 +34,8 @@
 
 html {
   scroll-padding-top: 5rem;
+  /* Page colour behind content (matches PageBackground). */
+  --page-bg: #ffffff;
 }
 
 /* Text selection: black with white text (inverts with the palette in dark mode) */
@@ -49,6 +51,7 @@ html {
  */
 html.dark {
   color-scheme: dark;
+  --page-bg: #0e0e10;
   --color-white: #161618;
   --color-black: #fafafa;
   --color-zinc-50: #1c1c1f;
@@ -559,6 +562,118 @@ html.dark .avatar-art .av-hair path:not(defs path) {
   }
 }
 
+/*
+ * Breathing call-to-action: a soft ring swells off the pill's edge and fades
+ * as it grows, while the button's own glow breathes on the same beat a touch
+ * later. Uses spread shadows so the ring stays even around the pill.
+ */
+.cta-pulse {
+  position: relative;
+  isolation: isolate;
+}
+
+.cta-pulse::before,
+.cta-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.cta-pulse::before {
+  animation: cta-halo 3.2s cubic-bezier(0.33, 0, 0.2, 1) infinite;
+}
+
+.cta-pulse::after {
+  box-shadow: 0 6px 18px -4px rgb(0 0 0 / 0.35);
+  opacity: 0.3;
+  animation: cta-glow 3.2s ease-in-out 0.35s infinite;
+}
+
+html.dark .cta-pulse::after {
+  box-shadow: 0 6px 18px -4px rgb(255 255 255 / 0.18);
+}
+
+.cta-pulse:disabled::before,
+.cta-pulse:disabled::after {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes cta-halo {
+  0% {
+    box-shadow: 0 0 0 0 var(--color-zinc-300);
+    opacity: 0.9;
+  }
+
+  70%,
+  100% {
+    box-shadow: 0 0 0 7px var(--color-zinc-300);
+    opacity: 0;
+  }
+}
+
+@keyframes cta-glow {
+  0%,
+  100% {
+    opacity: 0.3;
+    translate: 0 0;
+  }
+
+  45% {
+    opacity: 0.75;
+    translate: 0 1px;
+  }
+}
+
+/* A slower, shallower take on button-ready-bounce for the breathing CTA. */
+@keyframes cta-hover-settle {
+  0% {
+    scale: 1;
+  }
+
+  32% {
+    scale: 0.98;
+  }
+
+  72% {
+    scale: 1.008;
+  }
+
+  100% {
+    scale: 1;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta-pulse.button-ready-bounce:hover:not(:disabled) {
+    animation: cta-hover-settle 420ms cubic-bezier(0.33, 0, 0.2, 1) both;
+  }
+
+  .cta-pulse.button-ready-bounce:active:not(:disabled) {
+    animation: none;
+    scale: 0.98;
+    transition: scale 160ms ease-out;
+  }
+}
+
+.cta-pulse {
+  transition-duration: 220ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-pulse::before,
+  .cta-pulse::after {
+    animation: none;
+  }
+
+  .cta-pulse.button-ready-bounce:hover {
+    animation: none;
+  }
+}
+
 @utility pill-hover-ring {
   transition:
     scale 200ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -692,52 +807,54 @@ html.dark .avatar-art .av-hair path:not(defs path) {
 
 .case-study__title {
   font-family: var(--font-case-body);
-  font-size: 2rem;
+  font-size: 2.125rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
   color: var(--color-zinc-950);
 }
 
 @media (min-width: 600px) {
   .case-study__title {
-    font-size: 2.25rem;
+    font-size: 2.75rem;
   }
 }
 
 .case-study__deck {
   font-family: var(--font-case-body);
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: 1.1875rem;
+  font-weight: 400;
   font-style: italic;
-  line-height: 1.55;
+  line-height: 1.5;
+  text-wrap: pretty;
   color: var(--color-zinc-600);
 }
 
 @media (min-width: 600px) {
   .case-study__deck {
-    font-size: 1.1875rem;
+    font-size: 1.3125rem;
   }
 }
 
 .case-study__h2 {
   font-family: var(--font-case-body);
-  font-size: 1.375rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
   color: var(--color-zinc-950);
 }
 
 @media (min-width: 600px) {
   .case-study__h2 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
 }
 
 .case-study__h3 {
   font-family: var(--font-case-body);
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   font-weight: 600;
   line-height: 1.35;
   color: var(--color-zinc-950);
@@ -745,9 +862,10 @@ html.dark .avatar-art .av-hair path:not(defs path) {
 
 .case-study__body {
   font-family: var(--font-case-body);
-  font-size: 1rem;
+  font-size: 1.0625rem;
   font-weight: 400;
   line-height: 1.75;
+  text-wrap: pretty;
   color: var(--color-zinc-800);
 }
 
@@ -760,21 +878,283 @@ html.dark .avatar-art .av-hair path:not(defs path) {
   font-size: 1.375rem;
   font-weight: 500;
   font-style: italic;
-  line-height: 1.5;
-  color: var(--color-zinc-600);
-  border-left: 3px solid var(--color-zinc-300);
-  padding-left: 1.5rem;
-  margin: 2.25rem 0;
+  line-height: 1.45;
+  text-wrap: balance;
+  color: var(--color-zinc-800);
+  border-left: 2px solid var(--color-zinc-900);
+  padding-left: 1.25rem;
+  margin: 0.75rem 0;
 }
 
 @media (min-width: 600px) {
   .case-study__quote {
-    font-size: 1.5rem;
+    font-size: 1.5625rem;
   }
 }
 
 .case-study > section + section {
   margin-top: 2rem;
+}
+
+/* The column is 52.5rem wide on desktop; type steps up a little to match. */
+@media (min-width: 1024px) {
+  .case-study__title {
+    font-size: 3.25rem;
+  }
+
+  .case-study__deck {
+    font-size: 1.5rem;
+  }
+
+  .case-study__h2 {
+    font-size: 2rem;
+  }
+
+  .case-study__h3 {
+    font-size: 1.3125rem;
+  }
+
+  .case-study__body {
+    font-size: 1.1875rem;
+    line-height: 1.7;
+  }
+
+  .case-study__quote {
+    font-size: 1.875rem;
+    padding-left: 1.5rem;
+  }
+}
+
+/* Case study layout (CaseStudyLayout.jsx) */
+
+/* A soft sheet behind the text column so the dot grid fades out under copy. */
+.cs-paper {
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  width: min(100%, 1140px);
+  transform: translateX(-50%);
+  background: var(--page-bg);
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 140px, #000 calc(100% - 140px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 140px, #000 calc(100% - 140px), transparent);
+}
+
+.cs-facts {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--color-zinc-200);
+  border-radius: 16px;
+}
+
+@media (min-width: 600px) {
+  .cs-facts {
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: 0;
+  }
+
+  .cs-facts > div {
+    padding-inline: 1.25rem;
+  }
+
+  .cs-facts > div:first-child {
+    padding-left: 0;
+  }
+
+  .cs-facts > div + div {
+    border-left: 1px solid var(--color-zinc-200);
+  }
+}
+
+.cs-facts dt {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-zinc-400);
+}
+
+.cs-facts dd {
+  margin-top: 0.375rem;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--color-zinc-700);
+}
+
+.cs-body {
+  counter-reset: chapter;
+}
+
+.cs-body > * + * {
+  margin-top: 4rem;
+}
+
+.cs-chapter {
+  counter-increment: chapter;
+  scroll-margin-top: 96px;
+}
+
+/* Chapter number above each heading: 01, 02, … */
+.cs-chapter > h2::before {
+  content: counter(chapter, decimal-leading-zero);
+  display: block;
+  margin-bottom: 0.625rem;
+  font-family: var(--font-case-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-zinc-400);
+}
+
+.cs-callout {
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--color-zinc-200);
+  border-radius: 14px;
+  background: var(--color-zinc-50);
+}
+
+.cs-callout__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-zinc-900);
+}
+
+.cs-callout__body {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--color-zinc-700);
+}
+
+.cs-callout__title + .cs-callout__body {
+  margin-top: 0.5rem;
+}
+
+.cs-figure {
+  margin-block: 1rem;
+}
+
+.cs-figure__frame {
+  overflow: hidden;
+  border: 1px solid var(--color-zinc-200);
+  border-radius: 16px;
+}
+
+.cs-figure--inset .cs-figure__frame {
+  padding: 16px;
+  background: var(--color-zinc-50);
+}
+
+.cs-figure--inset .cs-figure__frame img {
+  border-radius: 8px;
+}
+
+.cs-figure__frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cs-figure figcaption {
+  max-width: 34rem;
+  margin: 0.875rem auto 0;
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+  color: var(--color-zinc-500);
+}
+
+.cs-lessons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cs-lessons > li {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.5rem;
+}
+
+.cs-lessons__num {
+  padding-top: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-zinc-400);
+}
+
+/*
+ * Contents rail: sits left of the 52.5rem column, so it only fits on wide
+ * screens; shown after the cover.
+ */
+.cs-toc {
+  display: none;
+  left: calc(50% - 26.25rem - 56px - 160px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-8px, -50%);
+  transition:
+    opacity 300ms ease,
+    transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 1360px) {
+  .cs-toc {
+    display: block;
+  }
+}
+
+.cs-toc--visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(0, -50%);
+}
+
+.cs-toc__label {
+  font-family: var(--font-case-ui);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-zinc-400);
+}
+
+.cs-toc__link {
+  display: flex;
+  gap: 0.625rem;
+  white-space: nowrap;
+  padding-block: 0.375rem;
+  font-family: var(--font-case-ui);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  color: var(--color-zinc-400);
+  transition: color 200ms ease;
+}
+
+.cs-toc__link:hover {
+  color: var(--color-zinc-700);
+}
+
+.cs-toc__link[aria-current] {
+  color: var(--color-zinc-900);
+}
+
+.cs-toc__num {
+  flex-shrink: 0;
+  padding-top: 0.0625rem;
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-toc {
+    transition: none;
+  }
 }
 
 .case-study-related-card {
@@ -786,3 +1166,69 @@ html.dark .avatar-art .av-hair path:not(defs path) {
     border-color: var(--color-zinc-400);
   }
 }
+
+/*
+ * Message composer "ready" state: while focus is inside the card it grows a
+ * hair, easing out hard (expo) so it lands quickly and settles softly.
+ */
+/*
+ * The card lives on its own compositor layer so the scale is a smooth GPU
+ * resample; otherwise text and icons re-rasterise each frame and shimmer.
+ */
+.composer-ready {
+  will-change: scale;
+  backface-visibility: hidden;
+  transition:
+    scale 500ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.composer-ready:focus-within {
+  scale: 1.0033;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .composer-ready,
+  .composer-ready:focus-within {
+    transition: none;
+    scale: 1;
+  }
+}
+
+/* Custom text caret (see ThickCaret.jsx): native-like blink, solid while moving. */
+@keyframes thick-caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.thick-caret {
+  animation: thick-caret-blink 1.06s step-end 0.5s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thick-caret {
+    animation: none;
+  }
+}
+
+/* Flow diagrams (FlowDiagrams.jsx): arrows between steps. */
+.cs-flow__arrow {
+  align-self: center;
+  justify-self: center;
+  font-size: 1.25rem;
+  color: var(--color-zinc-400);
+}
+
+.cs-flow__arrow--dashed {
+  align-self: center;
+  justify-self: center;
+  font-size: 1.25rem;
+  color: var(--color-zinc-400);
+}
+

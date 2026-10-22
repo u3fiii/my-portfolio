@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { ArrowUpRight } from "@phosphor-icons/react";
+import { ICON_WEIGHT } from "../ui/icons.js";
 
 const FONT_SERIF = '"Source Serif 4", Georgia, serif';
 const FONT_UI = '"DM Sans", ui-sans-serif, system-ui, sans-serif';
@@ -27,6 +29,10 @@ function IconPhoto({ className }) {
   );
 }
 
+/**
+ * Framed card: the cover sits inset in a light frame; an arrow badge slides
+ * in on hover. `imageClassName` sizes the cover (defaults to 16:10).
+ */
 export default function WorkCard({
   tag,
   title,
@@ -35,15 +41,16 @@ export default function WorkCard({
   external,
   image,
   comingSoon = false,
+  imageClassName = "aspect-[16/10]",
 }) {
   const cardClass = comingSoon
-    ? "flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)]"
-    : "card-hover-ring group flex h-full flex-col overflow-hidden rounded-xl border border-zinc-300 bg-[color:var(--color-background-primary)] no-underline";
+    ? "flex h-full flex-col rounded-2xl border border-zinc-200 bg-[color:var(--color-background-primary)] p-1.5"
+    : "card-hover-ring group flex h-full flex-col rounded-2xl border border-zinc-200 bg-[color:var(--color-background-primary)] p-1.5 no-underline";
 
   const content = (
     <>
       <div
-        className="relative aspect-[4/2] w-full shrink-0 overflow-hidden bg-[color:var(--color-background-secondary)]"
+        className={`relative w-full shrink-0 overflow-hidden rounded-xl bg-[color:var(--color-background-secondary)] ${imageClassName}`}
       >
         {image ? (
           <img
@@ -68,12 +75,19 @@ export default function WorkCard({
           <span className="absolute right-2 top-2 rounded-full bg-zinc-900/90 px-2 py-0.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-[9px] lg:text-[10px] font-semibold uppercase tracking-[0.08em] text-white">
             Coming soon
           </span>
-        ) : null}
+        ) : (
+          <span
+            className="absolute right-2 top-2 flex h-8 w-8 translate-y-1 items-center justify-center rounded-full bg-white text-zinc-900 opacity-0 shadow-sm transition-[opacity,translate] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+            aria-hidden
+          >
+            <ArrowUpRight className="h-4 w-4" weight={ICON_WEIGHT} />
+          </span>
+        )}
       </div>
 
-      <div className="p-3 lg:p-3.5">
+      <div className="flex flex-1 flex-col px-2 pb-2 pt-3 lg:px-2.5">
         <p
-          className="mb-1.5 text-[9px] text-[color:var(--color-text-tertiary)] lg:text-[10px]"
+          className="mb-1 text-[9px] text-[color:var(--color-text-tertiary)] lg:text-[10px]"
           style={{
             fontFamily: FONT_UI,
             fontWeight: 500,

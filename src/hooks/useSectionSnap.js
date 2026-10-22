@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useLenis } from "./useLenis.jsx";
 
-/** Ease-in-out cubic: the page gathers weight, glides, then settles. */
-const SNAP_EASING = (t) =>
-  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-const SNAP_DURATION = 1.05;
+/**
+ * Ease-out quart: the page answers the gesture at once, then spends most of
+ * the glide settling softly into place.
+ */
+const SNAP_EASING = (t) => 1 - Math.pow(1 - t, 4);
+const SNAP_DURATION = 0.9;
 
 /** Quiet time (ms) after which the next wheel event counts as a new gesture. */
 const GESTURE_GAP_MS = 180;
 /** Wheel distance (px) a gesture must travel before it turns the page. */
-const GESTURE_THRESHOLD = 12;
+const GESTURE_THRESHOLD = 6;
 /** Slack (px) when comparing scroll positions against section edges. */
 const EDGE = 2;
 
@@ -58,8 +60,10 @@ function measureStops(ids) {
         const point = clamp(top - offset);
         return { start: point, end: point };
       }
+      // Same offset Lenis uses for anchors: scroll-padding plus scroll-margin.
+      const scrollMargin = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
       return {
-        start: clamp(top - scrollPadding),
+        start: clamp(top - scrollPadding - scrollMargin),
         end: clamp(top + height - vh),
       };
     });

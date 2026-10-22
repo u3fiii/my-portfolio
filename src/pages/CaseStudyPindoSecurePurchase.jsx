@@ -1,39 +1,14 @@
-import { useEffect } from "react";
-import RelatedWorkSection from "../components/work/RelatedWorkSection.jsx";
-import { useLenis } from "../hooks/useLenis.jsx";
-import pindoAsIsFlow from "../assets/case-studies/pindo-escrow-as-is-flow.png";
+import CaseStudyLayout, {
+  Chapter,
+  Figure,
+  H3,
+  Interlude,
+  P,
+} from "../components/case-study/CaseStudyLayout.jsx";
 import pindoCheckoutAfter from "../assets/case-studies/pindo-checkout-after.png";
 import pindoCheckoutBefore from "../assets/case-studies/pindo-checkout-before.png";
-import pindoFunnelBeforeAfter from "../assets/case-studies/pindo-escrow-funnel-before-after.png";
-import pindoShippingStatesFlow from "../assets/case-studies/pindo-shipping-states-flow.jpg";
+import { BeforeAfterBars, EscrowAsIsDiagram, ShippingDecisionDiagram } from "../components/case-study/FlowDiagrams.jsx";
 import escrowThumbnail from "../assets/thumbnails/escrow.jpg";
-
-function Section({ title, children }) {
-  return (
-    <section>
-      <h2 className="case-study__h2">{title}</h2>
-      <div className="mt-5 flex flex-col gap-5">{children}</div>
-    </section>
-  );
-}
-
-function Paragraph({ children }) {
-  return <p className="case-study__body">{children}</p>;
-}
-
-function MetaItem({ label, value }) {
-  return (
-    <div
-      className="case-study__ui h-full rounded-xl border border-[#E2E1DC] dark:border-zinc-200 bg-white px-5 py-4"
-      style={{ borderWidth: "0.5px" }}
-    >
-      <dt className="text-xs font-medium uppercase tracking-[0.06em] text-zinc-500">
-        {label}
-      </dt>
-      <dd className="mt-1.5 text-xs leading-relaxed text-zinc-700">{value}</dd>
-    </div>
-  );
-}
 
 function WireframePhone({ step, title, children }) {
   return (
@@ -64,7 +39,7 @@ function WireframePhone({ step, title, children }) {
 
 function ReturnRequestWireframe() {
   return (
-    <figure className="case-study__ui my-8 rounded-xl border border-zinc-300 bg-zinc-50 p-5 sm:p-7">
+    <figure className="case-study__ui my-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-5 sm:p-7">
       <div className="grid items-start gap-6 min-[580px]:grid-cols-2">
         <WireframePhone step="Item received" title="Is the item as described?">
           <p className="mt-2 text-[11px] leading-relaxed text-zinc-500">
@@ -206,12 +181,12 @@ function BaselineFunnel() {
   const topYs = funnelTopYs(pcts, baselineY, chartHeight);
 
   return (
-    <figure className="case-study__ui my-2 rounded-xl border border-[#E2E1DC] dark:border-zinc-200 bg-white px-5 py-6">
+    <figure className="case-study__ui my-2 rounded-2xl border border-zinc-200 bg-white px-5 py-6">
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
         <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-500">
           Baseline funnel
         </p>
-        <p className="rounded-lg border border-[#E2E1DC] dark:border-zinc-200 bg-zinc-50 px-3 py-2 text-xs leading-snug text-zinc-600">
+        <p className="rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-xs leading-snug text-zinc-600">
           <span className="font-semibold text-zinc-900">10%</span> of created
           carts confirmed item OK
         </p>
@@ -295,7 +270,7 @@ function ResultsComparisonFunnel() {
   const afterTopYs = funnelTopYs(afterPcts, baselineY, chartHeight);
 
   return (
-    <figure className="case-study__ui my-2 rounded-xl border border-[#E2E1DC] dark:border-zinc-200 bg-white px-5 py-6">
+    <figure className="case-study__ui my-2 rounded-2xl border border-zinc-200 bg-white px-5 py-6">
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
         <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-500">
           Results funnel
@@ -394,322 +369,226 @@ function ResultsComparisonFunnel() {
 }
 
 export default function CaseStudyPindoSecurePurchase() {
-  const lenis = useLenis();
-
-  useEffect(() => {
-    if (lenis) {
-      lenis.scrollTo(0, { immediate: true });
-      return;
-    }
-    window.scrollTo(0, 0);
-  }, [lenis]);
-
   return (
-    <div className="min-h-screen">
-      <article className="case-study mx-auto max-w-[748px] px-6 pb-20 pt-24 md:pt-28">
-        <header className="mb-8 pb-6">
-          <p className="case-study__eyebrow detail-reveal detail-reveal--eyebrow">Case Study · Pindo</p>
-          <h1 className="case-study__title detail-reveal detail-reveal--title mt-4">
-            Making the invisible measurable: redesigning Pindo&apos;s Secure
-            Purchase flow
-          </h1>
+    <CaseStudyLayout
+      id="pindo-secure-purchase"
+      eyebrow="Case Study · Pindo · 2023"
+      title="Making the invisible measurable: Pindo's Secure Purchase redesign"
+      deck="Redesigning Pindo's escrow flow and growing successful completions from 10% to 23%."
+      role="Lead Product Designer · Pindo"
+      cover={{
+        src: escrowThumbnail,
+        alt: "Pindo Secure Purchase case study cover",
+        width: 1536,
+        height: 1024,
+      }}
+      meta={[
+        ["Role", "Lead Product Designer"],
+        ["Timeframe", "April – June 2023 (~2 months)"],
+        ["Team", "Product Design, 1 PM, 1 frontend, 1 backend, Support"],
+      ]}
+    >
+      <Interlude>
+        <P>
+          <strong className="text-zinc-900">TL;DR</strong> — Pindo&apos;s escrow
+          flow (&ldquo;Secure Purchase&rdquo;) was the company&apos;s key revenue
+          stream, but no one could see how it performed: no instrumentation, no
+          return path in the product, and a support team quietly absorbing the
+          gaps. I went through the flow as a real buyer, made the problem visible
+          with data, redefined what &ldquo;success&rdquo; meant, and redesigned the
+          flow around its biggest drop-offs. Successful completions grew from 10%
+          to 23% of created carts.
+        </P>
+        <BeforeAfterBars />
+      </Interlude>
 
-          <figure
-            className="case-study__ui detail-reveal detail-reveal--image my-8 overflow-hidden rounded-xl border border-zinc-300 bg-zinc-100"
-          >
-            <img
-              src={escrowThumbnail}
-              alt="Pindo Secure Purchase case study cover"
-              width="1536"
-              height="1024"
-              decoding="async"
-              fetchPriority="high"
-              className="ambient-cover-zoom block h-auto w-full"
-            />
-          </figure>
+      <Chapter title="Context" nav="Context">
+        <P>
+          Pindo is a marketplace where trust between buyer and seller isn&apos;t
+          guaranteed — which is exactly why Secure Purchase existed: Pindo holds the
+          buyer&apos;s money until the item arrives in good condition, and earns a
+          commission on each transaction. It was the company&apos;s primary revenue
+          flow. I had worked on escrow before at Sheypoor, so it was one of the
+          first things I wanted to understand when I joined.
+        </P>
+      </Chapter>
 
-          <p className="case-study__deck detail-reveal detail-reveal--text mt-4">
-            Pindo · Lead Product Designer · Marketplace
-          </p>
+      <Chapter title="Discovery: buying a power strip" nav="Discovery">
+        <P>
+          Instead of starting with screens, I started as a customer. I needed a
+          power strip that week, so I found a listing with Secure Purchase and
+          ordered it. The experience had holes:
+        </P>
+        <ul className="case-study__body list-disc space-y-3 pl-5">
+          <li>
+            <span className="font-semibold text-zinc-900">Before paying</span>,
+            nothing said how or when the item would ship. My seller was in Tehran,
+            so I assumed courier; it arrived by post, days later. Had I known, I
+            might have decided differently.
+          </li>
+          <li>
+            <span className="font-semibold text-zinc-900">After delivery</span>,
+            the app asked me to rate the seller — and that was it. No question about
+            whether the item was correct or intact, and no return path anywhere.
+          </li>
+        </ul>
+        <P>
+          So I ordered again and called support anonymously to return the item. It
+          was entirely manual: support coordinated with the seller by phone, asked
+          for my card number for the refund, and told me the return courier was on
+          me — none of which was written in the terms. The support team confirmed
+          the scale: roughly 20–25 return-related cases a day, none of them logged.
+        </P>
+        <EscrowAsIsDiagram />
+      </Chapter>
 
-          <dl className="detail-mobile-stagger mt-6 grid gap-3 min-[600px]:grid-cols-3">
-            <MetaItem label="Role" value="Lead Product Designer" />
-            <MetaItem label="Timeframe" value="April – June 2023 (~2 months)" />
-            <MetaItem
-              label="Team"
-              value="Product Design, 1 PM, 1 frontend, 1 backend, Support"
-            />
-          </dl>
+      <Figure
+        frame="bleed"
+        src="/images/editorial/pindo-journey.jpg"
+        alt="A parcel follows a thread through a protective arch to a receiving hand"
+      />
 
-        </header>
+      <Chapter title="Making the problem visible" nav="Visibility">
+        <P>
+          I mapped the existing flow with all its states and edge cases, and brought
+          stakeholders and PMs into a briefing. The argument was simple: this flow
+          is silently expensive — for buyers with no visibility, and for a support
+          team doing undocumented manual work — and we can&apos;t improve what we
+          can&apos;t see.
+        </P>
+      </Chapter>
 
-        <section>
-          <div className="mt-5 flex flex-col gap-5">
-            <Paragraph>
-              <strong>TL;DR</strong> — Pindo&apos;s escrow flow
-              (&ldquo;Secure Purchase&rdquo;) was the company&apos;s key revenue
-              stream, but no one could see how it was performing: no
-              instrumentation, no return path in the product, and a support team
-              manually absorbing the gaps. I experienced the flow first-hand as a
-              real buyer, made the problem visible with data, redefined what
-              &ldquo;success&rdquo; meant for the funnel, and redesigned the flow
-              around its biggest drop-offs. Successful completions grew from 10%
-              to 23% of created carts.
-            </Paragraph>
-            <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
+      <Chapter title="Measuring before designing" nav="Measuring">
+        <P>
+          Rather than wait for client-side event tracking, we started with
+          transactional data, building Metabase dashboards with a backend engineer.
+          For a funnel of definitive actions — payments, confirmations — that was
+          enough, and arguably more reliable.
+        </P>
+        <P>
+          The key decision was definitional:{" "}
+          <strong>we changed what counted as success.</strong> The flow used to end
+          at &ldquo;I received the item.&rdquo; We replaced the post-delivery
+          rating prompt with an explicit question —{" "}
+          <em>confirm or reject the item&apos;s condition</em> — and made that the
+          bottom of the funnel. Escrow only keeps its promise when the buyer walks
+          away with an intact item, not merely a delivered box.
+        </P>
+        <BaselineFunnel />
+        <P>
+          Two numbers stood out: 8% of paying buyers never reached
+          &ldquo;delivered&rdquo; — they were calling support and being handled
+          manually, invisible to the product. And of those who received their items,
+          a meaningful share (6pp) wouldn&apos;t confirm the item&apos;s condition.
+        </P>
+      </Chapter>
+
+      <Chapter title="Design decisions, mapped to the drops" nav="Design decisions">
+        <H3>Cart → Paid (the biggest drop)</H3>
+        <P>
+          We brought shipping information — method and estimated time — onto the
+          product page and into checkout, before commitment. We also rewrote the
+          terms buyers accepted to include what had been unwritten, like return
+          courier costs.
+        </P>
+        <Figure caption="Checkout before and after: the summary now itemizes estimated shipping time and a location-based shipping cost, so buyers see the full picture before paying.">
+          <div className="flex flex-wrap items-start justify-center gap-4 sm:gap-6">
+            <div className="min-w-0 flex-1 basis-[200px]">
+              <p className="mb-2 text-center text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-500">
+                Before
+              </p>
               <img
-                src={pindoFunnelBeforeAfter}
-                alt="Before and after funnel comparison: cart created, paid, delivered, and confirmed item OK"
-                className="block h-auto w-full rounded"
+                src={pindoCheckoutBefore}
+                alt="Checkout before: only items and a single total, no address, shipping method, time, or cost"
+                className="mx-auto block w-full max-w-[240px] rounded"
               />
-            </figure>
-          </div>
-        </section>
-
-        <Section title="Context">
-          <Paragraph>
-            Pindo is a marketplace where the trust between buyer and seller
-            isn&apos;t guaranteed — which is exactly why its Secure Purchase
-            (escrow) feature existed: the buyer&apos;s money is held by Pindo
-            until the item arrives in good condition. Pindo earned a commission
-            on each escrow transaction, making this the company&apos;s primary
-            revenue flow.
-          </Paragraph>
-          <Paragraph>
-            I had worked on an escrow flow before at Sheypoor, so when I joined
-            Pindo, this feature was one of the first things I wanted to
-            understand.
-          </Paragraph>
-        </Section>
-
-        <Section title="Discovery: buying a power strip">
-          <Paragraph>
-            Instead of starting with screens, I started as a customer. I needed a
-            power strip that week, so I browsed the app as a real buyer, found a
-            listing that supported Secure Purchase, and ordered it.
-          </Paragraph>
-          <Paragraph>The experience had holes in it:</Paragraph>
-          <ul className="case-study__body list-disc space-y-3 pl-5">
-            <li>
-              <span className="font-semibold text-zinc-900">Before paying</span>,
-              there was no information about how or when the item would ship. My
-              seller was in Tehran; I assumed courier. It arrived by post, days
-              later. Had I known, I might have decided differently.
-            </li>
-            <li>
-              <span className="font-semibold text-zinc-900">
-                After confirming delivery
-              </span>
-              , the app asked me to rate the seller — and that was it. No
-              question about whether the item was correct or intact. No return
-              path anywhere in the product.
-            </li>
-          </ul>
-          <Paragraph>
-            So I ran a second experiment: I ordered again, and this time called
-            support anonymously to return the item. The process was entirely
-            manual — support coordinated with the seller by phone, asked me for a
-            card number for the refund, and told me the return courier cost was
-            on me. None of this was written anywhere in the terms.
-          </Paragraph>
-          <Paragraph>
-            Talking to the support team confirmed the scale: roughly 20–25
-            return-related cases per day, none of them logged anywhere.
-          </Paragraph>
-          <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
-            <img
-              src={pindoAsIsFlow}
-              alt="As-is Secure Purchase flow diagram with pain points marked at each step"
-              className="block h-auto w-full rounded"
-            />
-          </figure>
-        </Section>
-
-        <Section title="Making the problem visible">
-          <Paragraph>
-            I mapped the existing flow with all its states and edge cases, and
-            brought stakeholders and PMs into a briefing session. The argument
-            was simple: this flow is silently expensive — for buyers who have no
-            visibility, and for a support team doing undocumented manual work —
-            and we can&apos;t improve what we can&apos;t see.
-          </Paragraph>
-        </Section>
-
-        <Section title="Measuring before designing">
-          <Paragraph>
-            Client-side event tracking required frontend work we didn&apos;t want
-            to wait for, so we started with transactional data from the database,
-            building dashboards in Metabase with a backend engineer. For a funnel
-            of definitive actions — payments, confirmations — this was sufficient
-            and arguably more reliable. Behavioral events were deferred to a later
-            phase.
-          </Paragraph>
-          <Paragraph>
-            The key decision here wasn&apos;t technical, it was definitional:{" "}
-            <strong>we changed what counted as success.</strong> Until then, the
-            flow effectively ended at &ldquo;I received the item.&rdquo; We
-            replaced the post-delivery rating prompt with an explicit question —{" "}
-            <em>confirm or reject the item&apos;s condition</em> — and made that
-            confirmation the bottom of the funnel. Escrow only fulfills its
-            promise when the buyer walks away with an intact item, not merely a
-            delivered box.
-          </Paragraph>
-          <Paragraph>The baseline told the story:</Paragraph>
-          <BaselineFunnel />
-          <Paragraph>
-            Two numbers stood out: 8% of paying buyers never even reached
-            &ldquo;delivered&rdquo; — they were calling support and being handled
-            manually, invisible to the product. And of those who did receive
-            items, a meaningful share (6pp) wouldn&apos;t confirm the item&apos;s
-            condition.
-          </Paragraph>
-        </Section>
-
-        <Section title="Design decisions, mapped to the drops">
-          <h3 className="case-study__h3">
-            Cart → Paid (the biggest drop).
-          </h3>
-          <Paragraph>
-            We brought shipping information forward — method and estimated time —
-            onto the PDP and into checkout, before commitment. We also rewrote the
-            terms buyers accepted before paying to include what had previously
-            been unwritten, like return courier costs.
-          </Paragraph>
-          <figure className="case-study__ui my-8 rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
-            <div className="flex flex-wrap items-start justify-center gap-4 sm:gap-6">
-              <div className="min-w-0 flex-1 basis-[200px]">
-                <p className="mb-2 text-center text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-500">
-                  Before
-                </p>
-                <img
-                  src={pindoCheckoutBefore}
-                  alt="Checkout before: only items and a single total, no address, shipping method, time, or cost"
-                  className="mx-auto block w-full max-w-[240px] rounded"
-                />
-              </div>
-              <div className="min-w-0 flex-1 basis-[200px]">
-                <p className="mb-2 text-center text-[11px] font-medium uppercase tracking-[0.08em] text-[#0077A3]">
-                  After
-                </p>
-                <img
-                  src={pindoCheckoutAfter}
-                  alt="Checkout after: recipient address, seller info, and a payment summary itemizing items price, estimated shipping time, shipping cost, and total"
-                  className="mx-auto block w-full max-w-[240px] rounded"
-                />
-              </div>
             </div>
-            <figcaption className="mx-auto mt-4 max-w-md text-center font-['DM_Sans',ui-sans-serif,sans-serif] text-[13px] leading-relaxed text-zinc-500">
-              Checkout before and after: the summary now itemizes estimated
-              shipping time and a location-based shipping cost, so buyers see the
-              full picture before paying.
-            </figcaption>
-          </figure>
+            <div className="min-w-0 flex-1 basis-[200px]">
+              <p className="mb-2 text-center text-[11px] font-medium uppercase tracking-[0.08em] text-[#0077A3]">
+                After
+              </p>
+              <img
+                src={pindoCheckoutAfter}
+                alt="Checkout after: recipient address, seller info, and a payment summary itemizing items price, estimated shipping time, shipping cost, and total"
+                className="mx-auto block w-full max-w-[240px] rounded"
+              />
+            </div>
+          </div>
+        </Figure>
 
-          <h3 className="case-study__h3">
-            Paid → Delivered (the invisible 8%).
-          </h3>
-          <Paragraph>
-            Between payment and delivery, we had an 8pp leak: buyers had paid,
-            but sellers weren&apos;t shipping — or weren&apos;t shipping fast
-            enough for the order to ever reach &ldquo;delivered.&rdquo; Part of
-            the fix was operational, not just UI. Sellers already received a
-            push when a buyer paid, but the copy didn&apos;t convey urgency. We
-            rewrote it and asked the seller explicitly to ship. If a seller still
-            hadn&apos;t acted 24 hours after payment, support called to find out
-            why and remind them that fulfillment was overdue. We leaned on the
-            support team here deliberately — the drop was as much about seller
-            behavior as product gaps.
-          </Paragraph>
-          <Paragraph>
-            Those calls surfaced a concrete reason. Shipping cost had never been
-            accounted for anywhere in the flow — sellers were expected to absorb
-            it into their asking price. For local deliveries that was negligible,
-            but inter-city shipping was expensive enough that many sellers simply
-            chose not to ship, and Pindo offered no mechanism to cover it. So we
-            made shipping a priced part of the transaction: based on the
-            buyer&apos;s address, we added a shipping fee to the amount the buyer
-            paid — 50,000 toman for local delivery and 200,000 toman inter-city
-            at the time — and had the sales team tell sellers directly that
-            shipping was now covered, so they could fulfill orders without eating
-            the cost. The buyer saw this itemized in their cart before paying
-            (above), but its real purpose was to unblock the drop between paid
-            and delivered.
-          </Paragraph>
-          <Paragraph>
-            On the product side, when marking an item as shipped, sellers now
-            had to select the shipping method and enter an estimated delivery
-            window (e.g., under a day for courier, 3–5 days for post). The buyer
-            saw an &ldquo;in transit&rdquo; state during that window; only after
-            it ended did two buttons appear — <em>received</em> /{" "}
-            <em>not received</em> — accompanied by a push notification prompting
-            them to resolve the order. &ldquo;Not received&rdquo; triggered a
-            support follow-up and extended the window. The buyers who used to
-            vanish into phone calls were now systematically counted and handled
-            inside the flow.
-          </Paragraph>
-          <figure className="case-study__ui my-8 overflow-hidden rounded-lg border border-dashed border-[#CCC] bg-[#F5F5F5] p-4">
-            <img
-              src={pindoShippingStatesFlow}
-              alt="Post-payment flow: buyer pays, seller is prompted to ship; if not shipped within 24 hours support follows up, otherwise the buyer's order moves to in transit"
-              className="block h-auto w-full rounded"
-            />
-          </figure>
+        <H3>Paid → Delivered (the invisible 8%)</H3>
+        <P>
+          Buyers had paid, but sellers weren&apos;t shipping — or not fast enough
+          for the order to ever reach &ldquo;delivered.&rdquo; Part of the fix was
+          operational. We rewrote the seller&apos;s payment notification to ask
+          explicitly for shipment, and if nothing happened within 24 hours, support
+          called to find out why.
+        </P>
+        <P>
+          Those calls surfaced the real reason: shipping cost had never been part
+          of the flow. Sellers were expected to absorb it, which was negligible
+          locally but expensive between cities — so many simply didn&apos;t ship.
+          We made shipping a priced part of the transaction, adding a fee based on
+          the buyer&apos;s address (then 50,000 toman local, 200,000 inter-city),
+          and the sales team told sellers directly that shipping was now covered.
+        </P>
+        <P>
+          When marking an item as shipped, sellers now chose the method and an
+          estimated delivery window (under a day for courier, 3–5 days for post).
+          Buyers saw &ldquo;in transit&rdquo; during that window; afterwards, a push
+          and two buttons — <em>received</em> / <em>not received</em> — asked them
+          to resolve the order, and &ldquo;not received&rdquo; triggered a support
+          follow-up. Buyers who used to vanish into phone calls were now counted
+          and handled inside the flow.
+        </P>
+        <ShippingDecisionDiagram />
 
-          <h3 className="case-study__h3">Delivered → Confirmed.</h3>
-          <Paragraph>
-            Rejecting the item&apos;s condition now opened a return request inside
-            the product. To be transparent: the operation behind it stayed manual
-            — the request landed in the support admin panel and was followed up by
-            the same team. We digitized the <em>request</em>, not the whole return
-            operation. It was a deliberate MVP decision: buyers got a visible
-            path, and we got the data.
-          </Paragraph>
-          <ReturnRequestWireframe />
-        </Section>
+        <H3>Delivered → Confirmed</H3>
+        <P>
+          Rejecting the item&apos;s condition now opened a return request inside the
+          product. The operation behind it stayed manual — requests landed in the
+          support admin panel. We digitized the <em>request</em>, not the whole
+          return process: a deliberate MVP that gave buyers a visible path and gave
+          us the data.
+        </P>
+        <ReturnRequestWireframe />
+      </Chapter>
 
-        <Section title="Results">
-          <Paragraph>
-            Over the following months, the funnel shifted:
-          </Paragraph>
-          <ResultsComparisonFunnel />
-          <Paragraph>
-            Support load from escrow-related calls dropped as well — from roughly
-            20–25 calls a day to under 10.
-          </Paragraph>
-          <Paragraph>
-            One detail worth noting: among buyers who reached
-            &ldquo;delivered,&rdquo; the share who wouldn&apos;t confirm item
-            condition stayed in a similar range — roughly 38% before and 32%
-            after. We didn&apos;t nudge buyers into confirming — dissatisfaction
-            still surfaced at a comparable rate. The difference was that it now
-            surfaced <em>inside the product</em>, where it could be counted and
-            acted on.
-          </Paragraph>
-        </Section>
+      <Chapter title="Results" nav="Results">
+        <P>Over the following months, the funnel shifted:</P>
+        <ResultsComparisonFunnel />
+        <P>
+          Escrow-related support calls dropped too, from roughly 20–25 a day to
+          under 10.
+        </P>
+        <P>
+          One detail worth noting: among buyers who reached &ldquo;delivered,&rdquo;
+          the share who wouldn&apos;t confirm the item&apos;s condition stayed in a
+          similar range — about 38% before and 32% after. We didn&apos;t nudge
+          buyers into confirming; dissatisfaction still surfaced at a comparable
+          rate. The difference was that it now surfaced <em>inside the product</em>,
+          where it could be counted and acted on.
+        </P>
+      </Chapter>
 
-        <Section title="What I'd Do Differently">
-          <Paragraph>
-            The improvements shipped close together, so their effects were
-            combined — we never isolated which change moved which number. If I
-            did this again, I&apos;d release in stages so each intervention&apos;s
-            contribution was measurable on its own. I&apos;d also push for at
-            least minimal client-side event tracking earlier; transactional data
-            told us <em>where</em> the funnel leaked, but behavioral data would
-            have told us more about <em>why</em>.
-          </Paragraph>
-        </Section>
+      <Chapter title="What I'd do differently" nav="Hindsight">
+        <P>
+          The improvements shipped close together, so we never isolated which change
+          moved which number. Next time I&apos;d release in stages, and push earlier
+          for at least minimal client-side tracking: transactional data told us{" "}
+          <em>where</em> the funnel leaked, but behavioral data would have told us
+          more about <em>why</em>.
+        </P>
+      </Chapter>
 
-        <Section title="What happened next">
-          <Paragraph>
-            The remaining dissatisfaction pointed largely at the seller side —
-            items not shipped, or not matching the listing. That thread continued
-            in a separate project: a detailed post-purchase rating and review
-            system that gave buyers leverage and sellers accountability.
-          </Paragraph>
-        </Section>
-
-        <RelatedWorkSection excludeId="pindo-secure-purchase" />
-      </article>
-    </div>
+      <Chapter title="What happened next" nav="What's next">
+        <P>
+          The remaining dissatisfaction pointed mostly at sellers — items not
+          shipped, or not matching the listing. That thread continued in a separate
+          project: a post-purchase rating and review system that gave buyers
+          leverage and sellers accountability.
+        </P>
+      </Chapter>
+    </CaseStudyLayout>
   );
 }

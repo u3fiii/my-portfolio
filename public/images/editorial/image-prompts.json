@@ -1,0 +1,17 @@
+{
+  "generator": "Built-in image_gen",
+  "assets": [
+    {
+      "key": "deposit-trust",
+      "prompt": "Use case: stylized-concept. Create a sophisticated editorial illustration for a product designer's case study about rebuilding trust in bank deposits after a familiar payment gateway disappears. Landscape 3:2. Tactile cut-paper collage and restrained mid-century linocut, visible ivory paper grain, deep forest green backdrop, warm ivory and black ink, small mint detail. Main metaphor: two torn paper platforms separated by a narrow dark gap, connected by a carefully laid ivory paper bridge; a small abstract bank-card shape crossing the bridge and a simple geometric bank arch at the far end. Strong elegant composition, generous negative space, crisp hand-cut silhouettes, subtle imperfect print registration. Art direction suits black serif headlines, white dotted-paper portfolio and vintage editorial collage. No people, no text, no letters, no numbers, no cryptocurrency symbols, no logos, no UI screenshots, no gradients or generic glossy 3D. Entire composition safely inset. This is conceptual editorial artwork, not evidence of a shipped design."
+    },
+    {
+      "key": "pindo-journey",
+      "prompt": "Use case: stylized-concept. Wide landscape 3:2 editorial cut-paper collage illustrating a secure marketplace purchase: a small warm ivory parcel travels along a bold continuous black thread, passing through a simple protective arch and ending beside an ivory hand checking the parcel. Restrained brick-red paper background, ivory and black linocut silhouettes, tactile paper grain and sparse halftone detail. Refined magazine illustration for a product design portfolio with serif typography. Clear left-to-right composition, spacious, only three distinct objects, visually quiet, handmade and graphic rather than cute. No text, no labels, no lettering, no currency symbols, no logos, no charts, no UI. Conceptual metaphor for making the post-payment journey visible, not a real research artifact."
+    },
+    {
+      "key": "price-feedback",
+      "prompt": "Use case: stylized-concept. Wide landscape 3:2 sophisticated editorial collage about giving a car seller useful price guidance before they publish a listing. Ochre-yellow paper background, black ink and warm ivory cut-paper shapes. An ivory paper price tag hangs from a small sculptural black car silhouette, alongside a large simple black pencil poised to adjust the blank tag; a small muted sage circle adds a restrained affirmative accent. Elegant off-center composition, large areas of breathing room, subtle paper grain and linocut edges matching mid-century editorial printmaking. A refined product designer portfolio, not children's illustration. No text, numbers, currency symbols, logos, dashboard, charts, or artificial UI. Metaphorical illustration only."
+    }
+  ]
+}

@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle, PaperPlaneTilt } from "@phosphor-icons/react";
-import { ICON_WEIGHT } from "../ui/icons.js";
+import { CheckCircle } from "@phosphor-icons/react";
+import LottieIcon, { prefersReducedMotion } from "../ui/LottieIcon.jsx";
+import ThickCaret from "../ui/ThickCaret.jsx";
+import sendAnimation from "../../assets/lottie/Send message.json";
 import { SITE } from "../../content/site.js";
 import { FORM, FORM_FEEDBACK } from "../../content/contact.js";
 import {
   isContactFormConfigured,
   sendContactMessage,
 } from "../../lib/contactForm.js";
+import {
+  englishCharForKey,
+  insertText,
+  pastedToEnglish,
+  toEnglish,
+} from "../../utils/englishInput.js";
 
 const initialValues = { email: "", message: "" };
 
@@ -27,21 +35,61 @@ export default function ContactForm() {
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle");
 
+  const sendLottieRef = useRef(null);
+  const emailRef = useRef(null);
+  const messageRef = useRef(null);
+  const playSendIcon = () => {
+    if (!prefersReducedMotion()) sendLottieRef.current?.goToAndPlay(0, true);
+  };
+
   const configured = isContactFormConfigured();
   const isSubmitting = status === "submitting";
 
+  // Caret to restore after a value was rewritten to English (React would
+  // otherwise jump it to the end).
+  const pendingCaretRef = useRef(null);
+  useLayoutEffect(() => {
+    const pending = pendingCaretRef.current;
+    if (!pending) return;
+    pendingCaretRef.current = null;
+    pending.field.setSelectionRange(pending.position, pending.position);
+  });
+
   function handleChange(event) {
-    const { name, value } = event.target;
-    setValues((prev) => ({ ...prev, [name]: value }));
+    const field = event.target;
+    const { name, value } = field;
+    const english = toEnglish(value);
+    if (english !== value && field.selectionStart != null) {
+      pendingCaretRef.current = {
+        field,
+        position: toEnglish(value.slice(0, field.selectionStart)).length,
+      };
+    }
+    setValues((prev) => ({ ...prev, [name]: english }));
     setErrors((prev) => ({ ...prev, [name]: undefined }));
     if (status === "error") setStatus("idle");
+  }
+
+  /** Typing on a Persian (or any non-English) layout still types English. */
+  function handleEnglishKeyDown(event) {
+    const char = englishCharForKey(event);
+    if (char === null) return;
+    event.preventDefault();
+    insertText(event.currentTarget, char);
+  }
+
+  function handleEnglishPaste(event) {
+    event.preventDefault();
+    insertText(event.currentTarget, pastedToEnglish(event.clipboardData.getData("text")));
   }
 
   function handleMessageKeyDown(event) {
     if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
       event.preventDefault();
       event.currentTarget.form.requestSubmit();
+      return;
     }
+    handleEnglishKeyDown(event);
   }
 
   function validate() {
@@ -83,7 +131,10 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-[0_1px_2px_rgb(0_0_0/4%),0_12px_32px_-12px_rgb(0_0_0/12%)] transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] focus-within:border-zinc-900 focus-within:shadow-[0_0_0_2px_var(--color-zinc-900)]">
+    <div
+      data-dot-shock="off"
+      className="composer-ready overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-[0_1px_2px_rgb(0_0_0/4%),0_12px_32px_-12px_rgb(0_0_0/12%)] focus-within:border-zinc-900 focus-within:shadow-[0_0_0_4px_var(--color-zinc-900)]"
+    >
       <div className="flex items-center justify-between border-b border-zinc-100 bg-zinc-50 px-4 py-2.5">
         <span className={`${FONT_UI} text-sm font-semibold text-zinc-900`}>
           {FORM.title}
@@ -113,7 +164,7 @@ export default function ContactForm() {
             <button
               type="button"
               onClick={() => setStatus("idle")}
-              className={`${FONT_UI} pill-hover-ring mt-2 rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-900 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2`}
+              className={`${FONT_UI} pill-hover-ring mt-2 cursor-pointer rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-900 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2`}
             >
               {FORM_FEEDBACK.sendAnother}
             </button>
@@ -139,19 +190,32 @@ export default function ContactForm() {
                 <label htmlFor="contact-email" className={rowLabelClass}>
                   {FORM.email.label}
                 </label>
-                <input
-                  id="contact-email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  placeholder={FORM.email.placeholder}
-                  aria-invalid={Boolean(errors.email)}
-                  aria-describedby={errors.email ? "contact-email-error" : undefined}
-                  className={`${FONT_UI} min-w-0 flex-1 bg-transparent text-base text-zinc-900 placeholder:text-zinc-400 focus:outline-none`}
-                  disabled={isSubmitting}
-                />
+                <div className="relative min-w-0 flex-1">
+                  <input
+                    ref={emailRef}
+                    id="contact-email"
+                    name="email"
+                    // Text, not "email": email inputs hide the caret position,
+                    // which ThickCaret needs. Validation happens in validate().
+                    type="text"
+                    inputMode="email"
+                    autoComplete="email"
+                    autoCapitalize="off"
+                    spellCheck={false}
+                    value={values.email}
+                    onChange={handleChange}
+                    onKeyDown={handleEnglishKeyDown}
+                    onPaste={handleEnglishPaste}
+                    lang="en"
+                    dir="ltr"
+                    placeholder={FORM.email.placeholder}
+                    aria-invalid={Boolean(errors.email)}
+                    aria-describedby={errors.email ? "contact-email-error" : undefined}
+                    className={`${FONT_UI} w-full bg-transparent text-base text-zinc-900 placeholder:text-sm placeholder:text-zinc-400 focus:outline-none`}
+                    disabled={isSubmitting}
+                  />
+                  <ThickCaret fieldRef={emailRef} />
+                </div>
               </div>
               {errors.email && (
                 <p id="contact-email-error" className={`${fieldErrorClass} mt-1 pl-15`}>
@@ -164,19 +228,26 @@ export default function ContactForm() {
               <label htmlFor="contact-message" className="sr-only">
                 {FORM.message.label}
               </label>
-              <textarea
-                id="contact-message"
-                name="message"
-                rows={6}
-                value={values.message}
-                onChange={handleChange}
-                onKeyDown={handleMessageKeyDown}
-                placeholder={FORM.message.placeholder}
-                aria-invalid={Boolean(errors.message)}
-                aria-describedby={errors.message ? "contact-message-error" : undefined}
-                className={`${FONT_UI} block min-h-[9rem] w-full resize-none bg-transparent text-base leading-relaxed text-zinc-900 placeholder:text-zinc-400 focus:outline-none`}
-                disabled={isSubmitting}
-              />
+              <div className="relative">
+                <textarea
+                  ref={messageRef}
+                  id="contact-message"
+                  name="message"
+                  rows={6}
+                  value={values.message}
+                  onChange={handleChange}
+                  onKeyDown={handleMessageKeyDown}
+                  onPaste={handleEnglishPaste}
+                  lang="en"
+                  dir="ltr"
+                  placeholder={FORM.message.placeholder}
+                  aria-invalid={Boolean(errors.message)}
+                  aria-describedby={errors.message ? "contact-message-error" : undefined}
+                  className={`${FONT_UI} block min-h-[9rem] w-full resize-none bg-transparent text-base leading-relaxed text-zinc-900 placeholder:text-sm placeholder:text-zinc-400 focus:outline-none`}
+                  disabled={isSubmitting}
+                />
+                <ThickCaret fieldRef={messageRef} />
+              </div>
               {errors.message && (
                 <p id="contact-message-error" className={fieldErrorClass}>
                   {errors.message}
@@ -203,13 +274,16 @@ export default function ContactForm() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`${FONT_UI} button-ready-bounce group inline-flex w-full items-center justify-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto`}
+                onMouseEnter={playSendIcon}
+                onFocus={playSendIcon}
+                onClick={playSendIcon}
+                className={`${FONT_UI} button-ready-bounce cta-pulse inline-flex cursor-pointer w-full items-center justify-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto`}
               >
                 {isSubmitting ? FORM.submitting : FORM.submit}
-                <PaperPlaneTilt
-                  className="h-4 w-4 transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-disabled:translate-x-0 group-disabled:translate-y-0 motion-reduce:transition-none"
-                  weight={ICON_WEIGHT}
-                  aria-hidden
+                <LottieIcon
+                  animationData={sendAnimation}
+                  lottieRef={sendLottieRef}
+                  className="h-[1.125rem] w-[1.125rem]"
                 />
               </button>
             </div>

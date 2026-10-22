@@ -9,6 +9,8 @@ export default function Section({
   contentMaxWidth = "max-w-6xl",
   /** When false, section height follows content at all breakpoints. */
   tallOnMobile = true,
+  /** Ref to the <section> element, e.g. for scroll-linked effects. */
+  sectionRef,
 }) {
   const alignClass = align === "start" ? "justify-start" : "justify-center";
   const heightClass = tallOnMobile ? "h-[100dvh]" : "h-auto";
@@ -17,6 +19,7 @@ export default function Section({
 
   return (
     <section
+      ref={sectionRef}
       id={id}
       className={`flex flex-col items-center px-6 ${heightClass} ${overflowClass} ${className}`}
     >

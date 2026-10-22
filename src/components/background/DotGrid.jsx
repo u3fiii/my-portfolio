@@ -4,6 +4,9 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import "./DotGrid.css";
 
+const NO_SHOCK_SELECTOR =
+  'a, button, input, textarea, select, label, summary, [role="button"], [contenteditable], [data-dot-shock="off"]';
+
 gsap.registerPlugin(InertiaPlugin);
 
 const throttle = (func, limit) => {
@@ -218,6 +221,9 @@ export default function DotGrid({
     };
 
     const onClick = (e) => {
+      // Only clicks on empty background send a shockwave — not on controls,
+      // fields, or surfaces that opt out with data-dot-shock="off".
+      if (e.target instanceof Element && e.target.closest(NO_SHOCK_SELECTOR)) return;
       const rect = canvasRef.current.getBoundingClientRect();
       const cx = e.clientX - rect.left;
       const cy = e.clientY - rect.top;
