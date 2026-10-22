@@ -1,9 +1,9 @@
 import { useState } from "react";
-import FormField, { formInputClassName } from "../ui/FormField.jsx";
-import {
-  FORM,
-  FORM_FEEDBACK,
-} from "../../content/contact.js";
+import { AnimatePresence, motion } from "framer-motion";
+import { CheckCircle, PaperPlaneTilt } from "@phosphor-icons/react";
+import { ICON_WEIGHT } from "../ui/icons.js";
+import { SITE } from "../../content/site.js";
+import { FORM, FORM_FEEDBACK } from "../../content/contact.js";
 import {
   isContactFormConfigured,
   sendContactMessage,
@@ -11,19 +11,37 @@ import {
 
 const initialValues = { email: "", message: "" };
 
-export default function ContactForm({ theme = "light" }) {
+const FONT_UI = "font-['DM_Sans',ui-sans-serif,sans-serif]";
+const rowLabelClass = `${FONT_UI} w-12 shrink-0 text-[10px] font-medium uppercase tracking-[0.1em] text-zinc-400`;
+const fieldErrorClass = `${FONT_UI} text-xs text-red-600 dark:text-red-400`;
+const swap = {
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -8 },
+  transition: { duration: 0.25, ease: [0.4, 0, 0.2, 1] },
+};
+
+/** Mail-composer card: To / From rows, a body, and a send bar. */
+export default function ContactForm() {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle");
 
   const configured = isContactFormConfigured();
-  const isDark = theme === "dark";
-  const inputClass = formInputClassName(theme);
+  const isSubmitting = status === "submitting";
 
   function handleChange(event) {
     const { name, value } = event.target;
     setValues((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: undefined }));
+    if (status === "error") setStatus("idle");
+  }
+
+  function handleMessageKeyDown(event) {
+    if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
+      event.preventDefault();
+      event.currentTarget.form.requestSubmit();
+    }
   }
 
   function validate() {
@@ -40,7 +58,7 @@ export default function ContactForm({ theme = "light" }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (!configured || !validate()) return;
+    if (!configured || isSubmitting || !validate()) return;
 
     setStatus("submitting");
 
@@ -56,82 +74,148 @@ export default function ContactForm({ theme = "light" }) {
     }
   }
 
-  const notConfiguredClass = isDark
-    ? "rounded-2xl border border-amber-500/40 bg-amber-500/10 px-5 py-4 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm text-amber-200"
-    : "rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm text-amber-900";
-
-  const submitClass = isDark
-    ? "button-ready-bounce inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-semibold text-zinc-950 transition-colors hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
-    : "button-ready-bounce inline-flex w-full items-center justify-center rounded-full bg-zinc-900 px-6 py-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm font-semibold text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto";
-
-  const successClass = isDark
-    ? "rounded-2xl border border-green-500/40 bg-green-500/10 px-5 py-4 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm text-green-300"
-    : "rounded-2xl border border-green-200 bg-green-50 px-5 py-4 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm text-green-800";
-
-  const errorClass = isDark
-    ? "rounded-2xl border border-red-500/40 bg-red-500/10 px-5 py-4 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm text-red-300"
-    : "rounded-2xl border border-red-200 bg-red-50 px-5 py-4 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm text-red-800";
-
   if (!configured) {
     return (
-      <p className={notConfiguredClass}>{FORM_FEEDBACK.notConfigured}</p>
+      <p className={`${FONT_UI} rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-900 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-200`}>
+        {FORM_FEEDBACK.notConfigured}
+      </p>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
-      <FormField
-        id="contact-email"
-        label={FORM.email.label}
-        error={errors.email}
-        theme={theme}
-      >
-        <input
-          id="contact-email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          value={values.email}
-          onChange={handleChange}
-          placeholder={FORM.email.placeholder}
-          className={inputClass}
-          disabled={status === "submitting"}
-        />
-      </FormField>
+    <div className="overflow-hidden rounded-2xl border border-zinc-300 bg-white shadow-[0_1px_2px_rgb(0_0_0/4%),0_12px_32px_-12px_rgb(0_0_0/12%)] transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] focus-within:border-zinc-900 focus-within:shadow-[0_0_0_2px_var(--color-zinc-900)]">
+      <div className="flex items-center justify-between border-b border-zinc-200 bg-zinc-50 px-4 py-2.5">
+        <span className={`${FONT_UI} text-sm font-semibold text-zinc-900`}>
+          {FORM.title}
+        </span>
+        <span className="flex gap-1.5" aria-hidden>
+          <span className="h-2.5 w-2.5 rounded-full bg-zinc-300" />
+          <span className="h-2.5 w-2.5 rounded-full bg-zinc-300" />
+          <span className="h-2.5 w-2.5 rounded-full bg-zinc-300" />
+        </span>
+      </div>
 
-      <FormField
-        id="contact-message"
-        label={FORM.message.label}
-        error={errors.message}
-        theme={theme}
-      >
-        <textarea
-          id="contact-message"
-          name="message"
-          rows={4}
-          value={values.message}
-          onChange={handleChange}
-          placeholder={FORM.message.placeholder}
-          className={`${inputClass} resize-y min-h-[120px]`}
-          disabled={status === "submitting"}
-        />
-      </FormField>
+      <AnimatePresence mode="wait" initial={false}>
+        {status === "success" ? (
+          <motion.div
+            key="success"
+            {...swap}
+            className="flex min-h-[18rem] flex-col items-center justify-center gap-3 px-6 py-10 text-center"
+            role="status"
+          >
+            <CheckCircle className="h-11 w-11 text-emerald-500" weight="fill" aria-hidden />
+            <p className="font-['Source_Serif_4',Georgia,serif] text-xl font-bold tracking-[-0.01em] text-zinc-900">
+              {FORM_FEEDBACK.successTitle}
+            </p>
+            <p className={`${FONT_UI} max-w-xs text-sm text-zinc-500`}>
+              {FORM_FEEDBACK.success}
+            </p>
+            <button
+              type="button"
+              onClick={() => setStatus("idle")}
+              className={`${FONT_UI} pill-hover-ring mt-2 rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-900 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2`}
+            >
+              {FORM_FEEDBACK.sendAnother}
+            </button>
+          </motion.div>
+        ) : (
+          <motion.form key="form" {...swap} onSubmit={handleSubmit} noValidate>
+            <div className="flex items-center gap-3 border-b border-zinc-200 px-4 py-3">
+              <span className={rowLabelClass}>{FORM.to.label}</span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-zinc-100 py-0.5 pl-0.5 pr-2.5">
+                <img
+                  src={SITE.logo}
+                  alt=""
+                  className="h-5 w-5 rounded-full bg-zinc-900 object-cover"
+                />
+                <span className={`${FONT_UI} text-sm font-medium text-zinc-900`}>
+                  {FORM.to.value}
+                </span>
+              </span>
+            </div>
 
-      <button type="submit" disabled={status === "submitting"} className={submitClass}>
-        {status === "submitting" ? FORM.submitting : FORM.submit}
-      </button>
+            <div className="border-b border-zinc-200 px-4 py-3">
+              <div className="flex items-center gap-3">
+                <label htmlFor="contact-email" className={rowLabelClass}>
+                  {FORM.email.label}
+                </label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  placeholder={FORM.email.placeholder}
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? "contact-email-error" : undefined}
+                  className={`${FONT_UI} min-w-0 flex-1 bg-transparent text-base text-zinc-900 placeholder:text-zinc-400 focus:outline-none`}
+                  disabled={isSubmitting}
+                />
+              </div>
+              {errors.email && (
+                <p id="contact-email-error" className={`${fieldErrorClass} mt-1 pl-15`}>
+                  {errors.email}
+                </p>
+              )}
+            </div>
 
-      {status === "success" && (
-        <p className={successClass} role="status">
-          {FORM_FEEDBACK.success}
-        </p>
-      )}
+            <div className="px-4 pt-3">
+              <label htmlFor="contact-message" className="sr-only">
+                {FORM.message.label}
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows={6}
+                value={values.message}
+                onChange={handleChange}
+                onKeyDown={handleMessageKeyDown}
+                placeholder={FORM.message.placeholder}
+                aria-invalid={Boolean(errors.message)}
+                aria-describedby={errors.message ? "contact-message-error" : undefined}
+                className={`${FONT_UI} block min-h-[9rem] w-full resize-none bg-transparent text-base leading-relaxed text-zinc-900 placeholder:text-zinc-400 focus:outline-none`}
+                disabled={isSubmitting}
+              />
+              {errors.message && (
+                <p id="contact-message-error" className={fieldErrorClass}>
+                  {errors.message}
+                </p>
+              )}
+            </div>
 
-      {status === "error" && (
-        <p className={errorClass} role="alert">
-          {FORM_FEEDBACK.error}
-        </p>
-      )}
-    </form>
+            {status === "error" && (
+              <p
+                className={`${FONT_UI} mx-4 mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-300`}
+                role="alert"
+              >
+                {FORM_FEEDBACK.error}
+              </p>
+            )}
+
+            <div className="flex items-center justify-between gap-3 px-4 pb-4 pt-3">
+              <span className={`${FONT_UI} hidden items-center gap-1.5 text-xs text-zinc-400 sm:inline-flex`}>
+                <kbd className="rounded-md border border-zinc-300 bg-zinc-50 px-1.5 py-0.5 font-[inherit] text-[11px] font-semibold text-zinc-500">
+                  ⌘ ↵
+                </kbd>
+                {FORM.shortcut}
+              </span>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`${FONT_UI} button-ready-bounce group inline-flex w-full items-center justify-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto`}
+              >
+                {isSubmitting ? FORM.submitting : FORM.submit}
+                <PaperPlaneTilt
+                  className="h-4 w-4 transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-disabled:translate-x-0 group-disabled:translate-y-0 motion-reduce:transition-none"
+                  weight={ICON_WEIGHT}
+                  aria-hidden
+                />
+              </button>
+            </div>
+          </motion.form>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
