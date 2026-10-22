@@ -83,15 +83,15 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-zinc-300 bg-white shadow-[0_1px_2px_rgb(0_0_0/4%),0_12px_32px_-12px_rgb(0_0_0/12%)] transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] focus-within:border-zinc-900 focus-within:shadow-[0_0_0_2px_var(--color-zinc-900)]">
-      <div className="flex items-center justify-between border-b border-zinc-200 bg-zinc-50 px-4 py-2.5">
+    <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-[0_1px_2px_rgb(0_0_0/4%),0_12px_32px_-12px_rgb(0_0_0/12%)] transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] focus-within:border-zinc-900 focus-within:shadow-[0_0_0_2px_var(--color-zinc-900)]">
+      <div className="flex items-center justify-between border-b border-zinc-100 bg-zinc-50 px-4 py-2.5">
         <span className={`${FONT_UI} text-sm font-semibold text-zinc-900`}>
           {FORM.title}
         </span>
         <span className="flex gap-1.5" aria-hidden>
-          <span className="h-2.5 w-2.5 rounded-full bg-zinc-300" />
-          <span className="h-2.5 w-2.5 rounded-full bg-zinc-300" />
-          <span className="h-2.5 w-2.5 rounded-full bg-zinc-300" />
+          <span className="h-2.5 w-2.5 rounded-full bg-zinc-200" />
+          <span className="h-2.5 w-2.5 rounded-full bg-zinc-200" />
+          <span className="h-2.5 w-2.5 rounded-full bg-zinc-200" />
         </span>
       </div>
 
@@ -120,7 +120,7 @@ export default function ContactForm() {
           </motion.div>
         ) : (
           <motion.form key="form" {...swap} onSubmit={handleSubmit} noValidate>
-            <div className="flex items-center gap-3 border-b border-zinc-200 px-4 py-3">
+            <div className="flex items-center gap-3 border-b border-zinc-100 px-4 py-3">
               <span className={rowLabelClass}>{FORM.to.label}</span>
               <span className="inline-flex items-center gap-2 rounded-full bg-zinc-100 py-0.5 pl-0.5 pr-2.5">
                 <img
@@ -134,7 +134,7 @@ export default function ContactForm() {
               </span>
             </div>
 
-            <div className="border-b border-zinc-200 px-4 py-3">
+            <div className="border-b border-zinc-100 px-4 py-3">
               <div className="flex items-center gap-3">
                 <label htmlFor="contact-email" className={rowLabelClass}>
                   {FORM.email.label}
@@ -195,7 +195,7 @@ export default function ContactForm() {
 
             <div className="flex items-center justify-between gap-3 px-4 pb-4 pt-3">
               <span className={`${FONT_UI} hidden items-center gap-1.5 text-xs text-zinc-400 sm:inline-flex`}>
-                <kbd className="rounded-md border border-zinc-300 bg-zinc-50 px-1.5 py-0.5 font-[inherit] text-[11px] font-semibold text-zinc-500">
+                <kbd className="rounded-md border border-zinc-200 bg-zinc-50 px-1.5 py-0.5 font-[inherit] text-[11px] font-semibold text-zinc-500">
                   ⌘ ↵
                 </kbd>
                 {FORM.shortcut}

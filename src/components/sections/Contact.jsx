@@ -44,8 +44,8 @@ export default function Contact() {
             className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white py-1 pl-2.5 pr-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-[10px] font-semibold uppercase tracking-[0.1em] text-zinc-700"
           >
             <span className="relative flex h-2 w-2" aria-hidden>
-              <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500 opacity-60 motion-reduce:animate-none" />
-              <span className="relative h-2 w-2 rounded-full bg-emerald-500" />
+              <span className="absolute inset-0 animate-ping rounded-full bg-zinc-900 opacity-40 motion-reduce:animate-none" />
+              <span className="relative h-2 w-2 rounded-full bg-zinc-900" />
             </span>
             {CONTACT_AVAILABILITY}
           </motion.p>
@@ -84,7 +84,7 @@ export default function Contact() {
 
           <motion.nav
             {...reveal(hasEntered, 4)}
-            className="mt-8 flex flex-col items-center gap-3 self-stretch border-t border-dashed border-zinc-300 pt-6 lg:items-start"
+            className="mt-8 flex flex-col items-center gap-3 lg:items-start"
             aria-label="Social links"
           >
             <span className="font-['DM_Sans',ui-sans-serif,sans-serif] text-[10px] font-medium uppercase tracking-[0.1em] text-zinc-400">

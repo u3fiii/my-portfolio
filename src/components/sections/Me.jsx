@@ -1,4 +1,10 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import Button from "../ui/Button.jsx";
 import { ParallaxLayer, ParallaxProvider } from "../ui/Parallax.jsx";
 import LottiePlayer from "../LottiePlayer.jsx";
@@ -57,7 +63,22 @@ function stepDelayMs(step) {
   return (BASE_DELAY_S + step * STAGGER_S) * 1000;
 }
 
+/** As the page glides to Work, the hero recedes: it shrinks, lifts and fades. */
+function useExitStyle(ref) {
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, -64]);
+  const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  return reduceMotion ? undefined : { scale, y, opacity };
+}
+
 export default function Me() {
+  const contentRef = useRef(null);
+  const exitStyle = useExitStyle(contentRef);
   const greetingStep = 0;
   const typewriterStep = 1;
   const lottieStep = 2;
@@ -67,7 +88,10 @@ export default function Me() {
   return (
     <Section id="me" className="overflow-visible bg-transparent">
       <ParallaxProvider>
-        <div className="flex h-full w-full flex-col items-center justify-center gap-8 min-[550px]:max-[767px]:gap-6 md:max-lg:grid md:max-lg:h-auto md:max-lg:mx-auto md:max-lg:w-full md:max-lg:max-w-[720px] md:max-lg:grid-cols-[auto_minmax(0,1fr)] md:max-lg:items-center md:max-lg:gap-x-5 md:max-lg:gap-y-4 lg:grid lg:h-auto lg:w-full lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-0 lg:pr-42">
+        <motion.div
+          ref={contentRef}
+          style={exitStyle}
+          className="flex h-full w-full flex-col items-center justify-center gap-8 min-[550px]:max-[767px]:gap-6 md:max-lg:grid md:max-lg:h-auto md:max-lg:mx-auto md:max-lg:w-full md:max-lg:max-w-[720px] md:max-lg:grid-cols-[auto_minmax(0,1fr)] md:max-lg:items-center md:max-lg:gap-x-5 md:max-lg:gap-y-4 lg:grid lg:h-auto lg:w-full lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-0 lg:pr-42">
           <motion.div
             className="flex w-2/3 justify-center min-[550px]:max-[767px]:w-[52%] min-[550px]:max-[767px]:max-w-[190px] md:max-lg:w-auto md:max-lg:shrink-0 md:max-lg:justify-self-center lg:w-1/2"
             {...revealProps(lottieStep)}
@@ -163,7 +187,7 @@ export default function Me() {
               ))}
             </nav>
           </div>
-        </div>
+        </motion.div>
       </ParallaxProvider>
     </Section>
   );
