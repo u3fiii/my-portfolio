@@ -1232,3 +1232,14 @@ html.dark .cta-pulse::after {
   color: var(--color-zinc-400);
 }
 
+
+/* Browser autofill paints the field blue; keep it the card's own background. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-white) inset;
+  box-shadow: 0 0 0 1000px var(--color-white) inset;
+  -webkit-text-fill-color: var(--color-zinc-900);
+  caret-color: var(--color-zinc-900);
+  transition: background-color 9999s ease-out 0s;
+}
