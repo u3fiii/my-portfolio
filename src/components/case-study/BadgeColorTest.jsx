@@ -167,14 +167,12 @@ function PhoneColumn({
 
 export default function BadgeColorTest() {
   return (
-    <figure className="badge-color-test case-study__ui my-8">
-      <p
-        className="mb-5 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-[#888898]"
-        style={{ fontFamily: FONT_UI }}
-      >
-        Usability test — blue vs. green for &ldquo;Fair price&rdquo;
-      </p>
-      <div className="flex flex-wrap items-start justify-center gap-7">
+    <figure className="badge-color-test cs-viz case-study__ui">
+      <header className="mb-6">
+        <p className="cs-viz__kicker">Usability test · blue vs. green</p>
+        <p className="cs-viz__title">Asked which listing looked like a better deal, most people picked green.</p>
+      </header>
+      <div className="badge-color-test__phones flex flex-wrap items-start justify-center gap-10">
         <PhoneColumn
           versionLabel="Version A — Blue"
           versionLabelStyle={{

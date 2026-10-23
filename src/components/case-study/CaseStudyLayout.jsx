@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
+import { Buildings, CalendarBlank, DeviceMobile, Flag, Info, Stack, Target, UserCircle, UsersThree } from "@phosphor-icons/react";
 import { useLenis } from "../../hooks/useLenis.jsx";
 import RelatedWorkSection from "../work/RelatedWorkSection.jsx";
 
@@ -104,6 +105,19 @@ function ChapterNav({ articleRef, coverRef }) {
  * Shared page for case studies and articles: header (eyebrow, title, deck,
  * byline, cover, facts), the body, and related work.
  */
+/** An icon per fact in the header strip, matched by its label. */
+const FACT_ICONS = {
+  role: UserCircle,
+  team: UsersThree,
+  timeline: CalendarBlank,
+  timeframe: CalendarBlank,
+  focus: Target,
+  platform: DeviceMobile,
+  surfaces: Stack,
+  status: Flag,
+  company: Buildings,
+};
+
 export default function CaseStudyLayout({
   id,
   eyebrow,
@@ -132,6 +146,31 @@ export default function CaseStudyLayout({
     clone.querySelectorAll("figure, svg, [data-related]").forEach((node) => node.remove());
     const words = clone.textContent.trim().split(/\s+/).length;
     setMinutes(Math.max(1, Math.round(words / WORDS_PER_MINUTE)));
+  }, []);
+
+  // Every screenshot in the article loses its flat backdrop so it sits on the
+  // grey tray; illustrations (bleed figures) keep theirs.
+  useEffect(() => {
+    const body = bodyRef.current;
+    if (!body) return;
+    const images = [...body.querySelectorAll("img")].filter(
+      (img) => !img.closest(".cs-figure--bleed"),
+    );
+    const cleanups = images.map((img) => {
+      const apply = () => {
+        if (img.dataset.cleared) return;
+        img.dataset.cleared = "1";
+        const cleaned = clearBackdrop(img);
+        if (cleaned) img.src = cleaned;
+      };
+      if (img.complete && img.naturalWidth) {
+        apply();
+        return () => {};
+      }
+      img.addEventListener("load", apply, { once: true });
+      return () => img.removeEventListener("load", apply);
+    });
+    return () => cleanups.forEach((fn) => fn());
   }, []);
 
   return (
@@ -179,23 +218,29 @@ export default function CaseStudyLayout({
 
           <figure
             ref={coverRef}
-            className="cs-cover case-study__ui detail-reveal detail-reveal--image mt-10 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100"
+            className={`cs-cover case-study__ui detail-reveal detail-reveal--image mt-10 ${cover.node ? "" : "overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100"}`}
           >
-            <img
+            {cover.node ?? <img
               src={cover.src}
               alt={cover.alt}
               width={cover.width}
               height={cover.height}
               decoding="async"
               fetchPriority="high"
-              className="ambient-cover-zoom block h-auto w-full"
-            />
+              className="ambient-cover-zoom block aspect-[2/1] w-full object-cover"
+            />}
           </figure>
 
           {meta.length ? (
             <dl className="cs-facts case-study__ui detail-mobile-stagger mt-8">
               {meta.map(([label, value]) => (
                 <div key={label}>
+                  <span className="cs-facts__icon" aria-hidden>
+                    {(() => {
+                      const Icon = FACT_ICONS[label.toLowerCase()] ?? Info;
+                      return <Icon size={18} weight="duotone" />;
+                    })()}
+                  </span>
                   <dt>{label}</dt>
                   <dd>{value}</dd>
                 </div>
@@ -262,6 +307,64 @@ export function Callout({ title, children }) {
 
 /**
  * Image figure. `frame` "inset" shows the image on a soft tray (screens,
+ * diagrams); "bleed" lets an illustration fill the rounded frame.
+ */
+/**
+ * Clears a screenshot's flat backdrop: if all four corners share one colour,
+ * flood-fill everything connected to the edges in that colour to transparent,
+ * so the screen sits directly on the figure tray. Returns a PNG data URL, or
+ * null when the image has no flat backdrop (it is then left as is).
+ */
+function clearBackdrop(img) {
+  try {
+    const w = img.naturalWidth;
+    const h = img.naturalHeight;
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    ctx.drawImage(img, 0, 0);
+    const image = ctx.getImageData(0, 0, w, h);
+    const px = image.data;
+
+    const corners = [0, w - 1, (h - 1) * w, h * w - 1].map((i) => [px[i * 4], px[i * 4 + 1], px[i * 4 + 2]]);
+    const spread = Math.max(
+      ...[0, 1, 2].map((c) => Math.max(...corners.map((p) => p[c])) - Math.min(...corners.map((p) => p[c]))),
+    );
+    if (spread > 12) return null;
+    const bg = [0, 1, 2].map((c) => corners.reduce((sum, p) => sum + p[c], 0) / 4);
+
+    const TOLERANCE = 14;
+    const matches = (i) =>
+      Math.abs(px[i] - bg[0]) <= TOLERANCE &&
+      Math.abs(px[i + 1] - bg[1]) <= TOLERANCE &&
+      Math.abs(px[i + 2] - bg[2]) <= TOLERANCE;
+
+    const seen = new Uint8Array(w * h);
+    const stack = [];
+    for (let x = 0; x < w; x += 1) stack.push(x, (h - 1) * w + x);
+    for (let y = 0; y < h; y += 1) stack.push(y * w, y * w + w - 1);
+    while (stack.length) {
+      const p = stack.pop();
+      if (seen[p]) continue;
+      seen[p] = 1;
+      if (!matches(p * 4)) continue;
+      px[p * 4 + 3] = 0;
+      const x = p % w;
+      if (x > 0) stack.push(p - 1);
+      if (x < w - 1) stack.push(p + 1);
+      if (p >= w) stack.push(p - w);
+      if (p < w * (h - 1)) stack.push(p + w);
+    }
+    ctx.putImageData(image, 0, 0);
+    return canvas.toDataURL("image/png");
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Image figure. `frame` "inset" shows the image on the grey tray (screens,
  * diagrams); "bleed" lets an illustration fill the rounded frame.
  */
 export function Figure({ src, alt, caption, frame = "inset", children }) {

@@ -82,3 +82,8 @@ html.dark .badge-color-test__tone--green {
     transform: translateX(100%);
   }
 }
+
+/* Phones shrink to fit one viewport inside the wide frame; nothing is cropped. */
+.badge-color-test__phones {
+  zoom: 0.74;
+}

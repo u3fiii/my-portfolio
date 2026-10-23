@@ -7,6 +7,18 @@ const rialDepositThumbnail = "/images/editorial/deposit-trust.jpg";
 /** Homepage work grid — single source for Projects section and related links. */
 export const WORK_CARDS = [
   {
+    id: "wallgold-bnpl",
+    filter: "case-study",
+    tag: "Case Study · WallGold",
+    title: "Gold-Backed BNPL",
+    description:
+      "Designing an installment journey across WallGold, Goldpay, and merchant checkout.",
+    href: workDetailPath("wallgold-bnpl"),
+    external: false,
+    comingSoon: false,
+    image: "/images/editorial/wallgold-bnpl.jpg",
+  },
+  {
     id: "price-signal",
     filter: "case-study",
     tag: "Case Study · Sheypoor",
@@ -89,18 +101,6 @@ export const WORK_CARDS = [
     external: true,
     comingSoon: true,
     image: "/images/covers/designing-for-low-trust.jpg",
-  },
-  {
-    id: "icon-system",
-    filter: "project",
-    tag: "Project · Side Project",
-    title: "Open Icon Set",
-    description:
-      "A 400-icon open-source set built on a strict 24px grid, with RTL-aware variants for Persian interfaces.",
-    href: "#",
-    external: true,
-    comingSoon: true,
-    image: "/images/covers/open-icon-set.jpg",
   },
 ];
 

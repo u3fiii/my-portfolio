@@ -1,185 +1,152 @@
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+/** Flow diagrams drawn in code; steps reveal in order as the figure scrolls in. */
+import { motion, useReducedMotion } from "framer-motion";
+import { EASE, VizFrame, useInViewOnce } from "./viz.jsx";
 
-/** Diagrams drawn in code, in the case-study palette. */
+function Reveal({ active, delay, children, className = "" }) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.div
+      className={className}
+      initial={reduce ? false : { opacity: 0, y: 8 }}
+      animate={active ? { opacity: 1, y: 0 } : undefined}
+      transition={{ duration: 0.45, delay, ease: EASE }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
-const ARROW = (
-  <span aria-hidden className="cs-flow__arrow">
-    →
-  </span>
-);
+function Arrow({ active, delay, dashed = false }) {
+  return (
+    <Reveal active={active} delay={delay} className="flex items-center justify-center text-zinc-300 max-md:rotate-90">
+      <span aria-hidden className="text-lg">
+        {dashed ? "⇢" : "→"}
+      </span>
+    </Reveal>
+  );
+}
 
-function FlowStep({ title, detail, pain, dashed = false }) {
+function Step({ index, title, detail, pain, dashed = false, active, delay }) {
   return (
     <div className="flex flex-col items-stretch gap-2">
-      <div
-        className={`flex flex-1 flex-col justify-center rounded-xl border bg-white px-4 py-3.5 text-center ${
-          dashed ? "border-dashed border-zinc-300" : "border-zinc-200"
-        }`}
-      >
-        <p className="text-[13px] font-semibold text-zinc-900">{title}</p>
-        {detail ? <p className="mt-0.5 text-[12px] text-zinc-500">{detail}</p> : null}
-      </div>
+      <Reveal active={active} delay={delay}>
+        <div
+          className={`flex items-start gap-2.5 rounded-xl border bg-white px-3.5 py-3 ${
+            dashed ? "border-dashed border-zinc-300" : "border-zinc-200"
+          }`}
+        >
+          {index ? (
+            <span className="mt-px flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-[10px] font-semibold tabular-nums text-zinc-500">
+              {index}
+            </span>
+          ) : null}
+          <span>
+            <span className="block text-[13px] font-semibold text-zinc-900">{title}</span>
+            {detail ? <span className="mt-0.5 block text-[12px] text-zinc-500">{detail}</span> : null}
+          </span>
+        </div>
+      </Reveal>
       {pain ? (
-        <p className="mx-auto rounded-full border border-red-200 bg-red-50 px-3 py-1 text-center text-[11px] font-medium leading-snug text-red-700">
-          {pain}
-        </p>
+        <Reveal active={active} delay={delay + 0.25}>
+          <p className="flex items-start gap-1.5 text-[11.5px] font-medium leading-snug text-[#A32D2D] dark:text-[#FFB4B4]">
+            <span aria-hidden className="mt-[5px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#E5807A]" />
+            {pain}
+          </p>
+        </Reveal>
       ) : null}
     </div>
   );
 }
 
-function Legend() {
-  return (
-    <div className="mb-5 flex flex-wrap items-center gap-5 text-[12px] text-zinc-500">
-      <span className="inline-flex items-center gap-2">
-        <span className="h-3 w-3 rounded-[3px] border border-zinc-400 bg-white" aria-hidden />
-        Flow step
-      </span>
-      <span className="inline-flex items-center gap-2">
-        <span className="h-3 w-3 rounded-full border border-red-300 bg-red-50" aria-hidden />
-        Pain point
-      </span>
-    </div>
-  );
-}
-
-/** Secure Purchase as it was: six steps across two rows, one dashed off-product step. */
-export function EscrowAsIsDiagram() {
-  return (
-    <figure className="case-study__ui my-4 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 p-5 sm:p-8">
-      <Legend />
-      <div className="grid gap-x-6 gap-y-7 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-start">
-        <FlowStep title="Browse & order" detail="Product page" pain="No shipping method or ETA" />
-        {ARROW}
-        <FlowStep title="Pay" detail="Funds held by Pindo" pain="Return rules unwritten" />
-        {ARROW}
-        <FlowStep title="Seller ships" detail="Marks as sent" pain="No delivery window" />
-      </div>
-      <div className="mt-7 grid gap-x-6 gap-y-7 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-start">
-        <FlowStep title={'"Received?" prompt'} detail="Shown immediately" pain="Days in limbo, no state" />
-        {ARROW}
-        <FlowStep title="Confirm & rate" detail="Funds released" pain="No item-condition check" />
-        <span aria-hidden className="cs-flow__arrow cs-flow__arrow--dashed">
-          ⇢
-        </span>
-        <FlowStep
-          title="Return via phone"
-          detail="Outside the product"
-          pain="Manual, unlogged, 20–25/day"
-          dashed
-        />
-      </div>
-    </figure>
-  );
-}
-
-/** Shipping rule after the change: one decision, two outcomes. */
-export function ShippingDecisionDiagram() {
-  return (
-    <figure className="case-study__ui my-4 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 p-5 sm:p-8">
-      <div className="grid gap-5 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] md:items-center">
-        <FlowStep title="Buyer pays" detail="Payment completes" />
-        {ARROW}
-        <FlowStep title="Seller is prompted" detail="Push asks them to ship" />
-        {ARROW}
-        <div className="flex flex-col items-center gap-3 rounded-xl border border-[#99DAEF] bg-[#E6F1FB] px-4 py-4 text-center">
-          <p className="text-[13px] font-semibold text-[#0077A3]">Shipped within 24 hours?</p>
-          <div className="flex w-full justify-around gap-3 text-[11px] font-semibold">
-            <span className="rounded-full bg-white px-2.5 py-1 text-zinc-600">No</span>
-            <span className="rounded-full bg-white px-2.5 py-1 text-zinc-600">Yes</span>
-          </div>
-        </div>
-        <div className="grid gap-3">
-          <FlowStep title="Support follows up" detail="Contacts the seller about the delay" />
-          <FlowStep title={'Order: "in transit"'} detail="Buyer sees the new state" />
-        </div>
-      </div>
-    </figure>
-  );
-}
-
-const BAR_ROWS = [
-  { label: "Cart created", before: 100, after: 100 },
-  { label: "Paid", before: 24, after: 39 },
-  { label: "Delivered", before: 16, after: 34 },
-  { label: "Confirmed item OK", before: 10, after: 23 },
+const AS_IS = [
+  { title: "Browse & order", detail: "Product page", pain: "No shipping method or ETA" },
+  { title: "Pay", detail: "Funds held by Pindo", pain: "Return rules unwritten" },
+  { title: "Seller ships", detail: "Marks as sent", pain: "No delivery window" },
+  { title: '"Received?" prompt', detail: "Shown immediately", pain: "Days in limbo, no state" },
+  { title: "Confirm & rate", detail: "Funds released", pain: "No item-condition check" },
+  { title: "Return via phone", detail: "Outside the product", pain: "Manual, unlogged, 20–25 a day", dashed: true },
 ];
 
-/**
- * Before/after bars per funnel stage. Bars grow from zero once the chart is in
- * view, one row after another, so the change reads as a sequence.
- */
-export function BeforeAfterBars({ footnote = "Success redefined: the bottom of the funnel is the buyer confirming item condition, not delivery." }) {
-  const ref = useRef(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.35 },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
-  const bar = (value, color, delay) => (
-    <motion.div
-      className="h-2.5 rounded-sm"
-      style={{ background: color, originX: 0 }}
-      initial={{ scaleX: 0 }}
-      animate={inView ? { scaleX: value / 100 } : undefined}
-      transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
-    />
-  );
-
-  return (
-    <figure
-      ref={ref}
-      className="case-study__ui my-4 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 p-5 sm:p-8"
-    >
-      <div className="mb-6 flex flex-wrap items-center gap-5 text-[12px] text-zinc-500">
-        <span className="inline-flex items-center gap-2">
-          <span className="h-2.5 w-2.5 rounded-sm bg-zinc-300" aria-hidden />
-          Before
-        </span>
-        <span className="inline-flex items-center gap-2">
-          <span className="h-2.5 w-2.5 rounded-sm bg-[#0099CC]" aria-hidden />
-          After redesign
-        </span>
-      </div>
-
-      <div className="flex flex-col gap-6">
-        {BAR_ROWS.map((row, index) => {
-          const base = index * 0.12;
-          return (
-            <div key={row.label} className="grid gap-2 sm:grid-cols-[9.5rem_minmax(0,1fr)] sm:items-center sm:gap-5">
-              <p className="text-[13px] font-semibold text-zinc-800 sm:text-right">{row.label}</p>
-              <div className="flex flex-col gap-1.5">
-                <div className="flex items-center gap-3">
-                  <div className="h-2.5 min-w-0 flex-1">{bar(row.before, "#D4D4D8", base)}</div>
-                  <span className="w-10 text-[12px] tabular-nums text-zinc-500">{row.before}%</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="h-2.5 min-w-0 flex-1">{bar(row.after, "#0099CC", base + 0.15)}</div>
-                  <span className="w-10 text-[12px] font-semibold tabular-nums text-[#0077A3]">{row.after}%</span>
-                </div>
-              </div>
-            </div>
+/** Secure Purchase as it was: a gap in trust at every step. */
+export function EscrowAsIsDiagram() {
+  const [ref, inView] = useInViewOnce(0.3);
+  const row = (items, offset) => (
+    <div className="grid gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-start md:gap-x-3">
+      {items.flatMap((step, i) => {
+        const index = offset + i;
+        const nodes = [
+          <Step key={step.title} index={index + 1} {...step} active={inView} delay={index * 0.16} />,
+        ];
+        if (i < items.length - 1) {
+          nodes.push(
+            <Arrow key={`${step.title}-arrow`} active={inView} delay={index * 0.16 + 0.1} dashed={items[i + 1].dashed} />,
           );
-        })}
+        }
+        return nodes;
+      })}
+    </div>
+  );
+  return (
+    <VizFrame
+      frameRef={ref}
+      kicker="Secure Purchase · as it was"
+      title="Every step left the buyer guessing — and returns happened off the product."
+    >
+      {row(AS_IS.slice(0, 3), 0)}
+      <div className="my-3 flex justify-center text-zinc-300 md:justify-end md:pr-[14%]" aria-hidden>
+        ↓
       </div>
+      {row(AS_IS.slice(3), 3)}
+    </VizFrame>
+  );
+}
 
-      <figcaption className="mt-7 text-[12px] leading-relaxed text-zinc-500 sm:pl-[10.5rem]">
-        {footnote}
-      </figcaption>
-    </figure>
+/** The 24-hour rule after payment: one decision, two outcomes. */
+export function ShippingDecisionDiagram() {
+  const [ref, inView] = useInViewOnce(0.3);
+  return (
+    <VizFrame
+      frameRef={ref}
+      kicker="After payment"
+      title="Sellers got 24 hours to ship before support stepped in."
+    >
+      <div className="grid gap-3 md:grid-cols-[1fr_auto_1fr_auto_1.1fr_auto_1.3fr] md:items-center md:gap-x-3">
+        <Step title="Buyer pays" detail="Funds held by Pindo" active={inView} delay={0} />
+        <Arrow active={inView} delay={0.1} />
+        <Step title="Seller is prompted" detail="Push asks them to ship" active={inView} delay={0.2} />
+        <Arrow active={inView} delay={0.3} />
+        <Reveal active={inView} delay={0.4}>
+          <div className="rounded-xl border border-[#99DAEF] bg-[#EEF7FC] px-3.5 py-3 text-center dark:bg-[#132A40]">
+            <span className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-[#0077A3]">Decision</span>
+            <span className="mt-0.5 block text-[13px] font-semibold text-zinc-900">Shipped within 24 h?</span>
+          </div>
+        </Reveal>
+        <Arrow active={inView} delay={0.5} />
+        <div className="flex flex-col gap-2.5">
+          <Reveal active={inView} delay={0.6}>
+            <div className="flex items-start gap-2.5 rounded-xl border border-zinc-200 bg-white px-3.5 py-3">
+              <span className="mt-px rounded-full bg-[#EAF3DE] px-2 py-0.5 text-[10px] font-semibold text-[#27500A] dark:bg-[#1D2D16] dark:text-[#B8DD9B]">
+                Yes
+              </span>
+              <span>
+                <span className="block text-[13px] font-semibold text-zinc-900">Order: “in transit”</span>
+                <span className="mt-0.5 block text-[12px] text-zinc-500">Buyer sees the new state</span>
+              </span>
+            </div>
+          </Reveal>
+          <Reveal active={inView} delay={0.75}>
+            <div className="flex items-start gap-2.5 rounded-xl border border-zinc-200 bg-white px-3.5 py-3">
+              <span className="mt-px rounded-full bg-[#FCEBEB] px-2 py-0.5 text-[10px] font-semibold text-[#A32D2D] dark:bg-[#3A1D1D] dark:text-[#FFB4B4]">
+                No
+              </span>
+              <span>
+                <span className="block text-[13px] font-semibold text-zinc-900">Support calls the seller</span>
+                <span className="mt-0.5 block text-[12px] text-zinc-500">Finds out why and follows up</span>
+              </span>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </VizFrame>
   );
 }

@@ -1,0 +1,8 @@
+/* The three surfaces, as soft tiles like the header facts. */
+.bnpl-roles { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.625rem; }
+.bnpl-roles > div { border-radius:18px; background:#f5f5f3; padding:1rem 1.125rem 1.125rem; }
+html.dark .bnpl-roles > div { background:var(--color-zinc-100); }
+.bnpl-roles span { display:block; font:600 11px/1.4 var(--font-case-ui); letter-spacing:.08em; color:var(--color-zinc-400); }
+.bnpl-roles strong { display:block; margin-top:.5rem; font:600 17px/1.25 var(--font-case-ui); color:var(--color-zinc-900); }
+.bnpl-roles p { margin-top:.25rem; font:500 13px/1.5 var(--font-case-ui); color:var(--color-zinc-600); }
+@media(max-width:600px){ .bnpl-roles { grid-template-columns:1fr; } }
