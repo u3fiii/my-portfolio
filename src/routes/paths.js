@@ -10,6 +10,7 @@ const CASE_STUDY_PATHS = {
   "bitpin-deposit": "/case-studies/bitpin-deposit",
   "pindo-secure-purchase": "/case-studies/pindo-secure-purchase",
   "bitpin-motion": "/case-studies/bitpin-motion",
+  "wallgold-bnpl": "/case-studies/wallgold-bnpl",
 };
 
 export const CASE_STUDY_TITLES = {
@@ -17,6 +18,7 @@ export const CASE_STUDY_TITLES = {
   "bitpin-deposit": "Bitpin — Deposit Flow Redesign",
   "pindo-secure-purchase": "Pindo — Secure Purchase",
   "bitpin-motion": "Bitpin — Motion",
+  "wallgold-bnpl": "WallGold — Gold-Backed BNPL",
 };
 
 export function workDetailPath(id) {

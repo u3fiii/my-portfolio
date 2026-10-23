@@ -1,50 +1,50 @@
-import { PhoneColumn } from "./sheypoorListingFormMockup.jsx";
+import { Check, X } from "@phosphor-icons/react";
+import PhoneFrame from "../mockups/PhoneFrame.jsx";
+import { SheypoorForm } from "../mockups/sheypoor.jsx";
+import { useInViewOnce } from "./viz.jsx";
 
-function ScreenImage({ src, alt }) {
+/** Label above, phone, then a small status pill and one-line caption. */
+function Column({ label, status, phone, caption }) {
+  const shipped = status === "shipped";
   return (
-    <img src={src} alt={alt} className="mx-auto block w-full max-w-[260px]" />
+    <div className="flex w-[230px] flex-col items-center">
+      <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-400">{label}</p>
+      {phone}
+      <span
+        className="mt-5 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold"
+        style={shipped ? { background: "#E8F1FD", color: "#2481ED" } : { background: "#FDECEF", color: "#D0425E" }}
+      >
+        {shipped ? <Check size={12} weight="bold" /> : <X size={12} weight="bold" />}
+        {shipped ? "Shipped" : "Tested & dropped"}
+      </span>
+      <p className="mt-2 text-center text-[12px] leading-snug text-zinc-500">{caption}</p>
+    </div>
   );
 }
 
 export default function SheypoorFormComparison() {
+  const [ref, inView] = useInViewOnce(0.4);
   return (
-    <figure className="case-study-artwork case-study__ui my-8">
-      <div
-        className="flex flex-wrap items-start justify-center"
-        style={{ gap: "40px" }}
-      >
-        <PhoneColumn
-          label="Screen 3 — Slider concept"
-          labelColor="#C0392B"
-          badge="❌ Tested & abandoned"
-          badgeStyle={{
-            background: "#FDECEA",
-            color: "#C0392B",
-            borderColor: "#F5B3B3",
-          }}
-          caption="Users didn't understand what the slider was for."
+    <figure ref={ref} className="case-study__ui cs-tray my-4">
+      <div className="flex flex-wrap items-start justify-center gap-10">
+        <Column
+          label="Slider concept"
+          status="dropped"
+          caption="Sellers didn't understand what the slider was for."
           phone={
-            <ScreenImage
-              src="/images/case-studies/price-signal-screen-3.png"
-              alt="Sheypoor listing form with price range slider concept"
-            />
+            <PhoneFrame width={210} label="Sheypoor listing form with price range slider concept">
+              <SheypoorForm variant="slider" play={inView} />
+            </PhoneFrame>
           }
         />
-        <PhoneColumn
-          label="Screen 4 — Final design"
-          labelColor="#0099CC"
-          badge="✓ Shipped"
-          badgeStyle={{
-            background: "#EEF6FF",
-            color: "#0077A3",
-            borderColor: "#99DAEF",
-          }}
-          caption="Price moved to last — pre-filled with fair estimate."
+        <Column
+          label="Final design"
+          status="shipped"
+          caption="Price moved to last, pre-filled with a fair estimate."
           phone={
-            <ScreenImage
-              src="/images/case-studies/price-signal-screen-4.png"
-              alt="Sheypoor listing form final design with pre-filled fair price"
-            />
+            <PhoneFrame width={210} label="Sheypoor listing form final design with pre-filled fair price">
+              <SheypoorForm variant="suggestion" play={inView} />
+            </PhoneFrame>
           }
         />
       </div>

@@ -1,0 +1,24 @@
+/*
+ * WallGold scenes, styled like every other case-study figure: the shared light
+ * tray (no border), the same phone size and bezel as PhoneFrame (~210px wide,
+ * #111113, 34px corners), small uppercase labels and the shared caption style.
+ */
+.bnpl-scenes { margin-block:1rem; padding:1.25rem; border-radius:16px; background:#fcfcfc; overflow:hidden; }
+html.dark .bnpl-scenes { background:var(--color-zinc-50); }
+.bnpl-scenes__track { display:flex; justify-content:center; align-items:flex-start; gap:2.5rem; overflow-x:auto; padding:2px 4px 6px; scrollbar-width:none; }
+.bnpl-scenes--3 .bnpl-scenes__track { gap:1.25rem; }
+.bnpl-scenes figcaption { max-width:610px; margin:1.25rem auto 0; text-align:center; color:var(--color-zinc-500); font:0.8125rem/1.55 var(--font-case-ui); }
+.bnpl-screen-item { --bnpl-scale:.54; flex:0 0 calc(390px * var(--bnpl-scale)); width:calc(390px * var(--bnpl-scale)); min-width:0; }
+.bnpl-scenes--featured .bnpl-screen-item { --bnpl-scale:.62; }
+.bnpl-screen-item--hero { --bnpl-scale:.72; width:100%; display:flex; flex-direction:column; align-items:center; padding:1.75rem 12px; border-radius:16px; background:#fcfcfc; }
+html.dark .bnpl-screen-item--hero { background:var(--color-zinc-50); }
+.bnpl-screen-item__label { display:block; margin-bottom:1rem; font:500 11px/1.4 var(--font-case-ui); letter-spacing:.08em; text-transform:uppercase; color:var(--color-zinc-400); text-align:center; }
+.bnpl-screen-item__slot { width:calc(390px * var(--bnpl-scale)); height:calc(844px * var(--bnpl-scale)); flex:none; }
+.bnpl-screen-item__scaled { width:390px; height:844px; transform:scale(var(--bnpl-scale)); transform-origin:top left; }
+.bnpl-screen-device { width:390px; height:844px; display:flex; flex-direction:column; overflow:hidden; border:11px solid #111113; border-radius:62px; background:#fff; box-shadow:0 18px 40px -18px rgb(0 0 0 / .35); font-family:IRANSansX,system-ui,sans-serif; font-size:13px; line-height:1.7; color:var(--ink); user-select:none; }
+.bnpl-screen-device .bnpl-screen-status { height:30px; flex:none; display:flex; justify-content:space-between; align-items:center; padding:4px 26px 0; font-size:11px; font-weight:700; background:#fff; }
+.bnpl-screen-device .screen { flex:1; min-height:0; height:auto; border-radius:0; }
+.bnpl-screen-device .bnpl-screen-nav { height:24px; flex:none; display:grid; place-items:center; background:#fff; }
+.bnpl-screen-device .bnpl-screen-nav i { display:block; width:120px; height:5px; border-radius:3px; background:#111113; }
+@media(min-width:640px){ .bnpl-scenes { padding:1.75rem; } }
+@media(max-width:640px){ .bnpl-scenes__track { justify-content:flex-start; scroll-snap-type:x proximity; gap:1rem; } .bnpl-screen-item { scroll-snap-align:center; } .bnpl-screen-item--hero { --bnpl-scale:.62; } }

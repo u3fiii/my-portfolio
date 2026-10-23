@@ -16,7 +16,8 @@
     "lottie-react": "^2.4.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.15.1"
+    "react-router-dom": "^7.15.1",
+    "three": "^0.182.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",

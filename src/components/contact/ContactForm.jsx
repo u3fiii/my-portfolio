@@ -177,7 +177,7 @@ export default function ContactForm() {
                 <img
                   src={SITE.logo}
                   alt=""
-                  className="h-5 w-5 rounded-full bg-zinc-900 object-cover"
+                  className="h-5 w-5 object-contain dark:invert"
                 />
                 <span className={`${FONT_UI} text-sm font-medium text-zinc-900`}>
                   {FORM.to.value}

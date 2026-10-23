@@ -1,39 +1,20 @@
-import BadgeColorTest from "../components/case-study/BadgeColorTest.jsx";
 import CaseStudyLayout, {
   Chapter,
-  Figure,
   H3,
   Interlude,
-  Lessons,
   P,
   PullQuote,
 } from "../components/case-study/CaseStudyLayout.jsx";
-import FormReorderDiagram from "../components/case-study/FormReorderDiagram.jsx";
-import PriceBadgeList from "../components/case-study/PriceBadgeList.jsx";
-import PriceSignalResultsGraphic from "../components/case-study/PriceSignalResultsGraphic.jsx";
 import SheypoorFinalFormScreen from "../components/case-study/SheypoorFinalFormScreen.jsx";
+import SheypoorFeedComparison from "../components/case-study/SheypoorFeedComparison.jsx";
 import SheypoorFormComparison from "../components/case-study/SheypoorFormComparison.jsx";
-import StatsRow from "../components/case-study/StatsRow.jsx";
+import {
+  FormReorder,
+  PriceSignalPlayground,
+  ShareShift,
+  StatCards,
+} from "../components/case-study/viz.jsx";
 import priceSignalThumbnail from "../assets/thumbnails/price-signal.jpg";
-
-const LEARNINGS = [
-  {
-    title: "Feedback timing changes everything.",
-    body: "The first version was right in concept and wrong in placement. The same information, delivered while sellers could still act on it, produced completely different results.",
-  },
-  {
-    title: "Two days of data beats two weeks of debate.",
-    body: "Arguments got us nowhere. A minimal test with real numbers reopened a closed conversation.",
-  },
-  {
-    title: "Defaults are stronger than instructions.",
-    body: "Pre-filling the price did more than the slider ever could. We didn't explain or persuade — we made the right option the easy one.",
-  },
-  {
-    title: "The same idea needs the right conditions.",
-    body: "Before the slowdown, the idea went nowhere. Once the problem was visible to everyone in the company, the same idea suddenly had support.",
-  },
-];
 
 export default function CaseStudyPriceSignal() {
   return (
@@ -50,224 +31,214 @@ export default function CaseStudyPriceSignal() {
         height: 1024,
       }}
       meta={[
-        ["Role", "Product Design — wireframes, prototypes, interaction + product thinking"],
-        ["Team", "Kourosh (PM), Engineering, Support, Sales"],
-        ["Timeline", "~2 months from idea to results"],
+        ["Role", "Product Designer"],
+        ["Team", "PM, Eng, Support, Sales"],
+        ["Timeline", "~2 months, idea to results"],
       ]}
     >
-      <Chapter title="Buyers were losing trust — and the market was slowing down" nav="The problem">
+      <Chapter title="Buyers stopped trusting prices" nav="The problem">
         <P>
-          In 2020, Iran&apos;s used-car market ran on rumors. Dealers were said to
-          be coordinating to inflate prices on classifieds platforms. Organized or
-          not, the effect was real: buyers didn&apos;t trust what they saw, fewer
-          deals closed, and the market slowed down.
+          In 2020, Iran&apos;s used-car market was full of rumors. People said
+          dealers were working together to push prices up on classifieds sites.
+          True or not, the effect was real. Buyers didn&apos;t trust the prices
+          they saw, fewer deals closed, and the market slowed down.
         </P>
         <P>
-          Buyers had no reliable way to tell whether a listing was fair. They
-          relied entirely on a stranger&apos;s judgment, on a platform that had no
-          opinion about whether a deal was good.
+          On Sheypoor, a buyer had no way to know if a price was fair. They could
+          only trust the seller, and Sheypoor said nothing either way.
         </P>
       </Chapter>
 
       <Interlude>
         <PullQuote>
-          What if Sheypoor just told people whether a price is fair or not?
+          What if Sheypoor just told people whether a price is fair?
         </PullQuote>
         <P>
-          It started over lunch: a small label on each listing. Is this car priced
-          too high? About right? A great deal?
+          The idea came up over lunch: a small label on every listing that says
+          if the price is too high, about right, or a good deal.
         </P>
         <P>
-          Kourosh liked it immediately, and we found an engineer that same
-          afternoon. We already had a machine learning model estimating fair market
-          prices from mileage, year, condition, and model. We had the data — we
-          just weren&apos;t using it this way.
+          Kourosh, our PM, liked it right away, and we found an engineer the same
+          afternoon. We already had a machine learning model that estimated a fair
+          price from a car&apos;s model, year, mileage and condition. We had the
+          data. We just weren&apos;t showing it to anyone.
         </P>
         <P>
-          First we wanted to know the problem was real. Kourosh and I called 20
-          active users who had viewed lots of listings but never tapped the contact
-          button. The pattern was consistent: when the gap between expectation and
-          listing price grew too wide, people simply stopped engaging. One person
-          put it plainly — &ldquo;There&apos;s no point calling when the prices are
-          like this.&rdquo;
+          First, we wanted to check that the problem was real. Kourosh and I
+          called 20 users who had looked at many listings but never contacted a
+          seller. They all told us something similar: when prices felt far too
+          high, they simply gave up. As one of them said, &ldquo;There&apos;s no
+          point calling when the prices are like this.&rdquo;
         </P>
         <P>
-          When we brought it to sales and support, they pushed back hard. Sellers
-          would get angry. Support would get flooded. The idea was shelved.
+          Sales and support were against it. They expected angry sellers and a
+          flood of support calls. The idea was put on hold.
         </P>
       </Interlude>
 
-      <Chapter title="Minimum effort. Just see what happens." nav="First test">
+      <Chapter title="A two-day test" nav="First test">
         <P>
-          A few weeks later, the market had visibly slowed. The same people who said
-          no came back: &ldquo;Let&apos;s do a small test. Minimum effort.&rdquo;
+          A few weeks later, the slowdown was clear to everyone. The same people
+          who had said no came back and said: &ldquo;Let&apos;s do a small test.
+          Minimum effort.&rdquo;
         </P>
         <P>
-          We built it fast and rolled it out to 20% of users as a controlled test.
-          For them, once a listing passed moderation, a colored badge appeared
-          below the price:
+          We built it quickly and showed it to 20% of users. Once a listing was
+          approved, a colored badge appeared under its price:
         </P>
-        <PriceBadgeList
-          items={[
-            { label: "Price is very high", variant: "red", description: "seller priced significantly above market" },
-            { label: "Price is high", variant: "yellow", description: "seller priced above market" },
-            { label: "Fair price", variant: "blue", description: "Sheypoor's brand color, aligned with market" },
-            { label: "Great deal", variant: "green", description: "priced below market" },
+        <PriceSignalPlayground
+          captionStyle={{ marginTop: 4, fontSize: 11 }}
+          caption={
+            <>
+              3D model: “Low Poly Small car” by{" "}
+              <a href="https://sketchfab.com/scailman" target="_blank" rel="noopener noreferrer" className="underline">
+                scailman
+              </a>
+              , CC BY 4.0.
+            </>
+          }
+          states={[
+            { label: "Good deal", variant: "green", from: -100, hint: "Priced below market" },
+            { label: "Fair price", variant: "blue", from: -8, hint: "In line with market" },
+            { label: "High price", variant: "yellow", from: 8, hint: "Priced above market" },
+            { label: "Too high", variant: "red", from: 20, hint: "Far above market" },
           ]}
         />
         <P>
-          The green state marked listings priced below market — rare, but real,
-          usually a seller in a hurry or unsure of the value.
+          The badge compared the price with similar cars and put it in one of
+          four groups, from a good deal to far too high. It was just one word and
+          one color, so buyers could read it at a glance. In a long feed, it gave
+          them a reason to stop on some listings:
         </P>
-        <BadgeColorTest />
+        <SheypoorFeedComparison caption="The same feed before and after the price badge." />
         <P>
-          One question was still open: should &ldquo;Fair price&rdquo; be blue,
-          Sheypoor&apos;s brand color, or green, following the red-to-green scale
-          people already understand? We couldn&apos;t agree, so we tested it.
+          After two days, seller complaints forced us to turn it off. But two
+          days was enough to learn three things:
         </P>
-        <P>
-          I built a skeleton listing page with colored badges and no labels, and
-          asked participants from our weekly usability sessions one question: which
-          listing looks like a better deal? Most chose green without hesitation.
-        </P>
-        <Figure caption="Listing cards before and after the price badge — same listing, new signal.">
-          <p className="mb-3 text-center text-[10px] font-medium uppercase tracking-[0.1em] text-[#0099CC]">
-            Screen 1 of 4
-          </p>
-          <img
-            src="/images/case-studies/price-signal-screen-1.png"
-            alt="Listing cards before and after the price badge — same listing, new signal"
-            loading="lazy"
-            decoding="async"
-          />
-        </Figure>
-        <P>
-          The test ran for two days before seller complaints forced us to roll it
-          back.
-        </P>
-      </Chapter>
-
-      <Chapter title="Even two days was enough to learn something real" nav="Early signals">
-        <P>Three signals stood out.</P>
-        <StatsRow
+        <StatCards
+          kicker="Two-day test · 20% of users"
+          title="Small numbers, but enough to restart the conversation."
           items={[
-            { value: "23%", label: "of badged listings tagged as fair price — our baseline" },
-            { value: "6%", label: "of complaining sellers actually lowered their price after support call" },
-            { value: "+10%", label: "more contact clicks on fair-price listings vs others" },
+            { value: "23%", label: "of listings were fairly priced — our starting point" },
+            { value: "6%", label: "of sellers who complained lowered their price after a support call" },
+            { value: "+10%", label: "more contact clicks on fair-price listings" },
           ]}
         />
         <P>
-          Other sellers had quietly deleted and reposted with lower prices — we
-          could see it in the data. We shared these numbers, and real data
-          reopened a closed conversation.
+          We also saw sellers quietly delete their listings and post them again
+          at a lower price. We shared these numbers, and the idea was back on the
+          table.
         </P>
       </Chapter>
 
-      <Chapter title="We were giving feedback at the wrong moment" nav="The real issue">
+      <Chapter title="The feedback came too late" nav="The real issue">
         <P>
-          Sellers went through the entire listing process, went live, and only then
-          found their price flagged. It felt like a penalty, not a signal, and the
-          only way out was to go back and edit. The feedback had to arrive before
-          anything went live.
+          The real problem was timing. Sellers filled in the whole form, published
+          their listing, and only then saw that their price was flagged. It felt
+          like a punishment, not advice, and the only way to fix it was to go back
+          and edit.
+        </P>
+        <PullQuote>The feedback had to arrive before the listing went live.</PullQuote>
+        <P>
+          The form was one single page, and we wanted to keep it that way. The
+          price field was near the top, so I moved it to the end. By the time
+          sellers got there, they had already entered the model, year, mileage and
+          condition. That was everything we needed for a good estimate, at the
+          exact moment they chose a price.
+        </P>
+        <FormReorder />
+        <P>
+          We also removed the &ldquo;Good deal&rdquo; label. Very few cars were
+          really priced below market, so three labels were enough and easier to
+          understand.
         </P>
         <P>
-          We also dropped the green &ldquo;Great deal&rdquo; state. Genuinely
-          underpriced listings were too rare to justify a whole state; three labels
-          meant a clearer signal and less for the seller to process.
-        </P>
-        <FormReorderDiagram />
-        <Figure
-          frame="bleed"
-          src="/images/editorial/price-feedback.jpg"
-          alt="Cut-paper car, blank price tag and pencil on an ochre background"
-        />
-      </Chapter>
-
-      <Chapter title="I moved the price field to the bottom of the form" nav="The new form">
-        <P>
-          The listing form was a single page — a core product principle we wanted
-          to keep. The price field had always sat near the top, so I moved it to the
-          bottom. By the time sellers reached it, they had entered the model, year,
-          mileage, and condition: everything we needed for an accurate estimate,
-          right at the moment they set a price.
-        </P>
-        <H3>First idea: a range slider</H3>
-        <P>
-          My first design was a red-to-yellow-to-green slider, with a marker showing
-          where the seller&apos;s price landed. I tested a Framer prototype with
-          people from other teams, and the same thing came up every time: nobody
-          understood what the slider was for or how it related to their price. We
-          moved on.
+          My first design for the new form was a slider from red to green that
+          showed where the seller&apos;s price landed. I tested a prototype with
+          people from other teams, and nobody understood what the slider was for.
+          So we dropped it.
         </P>
         <SheypoorFormComparison />
       </Chapter>
 
-      <Chapter title="Make the right option the easy option" nav="Smart defaults">
+      <Chapter title="A fair price by default" nav="Smart default">
         <P>
-          Instead of a slider, we pre-filled the price field with our suggested fair
-          price, with one line below it:
+          Instead of a slider, we filled in the price field for the seller with
+          our suggested fair price, and added one line under it:
         </P>
         <PullQuote>
           Based on current market conditions, Sheypoor suggests this price for your
           listing.
         </PullQuote>
         <P>
-          Sellers could keep it or change it — their listing, their choice. But the
-          default was now a fair price, and the path of least resistance led
-          somewhere good.
+          Sellers could keep it or change it. It was still their listing. But now
+          the easiest choice was also a fair one.
         </P>
-        <PriceBadgeList
-          items={[
-            { label: "Price is very high", variant: "red", description: "seller priced significantly above market" },
-            { label: "Price is high", variant: "yellow", description: "seller priced above market" },
-            { label: "Fair price", variant: "green", description: "aligned with market" },
+        <PriceSignalPlayground
+          states={[
+            { label: "Fair price", variant: "green", from: -100, hint: "In line with market" },
+            { label: "High price", variant: "yellow", from: 8, hint: "Priced above market" },
+            { label: "Too high", variant: "red", from: 20, hint: "Far above market" },
           ]}
         />
         <P>
-          &ldquo;Fair price&rdquo; landed on green — the color buyers had read as a
-          good deal in testing.
+          If a seller typed a higher price, they saw the label their listing would
+          get, while they could still change it. Buyers saw the same labels in the
+          feed.
         </P>
         <SheypoorFinalFormScreen />
       </Chapter>
 
-      <Chapter title="From 23% to 41% in two weeks" nav="Results">
+      <Chapter title="Fair prices almost doubled" nav="Results">
         <P>
-          Two weeks after launch, fair-priced listings grew from 23% to 41% — nearly
-          double. Changing when and how feedback arrived was enough to shift seller
-          behavior at scale.
+          Two weeks after launch, fairly priced listings went from 23% to 41%.
+          Changing when and how sellers got feedback was enough to change what
+          they did.
         </P>
-        <PriceSignalResultsGraphic />
-      </Chapter>
-
-      <Chapter title="How it ended" nav="The ending">
+        <ShareShift
+          kicker="Fair-priced listings"
+          title="Earlier feedback nearly doubled fair pricing."
+          rows={[
+            { label: "First test", note: "2 days · 20% of users", value: 23 },
+            { label: "After the redesign", note: "2 weeks after launch", value: 41, highlight: true },
+          ]}
+          delta="+18 pts · nearly 2×"
+          footer={[
+            { value: "6%", label: "of complaining sellers lowered their price" },
+            { value: "+10%", label: "more contact clicks on fair-price listings" },
+            { value: "~2 months", label: "from a lunch idea to a live feature" },
+          ]}
+        />
         <P>
-          A few months after launch, the government ordered all major classifieds
-          platforms to remove car prices from listings entirely, and the feature
-          came down with everything else. We brought it back when the restrictions
-          lifted — but the part that mattered, from a lunch conversation to a
-          working, data-backed feature, took about two months.
+          A few months later, the government told all classifieds sites to remove
+          car prices completely, and the feature went down with them. We brought
+          it back when the rule was lifted. But the important part had already
+          happened: an idea from lunch became a working, data-backed feature in
+          about two months.
         </P>
       </Chapter>
 
       <Chapter title="What I learned" nav="Learnings">
-        <Lessons items={LEARNINGS} />
-      </Chapter>
-
-      <Chapter title="What I'd do differently" nav="Hindsight">
         <P>
-          <strong className="text-zinc-900">We could have had the baseline for free.</strong>{" "}
-          The pricing model existed before the feature did. Scoring every active
-          listing offline — no launch, no complaints, no risk — would have told us
-          from day one that only 23% were fairly priced: the very number we later
-          used to reopen the conversation.
+          The first version had the right idea in the wrong place. The same
+          information, shown while sellers could still act on it, gave completely
+          different results.
+        </P>
+        <PullQuote>Two days of real data did more than two weeks of debate.</PullQuote>
+        <P>
+          Pre-filling the price also worked better than any explanation. We
+          didn&apos;t try to convince sellers. We made the fair option the easy
+          one. And timing matters for ideas too: the same idea that was rejected
+          before the slowdown got full support once everyone could see the
+          problem.
         </P>
         <P>
-          We would still have needed the live test. Offline scoring shows the state
-          of the market; only real sellers show how people <em>respond</em> — the 6%
-          who lowered their price, the quiet reposts, the +10% in contact clicks.
-          But walking into that first meeting with &ldquo;only 23% of our listings
-          are fairly priced&rdquo; instead of a hypothesis might have kept the idea
-          from being shelved at all.
+          If I did it again, I would get the starting number before the test. The
+          pricing model already existed, so we could have scored every listing
+          offline, with no launch and no angry sellers. We would still need a live
+          test to see how sellers react. But walking into the first meeting with
+          &ldquo;only 23% of our listings are fairly priced&rdquo; might have kept
+          the idea alive from the start.
         </P>
       </Chapter>
     </CaseStudyLayout>
