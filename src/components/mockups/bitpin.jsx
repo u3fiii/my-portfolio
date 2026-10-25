@@ -9,6 +9,8 @@ import {
   CaretDown,
   CaretRight,
   ChartBar,
+  CheckCircle,
+  CircleNotch,
   ClockCounterClockwise,
   Copy,
   CreditCard,
@@ -83,7 +85,37 @@ function TabBar() {
   );
 }
 
-export function EasyBuyScreen() {
+export function EasyBuyScreen({ flowStage }) {
+  const animated = Number.isInteger(flowStage);
+  const entered = animated ? Math.min(Math.max(flowStage, 0), 6) : 6;
+  const rawAmount = "500000".slice(0, entered);
+  const amount = rawAmount ? Number(rawAmount).toLocaleString("en-US") : "0";
+  const activeKey = animated && flowStage >= 1 && flowStage <= 6 ? "500000"[flowStage - 1] : null;
+  const waiting = animated && flowStage >= 8 && flowStage < 15;
+  const successful = animated && flowStage >= 15;
+
+  if (successful) return (
+    <Screen className="flex h-full flex-col" style={{ background: BP.bg, direction: "ltr" }}>
+      <StatusBar tone="dark" />
+      <Header title="Easy buy" back={false} />
+      <motion.div
+        className="flex flex-1 flex-col items-center justify-center px-7 pb-16 text-center"
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45 }}
+      >
+        <CheckCircle size={82} weight="fill" color={BP.green} />
+        <p className="mt-5 text-[25px] font-semibold" style={{ color: BP.text }}>Purchase successful</p>
+        <p className="mt-3 text-[14px] leading-relaxed" style={{ color: BP.muted }}>You bought Bitcoin with 500,000 toman.</p>
+        <div className="mt-8 w-full rounded-[2px] px-5 py-4 text-left" style={{ background: BP.surface }}>
+          <p className="text-[12px]" style={{ color: BP.muted }}>Purchased</p>
+          <p className="mt-1 text-[20px] font-semibold" style={{ color: BP.text }}>≈ 0.00071 BTC</p>
+        </div>
+      </motion.div>
+      <TabBar />
+    </Screen>
+  );
+
   return (
     <Screen className="flex h-full flex-col" style={{ background: BP.bg, direction: "ltr" }}>
       <StatusBar tone="dark" />
@@ -105,17 +137,30 @@ export function EasyBuyScreen() {
         <div className="mt-3 rounded-[2px] px-4 pb-4 pt-5" style={{ background: BP.surface }}>
           <p className="text-[11.5px] font-medium" style={{ color: BP.muted }}>You pay</p>
           <p className="mt-1 flex items-baseline gap-2 text-[30px] font-semibold tracking-[-0.02em]" style={{ color: BP.text }}>
-            500,000 <span className="text-[14px] font-medium" style={{ color: BP.muted }}>toman</span>
+            {amount}<span className="text-[14px] font-medium" style={{ color: BP.muted }}>toman</span>
           </p>
-          <p className="mt-2 text-[12px]" style={{ color: BP.faint }}>≈ 0.00071 BTC</p>
+          <p className="mt-2 text-[12px]" style={{ color: BP.faint }}>{entered === 6 ? "≈ 0.00071 BTC" : "Enter an amount"}</p>
         </div>
-        <div className="mt-5 flex h-[54px] items-center justify-center gap-2 rounded-[2px] text-[16px] font-semibold text-[#0B2A1E]" style={{ background: BP.green }}>
-          <Lightning size={18} weight="fill" /> Buy
-        </div>
+        <motion.div
+          className="mt-5 flex h-[54px] items-center justify-center gap-2 rounded-[2px] text-[16px] font-semibold text-[#0B2A1E]"
+          initial={false}
+          animate={{ scale: flowStage === 7 ? 0.96 : 1, opacity: waiting ? 0.55 : 1 }}
+          transition={{ duration: 0.2 }}
+          style={{ background: BP.green }}
+        >
+          {waiting ? <CircleNotch size={18} /> : <Lightning size={18} weight="fill" />}
+          {waiting ? "Waiting for payment" : flowStage === 7 ? "Opening gateway" : "Buy"}
+        </motion.div>
       </div>
       <div className="mt-6 grid grid-cols-3 gap-y-5 px-10 text-center text-[22px] font-medium" style={{ color: BP.text }}>
-        {["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "⌫"].map((k, i) => (
-          <span key={i} style={{ color: k === "⌫" ? BP.muted : undefined }}>{k}</span>
+        {["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "⌫"].map((key, index) => (
+          <motion.span
+            key={`${index}-${key && key === activeKey ? flowStage : "idle"}`}
+            className="mx-auto flex h-8 w-10 items-center justify-center rounded-[2px]"
+            initial={{ backgroundColor: "rgba(0,0,0,0)", color: key === "⌫" ? BP.muted : BP.text, scale: 1 }}
+            animate={{ backgroundColor: key && key === activeKey ? BP.raised : "rgba(0,0,0,0)", color: key && key === activeKey ? BP.green : key === "⌫" ? BP.muted : BP.text, scale: key && key === activeKey ? 1.2 : 1 }}
+            transition={{ duration: 0.18 }}
+          >{key}</motion.span>
         ))}
       </div>
       <TabBar />
@@ -125,15 +170,25 @@ export function EasyBuyScreen() {
 
 /* ——— Shaparak gateway (the trusted, familiar step) ——— */
 
-export function GatewayScreen() {
+export function GatewayScreen({ flowStage }) {
+  const animated = Number.isInteger(flowStage);
   const field = (label, value) => (
     <div className="mb-3">
       <p className="mb-1.5 text-[11.5px] font-medium text-[#8A8A8A]">{label}</p>
       <div className="flex h-[44px] items-center rounded-[2px] border border-[#E4E4E4] bg-white px-3.5 text-[14.5px] font-semibold tracking-[0.04em] text-[#222]">
-        {value}
+        {value ? (
+          <motion.span key={value} initial={animated ? { opacity: 0, y: 4 } : false} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>{value}</motion.span>
+        ) : <span className="font-normal text-[#BABABA]">{label}</span>}
       </div>
     </div>
   );
+  const card = !animated || flowStage >= 9 ? "6219 86•• •••• 6407" : "";
+  const cvv = !animated || flowStage >= 10 ? "•••" : "";
+  const expiry = !animated || flowStage >= 11 ? "•• / ••" : "";
+  const password = !animated || flowStage >= 12 ? "••••••" : "";
+  const paying = animated && flowStage === 13;
+  const successful = animated && flowStage >= 14;
+
   return (
     <Screen className="flex h-full flex-col bg-[#F4F5F7]" style={{ direction: "ltr" }}>
       <StatusBar />
@@ -141,36 +196,58 @@ export function GatewayScreen() {
         <Lock size={14} weight="fill" color="#1A9E5C" />
         shaparak.ir
       </div>
-      <div className="mx-4 rounded-[2px] bg-white p-4 shadow-[0_1px_3px_rgb(0_0_0/0.05)]">
-        <div className="flex items-center justify-between">
-          <span>
-            <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-[#9A9A9A]">Merchant</p>
-            <p className="mt-0.5 text-[16px] font-semibold text-[#111]">Bitpin</p>
-          </span>
-          <span className="rounded-full bg-[#E9F7EF] px-2.5 py-1 text-[11px] font-semibold text-[#1A9E5C]">Verified</span>
-        </div>
-        <div className="mt-4 flex items-baseline justify-between border-t border-dashed border-[#E6E6E6] pt-3.5">
-          <span className="text-[12.5px] text-[#8A8A8A]">Amount</span>
-          <span className="text-[19px] font-semibold text-[#111]">500,000 <span className="text-[12px] font-normal text-[#8A8A8A]">toman</span></span>
-        </div>
-      </div>
-      <div className="mx-4 mt-3 rounded-[2px] bg-white p-4 shadow-[0_1px_3px_rgb(0_0_0/0.05)]">
-        <div className="mb-3 flex items-center justify-between">
-          <span className="text-[14px] font-semibold text-[#111]">Card details</span>
-          <span className="flex items-center gap-1 text-[12px] font-medium text-[#8A8A8A]">
-            <Timer size={14} /> 09:28
-          </span>
-        </div>
-        {field("Card number", "6219 86•• •••• 6407")}
-        <div className="grid grid-cols-2 gap-2.5">
-          {field("CVV2", "•••")}
-          {field("Expiry", "•• / ••")}
-        </div>
-        {field("Dynamic password", "••••••")}
-      </div>
-      <div className="mx-4 mt-auto mb-8 flex h-[52px] items-center justify-center gap-2 rounded-[2px] bg-[#1A9E5C] text-[15px] font-semibold text-white">
-        <Lock size={16} weight="fill" /> Pay 500,000 toman
-      </div>
+      {successful ? (
+        <motion.div
+          className="flex flex-1 flex-col items-center justify-center px-8 pb-20 text-center"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <CheckCircle size={82} weight="fill" color="#1A9E5C" />
+          <p className="mt-5 text-[25px] font-semibold text-[#111]">Payment successful</p>
+          <p className="mt-3 text-[14px] text-[#777]">500,000 toman paid to Bitpin</p>
+          <p className="mt-8 text-[12px] text-[#999]">Returning to Bitpin…</p>
+        </motion.div>
+      ) : (
+        <>
+          <div className="mx-4 rounded-[2px] bg-white p-4 shadow-[0_1px_3px_rgb(0_0_0/0.05)]">
+            <div className="flex items-center justify-between">
+              <span>
+                <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-[#9A9A9A]">Merchant</p>
+                <p className="mt-0.5 text-[16px] font-semibold text-[#111]">Bitpin</p>
+              </span>
+              <span className="rounded-full bg-[#E9F7EF] px-2.5 py-1 text-[11px] font-semibold text-[#1A9E5C]">Verified</span>
+            </div>
+            <div className="mt-4 flex items-baseline justify-between border-t border-dashed border-[#E6E6E6] pt-3.5">
+              <span className="text-[12.5px] text-[#8A8A8A]">Amount</span>
+              <span className="text-[19px] font-semibold text-[#111]">500,000 <span className="text-[12px] font-normal text-[#8A8A8A]">toman</span></span>
+            </div>
+          </div>
+          <div className="mx-4 mt-3 rounded-[2px] bg-white p-4 shadow-[0_1px_3px_rgb(0_0_0/0.05)]">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-[14px] font-semibold text-[#111]">Card details</span>
+              <span className="flex items-center gap-1 text-[12px] font-medium text-[#8A8A8A]">
+                <Timer size={14} /> 09:28
+              </span>
+            </div>
+            {field("Card number", card)}
+            <div className="grid grid-cols-2 gap-2.5">
+              {field("CVV2", cvv)}
+              {field("Expiry", expiry)}
+            </div>
+            {field("Dynamic password", password)}
+          </div>
+          <motion.div
+            className="mx-4 mt-auto mb-8 flex h-[52px] items-center justify-center gap-2 rounded-[2px] text-[15px] font-semibold text-white"
+            initial={false}
+            animate={{ scale: paying ? 0.96 : 1, backgroundColor: paying ? "#147A49" : "#1A9E5C" }}
+            transition={{ duration: 0.2 }}
+          >
+            {paying ? <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}><CircleNotch size={16} /></motion.span> : <Lock size={16} weight="fill" />}
+            {paying ? "Processing payment" : "Pay 500,000 toman"}
+          </motion.div>
+        </>
+      )}
     </Screen>
   );
 }

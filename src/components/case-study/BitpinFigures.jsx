@@ -1,5 +1,6 @@
 /** Bitpin deposit flow figures: screens rebuilt in code, paired to tell the flow. */
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import PhoneFrame from "../mockups/PhoneFrame.jsx";
 import {
   BankMatchScreen,
@@ -44,50 +45,66 @@ function Tray({ frameRef, caption, children, gap = "gap-6 sm:gap-10" }) {
   );
 }
 
-/** Easy buy → Shaparak, then the link between them breaks once the figure is in view. */
+/** The familiar pre-shutdown route, played as one sequence across both phones. */
+const GATEWAY_FLOW_TIMES = [0, 850, 1120, 1390, 1660, 1930, 2200, 2800, 3200, 3700, 4150, 4600, 5050, 5650, 6400, 7100];
+const GATEWAY_FLOW_LENGTH = 9000;
+
 export function BitpinGatewayFigure() {
-  const [ref, inView] = useInViewOnce(0.45);
+  const ref = useRef(null);
+  const inView = useInView(ref, { amount: 0.35 });
   const reduce = useReducedMotion();
+  const [stage, setStage] = useState(0);
+
+  useEffect(() => {
+    if (reduce) {
+      setStage(15);
+      return;
+    }
+    if (!inView) {
+      setStage(0);
+      return;
+    }
+
+    const timers = new Set();
+    const later = (callback, delay) => {
+      const id = window.setTimeout(() => {
+        timers.delete(id);
+        callback();
+      }, delay);
+      timers.add(id);
+    };
+    const play = () => {
+      setStage(0);
+      GATEWAY_FLOW_TIMES.forEach((time, nextStage) => {
+        if (nextStage > 0) later(() => setStage(nextStage), time);
+      });
+      later(play, GATEWAY_FLOW_LENGTH);
+    };
+    play();
+    return () => timers.forEach(window.clearTimeout);
+  }, [inView, reduce]);
+
+  const gatewayActive = stage >= 8;
   return (
-    <Tray frameRef={ref} caption="The route users knew: tap Buy, land on Shaparak, pay by card. In January 2024, that link was cut.">
-      <Column label="Easy buy" phone={<PhoneFrame width={210} label="Bitpin easy buy screen"><EasyBuyScreen /></PhoneFrame>} />
-      <div className="relative flex h-[440px] w-24 items-center justify-center max-sm:h-16 max-sm:w-full">
-        <svg viewBox="0 0 96 24" className="h-6 w-24 max-sm:rotate-90" fill="none" strokeLinecap="round">
-          <motion.path
-            d="M4 12 H40"
-            stroke="currentColor"
-            className="text-zinc-300"
-            strokeWidth="1.8"
-          />
-          <motion.path
-            d="M56 12 H90 M83 5 L90 12 L83 19"
-            stroke="currentColor"
-            className="text-zinc-300"
-            strokeWidth="1.8"
-            initial={false}
-            animate={inView && !reduce ? { x: 6, opacity: 0.35 } : { x: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          />
-          <motion.path
-            d="M40 12 H56"
-            stroke="currentColor"
-            className="text-zinc-300"
-            strokeWidth="1.8"
-            initial={false}
-            animate={inView ? { opacity: 0 } : { opacity: 1 }}
-            transition={{ duration: 0.2, delay: 1.1 }}
-          />
-        </svg>
+    <Tray frameRef={ref} caption="The familiar route before the shutdown: enter an amount, pay on Shaparak, return to a completed purchase. In January 2024, that route was cut.">
+      <Column label="Easy buy" phone={<PhoneFrame width={210} label="Animated Bitpin easy buy flow"><EasyBuyScreen flowStage={stage} /></PhoneFrame>} />
+      <div className="flex h-[440px] w-24 items-center justify-center max-sm:h-16 max-sm:w-full" aria-hidden>
         <motion.span
-          className="absolute top-[calc(50%+18px)] whitespace-nowrap rounded-full bg-[#FDECEF] px-2.5 py-1 text-[10.5px] font-semibold text-[#D0425E] max-sm:top-auto max-sm:left-[calc(50%+24px)]"
-          initial={reduce ? false : { opacity: 0, scale: 0.6, rotate: -8 }}
-          animate={inView ? { opacity: 1, scale: 1, rotate: -4 } : undefined}
-          transition={{ type: "spring", stiffness: 380, damping: 16, delay: 1.25 }}
-        >
-          Gateways shut down
-        </motion.span>
+          className="text-4xl leading-none max-sm:rotate-90"
+          initial={false}
+          animate={{ color: gatewayActive ? "#00A86B" : "#D4D4D8", opacity: gatewayActive ? 1 : 0.55, scale: gatewayActive && stage < 15 ? 1.14 : 1 }}
+          transition={{ duration: 0.45 }}
+        >{stage >= 15 ? "←" : "→"}</motion.span>
       </div>
-      <Column label="Shaparak gateway" phone={<PhoneFrame width={210} label="Shaparak bank card payment page"><GatewayScreen /></PhoneFrame>} />
+      <Column label="Shaparak gateway" phone={
+        <motion.div
+          initial={false}
+          animate={{ opacity: gatewayActive ? 1 : 0.32, filter: gatewayActive ? "grayscale(0%)" : "grayscale(100%)" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <PhoneFrame width={210} label="Animated Shaparak payment page"><GatewayScreen flowStage={stage} /></PhoneFrame>
+        </motion.div>
+      } />
     </Tray>
   );
 }

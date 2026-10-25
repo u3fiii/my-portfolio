@@ -1,7 +1,6 @@
 import { workDetailPath } from "../routes/paths.js";
 import bitpinMotionThumbnail from "../assets/thumbnails/bitpin-motion-new-card.jpg";
 import escrowThumbnail from "../assets/thumbnails/escrow-card.jpg";
-import priceSignalThumbnail from "../assets/thumbnails/price-signal-card.jpg";
 const rialDepositThumbnail = "/images/editorial/deposit-trust.jpg";
 
 /** Homepage work grid — single source for Projects section and related links. */
@@ -28,7 +27,7 @@ export const WORK_CARDS = [
     href: workDetailPath("price-signal"),
     external: false,
     comingSoon: false,
-    image: priceSignalThumbnail,
+    image: "/images/editorial/price-signal-blue.jpg",
   },
   {
     id: "bitpin-deposit",

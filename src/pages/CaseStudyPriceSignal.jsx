@@ -14,7 +14,7 @@ import {
   ShareShift,
   StatCards,
 } from "../components/case-study/viz.jsx";
-import priceSignalThumbnail from "../assets/thumbnails/price-signal.jpg";
+const priceSignalCover = "/images/editorial/price-signal-blue.jpg";
 
 export default function CaseStudyPriceSignal() {
   return (
@@ -25,10 +25,10 @@ export default function CaseStudyPriceSignal() {
       deck="How Sheypoor helped buyers and sellers find fair ground in a volatile market."
       role="Product Designer · Sheypoor"
       cover={{
-        src: priceSignalThumbnail,
-        alt: "Price Signal case study cover",
-        width: 1536,
-        height: 1024,
+        src: priceSignalCover,
+        alt: "A used car balanced between two price tags on a blue scale",
+        width: 1672,
+        height: 941,
       }}
       meta={[
         ["Role", "Product Designer"],
