@@ -1,8 +1,4 @@
 import { workDetailPath } from "../routes/paths.js";
-import bitpinMotionThumbnail from "../assets/thumbnails/bitpin-motion-new-card.jpg";
-import escrowThumbnail from "../assets/thumbnails/escrow-card.jpg";
-import priceSignalThumbnail from "../assets/thumbnails/price-signal-card.jpg";
-const rialDepositThumbnail = "/images/editorial/deposit-trust.jpg";
 
 /** Homepage work grid — single source for Projects section and related links. */
 export const WORK_CARDS = [
@@ -16,7 +12,7 @@ export const WORK_CARDS = [
     href: workDetailPath("price-signal"),
     external: false,
     comingSoon: false,
-    image: priceSignalThumbnail,
+    image: "/images/work/price-signal-card.jpg",
   },
   {
     id: "bitpin-deposit",
@@ -28,7 +24,7 @@ export const WORK_CARDS = [
     href: workDetailPath("bitpin-deposit"),
     external: false,
     comingSoon: false,
-    image: rialDepositThumbnail,
+    image: "/images/work/deposit-flow-card.jpg",
   },
   {
     id: "pindo-secure-purchase",
@@ -40,7 +36,7 @@ export const WORK_CARDS = [
     href: workDetailPath("pindo-secure-purchase"),
     external: false,
     comingSoon: false,
-    image: escrowThumbnail,
+    image: "/images/work/secure-purchase-card.jpg",
   },
   {
     id: "bitpin-motion",
@@ -52,7 +48,7 @@ export const WORK_CARDS = [
     href: workDetailPath("bitpin-motion"),
     external: false,
     comingSoon: false,
-    image: bitpinMotionThumbnail,
+    image: "/images/work/motion-loops-card.jpg",
   },
   {
     id: "wander",
@@ -86,7 +82,7 @@ export const WORK_CARDS = [
     href: "#",
     external: true,
     comingSoon: true,
-    image: "/images/covers/designing-for-low-trust.jpg",
+    image: "/images/work/low-trust-card.jpg",
   },
   {
     id: "verified-listings",
@@ -98,7 +94,7 @@ export const WORK_CARDS = [
     href: "#",
     external: true,
     comingSoon: true,
-    image: "/images/covers/verified-listings.png",
+    image: "/images/work/verified-listings-card.jpg",
   },
 
 ];
