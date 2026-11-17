@@ -17,6 +17,8 @@ const pages = {
   pindo: () => import("./pages/CaseStudyPindoSecurePurchase.jsx"),
   bitpinMotion: () => import("./pages/ArticleBitpinMotion.jsx"),
   wallgold: () => import("./pages/CaseStudyWallGoldBnpl.jsx"),
+  wander: () => import("./pages/GameWander.jsx"),
+  lana: () => import("./pages/GameLana.jsx"),
 };
 const WorkDetailPage = lazy(pages.work);
 const CaseStudyPriceSignal = lazy(pages.priceSignal);
@@ -24,6 +26,8 @@ const CaseStudyBitpinDeposit = lazy(pages.bitpinDeposit);
 const CaseStudyPindoSecurePurchase = lazy(pages.pindo);
 const ArticleBitpinMotion = lazy(pages.bitpinMotion);
 const CaseStudyWallGoldBnpl = lazy(pages.wallgold);
+const GameWander = lazy(pages.wander);
+const GameLana = lazy(pages.lana);
 
 function usePrefetchPages() {
   useEffect(() => {
@@ -47,6 +51,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/work/:id" element={<WorkDetailPage />} />
+            <Route path="/games/wander" element={<GameWander />} />
+            <Route path="/games/lana" element={<GameLana />} />
             <Route
               path="/case-studies/price-signal"
               element={<CaseStudyPriceSignal />}

@@ -6,18 +6,6 @@ const rialDepositThumbnail = "/images/editorial/deposit-trust.jpg";
 /** Homepage work grid — single source for Projects section and related links. */
 export const WORK_CARDS = [
   {
-    id: "wallgold-bnpl",
-    filter: "case-study",
-    tag: "Case Study · WallGold",
-    title: "Gold-Backed BNPL",
-    description:
-      "Designing an installment journey across WallGold, Goldpay, and merchant checkout.",
-    href: workDetailPath("wallgold-bnpl"),
-    external: false,
-    comingSoon: false,
-    image: "/images/editorial/wallgold-bnpl.jpg",
-  },
-  {
     id: "price-signal",
     filter: "case-study",
     tag: "Case Study · Sheypoor",
@@ -66,28 +54,26 @@ export const WORK_CARDS = [
     image: bitpinMotionThumbnail,
   },
   {
-    id: "verified-listings",
-    filter: "case-study",
-    tag: "Case Study",
-    title: "Verified Listings",
-    description:
-      "A trust badge that cut scam reports — and why we almost shipped the wrong version.",
-    href: "#",
-    external: true,
-    comingSoon: true,
-    image: "/images/covers/verified-listings.png",
+    id: "wander",
+    filter: "game",
+    tag: "Game · Web / Three.js",
+    title: "Wander",
+    description: "An arcade drive around a tiny living planet, built for keyboard, touch and gamepad.",
+    href: workDetailPath("wander"),
+    external: false,
+    comingSoon: false,
+    image: "/images/games/wander-editorial.jpg",
   },
   {
-    id: "quiet-checkout",
-    filter: "project",
-    tag: "Project",
-    title: "Quiet Checkout",
-    description:
-      "Removing four fields from a marketplace checkout and watching completion climb.",
-    href: "#",
-    external: true,
-    comingSoon: true,
-    image: "/images/covers/price-signal.png",
+    id: "lana",
+    filter: "game",
+    tag: "Game · Godot",
+    title: "Lana / Mote",
+    description: "A small silhouette platformer about movement, atmosphere and a shifting world of colour.",
+    href: workDetailPath("lana"),
+    external: false,
+    comingSoon: false,
+    image: "/images/games/lana-editorial.jpg",
   },
   {
     id: "designing-for-low-trust",
@@ -101,6 +87,19 @@ export const WORK_CARDS = [
     comingSoon: true,
     image: "/images/covers/designing-for-low-trust.jpg",
   },
+  {
+    id: "verified-listings",
+    filter: "case-study",
+    tag: "Case Study",
+    title: "Verified Listings",
+    description:
+      "A trust badge that cut scam reports — and why we almost shipped the wrong version.",
+    href: "#",
+    external: true,
+    comingSoon: true,
+    image: "/images/covers/verified-listings.png",
+  },
+
 ];
 
 export function getRelatedWorkCards(excludeId, limit = 3) {

@@ -154,7 +154,7 @@ export default function CaseStudyLayout({
     const body = bodyRef.current;
     if (!body) return;
     const images = [...body.querySelectorAll("img")].filter(
-      (img) => !img.closest(".cs-figure--bleed"),
+      (img) => !img.closest(".cs-figure--bleed") && !img.hasAttribute("data-preserve-background"),
     );
     const cleanups = images.map((img) => {
       const apply = () => {

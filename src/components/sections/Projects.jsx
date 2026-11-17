@@ -29,7 +29,7 @@ const SECTION_TOKENS = {
 
 const TABS = [
   { id: "all", label: "All", animation: allAnimation },
-  { id: "project", label: "Projects", animation: projectsAnimation },
+  { id: "game", label: "Games", animation: projectsAnimation },
   { id: "article", label: "Articles", animation: articlesAnimation },
   { id: "case-study", label: "Case studies", animation: caseStudiesAnimation },
 ];
@@ -173,7 +173,7 @@ export default function Projects() {
               className="mt-1 text-zinc-500"
               style={{ fontFamily: FONT_UI, fontSize: "14px" }}
             >
-              Case studies, articles and side projects.
+              Case studies, articles and playable worlds.
             </motion.p>
           </div>
 

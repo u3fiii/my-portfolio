@@ -9,7 +9,7 @@ export const PROJECTS_DESCRIPTION =
 
 export const FILTER_OPTIONS = [
   { id: "all", label: "All", icon: "all" },
-  { id: "project", label: "Projects", icon: "project" },
+  { id: "game", label: "Games", icon: "project" },
   { id: "article", label: "Articles", icon: "article" },
   { id: "case-study", label: "Case studies", icon: "case-study" },
 ];

@@ -11,6 +11,8 @@ const CASE_STUDY_PATHS = {
   "pindo-secure-purchase": "/case-studies/pindo-secure-purchase",
   "bitpin-motion": "/case-studies/bitpin-motion",
   "wallgold-bnpl": "/case-studies/wallgold-bnpl",
+  wander: "/games/wander",
+  lana: "/games/lana",
 };
 
 export const CASE_STUDY_TITLES = {

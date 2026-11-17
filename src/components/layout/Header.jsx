@@ -90,7 +90,8 @@ const headerEnterTransition = {
 export default function Header() {
   const workMatch = useMatch("/work/:id");
   const caseStudyMatch = useMatch("/case-studies/:slug");
-  const isDetail = Boolean(workMatch || caseStudyMatch);
+  const gameMatch = useMatch("/games/:slug");
+  const isDetail = Boolean(workMatch || caseStudyMatch || gameMatch);
 
   const activeId = useActiveSection(isDetail ? [] : sectionIds);
 
