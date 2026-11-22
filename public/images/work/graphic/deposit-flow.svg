@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img">
+<defs><filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="3" seed="11" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".09"/></feComponentTransfer></filter>
+<pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.5" fill="#15233A" opacity=".22"/></pattern></defs>
+<rect width="1200" height="750" fill="#244F40"/>
+<circle cx="1060" cy="80" r="235" fill="#8EAC7A" opacity=".58"/>
+<path d="M-40 515 L425 515 L425 590 L-40 590Z" fill="#F0E5CF"/>
+<path d="M764 515 L1240 515 L1240 590 L764 590Z" fill="#F0E5CF"/>
+<path d="M424 550 L768 550" stroke="#DDEBD0" stroke-width="15" stroke-dasharray="20 22" stroke-linecap="round"/>
+<path d="M457 550 L729 550" stroke="#B2D181" stroke-width="7" stroke-linecap="round"/>
+<circle cx="594" cy="550" r="37" fill="#E5AC68" stroke="#1B4638" stroke-width="9"/>
+<g transform="rotate(-9 300 350)">
+<rect x="128" y="193" width="344" height="223" rx="18" fill="#152D2B" stroke="#F0E5CF" stroke-width="10"/>
+<rect x="164" y="236" width="93" height="55" rx="8" fill="#DCC89E"/>
+<path d="M165 348 H434" stroke="#B8C4A4" stroke-width="8" stroke-linecap="round"/>
+</g>
+<g transform="rotate(7 920 338)">
+<rect x="810" y="141" width="233" height="356" rx="29" fill="#F2E8D6" stroke="#173C36" stroke-width="11"/>
+<rect x="844" y="186" width="165" height="240" rx="6" fill="#B4CDB0"/>
+<path d="M876 330 L903 357 L977 283" fill="none" stroke="#194C40" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="926" cy="458" r="12" fill="#8BAF90"/>
+</g>
+<path d="M425 105 C573 59 625 79 734 136" fill="none" stroke="#DCEAD0" stroke-width="4" stroke-dasharray="8 13"/>
+<path d="M716 118 L741 143 L707 151" fill="none" stroke="#DCEAD0" stroke-width="6" stroke-linecap="round"/>
+
+<rect width="1200" height="750" fill="#15233A" filter="url(#paper)" opacity=".18" pointer-events="none"/>
+</svg>

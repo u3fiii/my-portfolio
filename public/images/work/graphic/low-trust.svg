@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img">
+<defs><filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="3" seed="11" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".09"/></feComponentTransfer></filter>
+<pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.5" fill="#15233A" opacity=".22"/></pattern></defs>
+<rect width="1200" height="750" fill="#243039"/>
+<circle cx="1008" cy="165" r="214" fill="#737A74" opacity=".36"/>
+<path d="M-80 692 L1260 692" stroke="#111E28" stroke-width="119"/>
+<path d="M118 566 L292 566 L292 507 L435 507 L435 448 L578 448 L578 389 L720 389 L720 332 L866 332" fill="none" stroke="#E7DCC4" stroke-width="65" stroke-linejoin="miter"/>
+<path d="M118 566 L292 566 L292 507 L435 507 L435 448 L578 448 L578 389 L720 389 L720 332 L866 332" fill="none" stroke="#BFAE91" stroke-width="3" stroke-dasharray="13 21"/>
+<path d="M862 480 L862 184 Q862 116 930 116 L1100 116 Q1160 116 1160 184 L1160 580 L862 580Z" fill="#141F27" stroke="#E7DCC4" stroke-width="11"/>
+<path d="M924 514 L924 206 Q924 181 950 181 L1070 181 Q1096 181 1096 206 L1096 514Z" fill="#D8A17B"/>
+<path d="M924 516 L1096 516" stroke="#E7DCC4" stroke-width="10"/>
+<circle cx="355" cy="390" r="9" fill="#DEA77E"/><circle cx="498" cy="330" r="9" fill="#DEA77E"/><circle cx="642" cy="269" r="9" fill="#DEA77E"/>
+
+<rect width="1200" height="750" fill="#15233A" filter="url(#paper)" opacity=".18" pointer-events="none"/>
+</svg>

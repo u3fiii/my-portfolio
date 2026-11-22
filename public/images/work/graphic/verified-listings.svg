@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img">
+<defs><filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="3" seed="11" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".09"/></feComponentTransfer></filter>
+<pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.5" fill="#15233A" opacity=".22"/></pattern></defs>
+<rect width="1200" height="750" fill="#B7B8CC"/>
+<path d="M-50 625 L1240 625" stroke="#7F83A5" stroke-width="120"/>
+<g transform="rotate(-11 274 335)"><rect x="116" y="189" width="313" height="364" rx="11" fill="#D8D7D5" stroke="#4A536C" stroke-width="8"/><rect x="144" y="218" width="257" height="156" fill="#A4AAB4"/><path d="M150 416 H335 M150 451 H299" stroke="#9096A1" stroke-width="15" stroke-linecap="round"/></g>
+<g transform="rotate(12 937 357)"><rect x="779" y="173" width="304" height="370" rx="11" fill="#D9D7D4" stroke="#4A536C" stroke-width="8"/><rect x="807" y="203" width="248" height="156" fill="#A4AAB4"/><path d="M813 401 H989 M813 437 H961" stroke="#9297A0" stroke-width="15" stroke-linecap="round"/></g>
+<rect x="429" y="103" width="354" height="461" rx="12" fill="#EEE8DC" stroke="#2D426E" stroke-width="11"/>
+<rect x="461" y="136" width="290" height="202" fill="#31579B"/>
+<path d="M475 321 L537 250 L587 290 L674 181 L742 293" fill="none" stroke="#A4C7BD" stroke-width="15" stroke-linejoin="round"/>
+<circle cx="685" cy="204" r="22" fill="#D8B992"/>
+<path d="M469 381 H716 M469 426 H653 M469 470 H686" stroke="#7388A1" stroke-width="13" stroke-linecap="round"/>
+<circle cx="762" cy="506" r="103" fill="#84B49E" stroke="#2D426E" stroke-width="10"/>
+<path d="M716 505 L750 538 L808 466" fill="none" stroke="#F4ECD9" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+
+<rect width="1200" height="750" fill="#15233A" filter="url(#paper)" opacity=".18" pointer-events="none"/>
+</svg>

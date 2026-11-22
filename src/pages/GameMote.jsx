@@ -1,10 +1,10 @@
 import CaseStudyLayout, { Chapter, P, PullQuote } from "../components/case-study/CaseStudyLayout.jsx";
 import { GameImage, ProcessStrip, PlayGame } from "../components/case-study/GameStoryBlocks.jsx";
 
-export default function GameLana() {
+export default function GameMote() {
   return (
     <CaseStudyLayout
-      id="lana"
+      id="mote"
       eyebrow="Game · Independent prototype"
       title="Mote: making a small journey feel alive"
       deck="A silhouette platformer where one small figure travels through red forest, cobalt water, amber light and violet night."
@@ -13,7 +13,7 @@ export default function GameLana() {
       meta={[["Role", "Game design & development"], ["Platform", "Godot · Web prototype"], ["Focus", "Movement and atmosphere"]]}
     >
       <Chapter title="A little light in the forest" nav="The idea">
-        <P>The project folder is called Lana; the current game is named Mote. Its protagonist is a small black silhouette with two bright eyes. I wanted her to feel tiny against a landscape that changes around her, but never hard to find or control.</P>
+        <P>Mote’s protagonist is a small black silhouette with two bright eyes. I wanted her to feel tiny against a landscape that changes around her, but never hard to find or control.</P>
         <PullQuote>Let movement and colour tell the story before adding words.</PullQuote>
         <PlayGame href="https://hollowlight-xi.vercel.app/" title="Mote" note="Open the playable Godot web prototype in a new tab. Desktop controls use the arrow keys or A/D, Space to jump and E to interact." />
       </Chapter>

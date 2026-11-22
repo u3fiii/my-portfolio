@@ -1,0 +1,11 @@
+Model Information:
+* title:	Suzuki Carry Blind Van
+* source:	https://sketchfab.com/3d-models/suzuki-carry-blind-van-f1ab63b5a2d94e4ebf9023a06f8aff71
+* author:	Dave Love SketchFab (https://sketchfab.com/Tyler_Dave)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Suzuki Carry Blind Van" (https://sketchfab.com/3d-models/suzuki-carry-blind-van-f1ab63b5a2d94e4ebf9023a06f8aff71) by Dave Love SketchFab (https://sketchfab.com/Tyler_Dave) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

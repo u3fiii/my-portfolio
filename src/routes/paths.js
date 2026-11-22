@@ -12,7 +12,7 @@ const CASE_STUDY_PATHS = {
   "bitpin-motion": "/case-studies/bitpin-motion",
   "wallgold-bnpl": "/case-studies/wallgold-bnpl",
   wander: "/games/wander",
-  lana: "/games/lana",
+  mote: "/games/mote",
 };
 
 export const CASE_STUDY_TITLES = {

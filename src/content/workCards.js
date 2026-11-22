@@ -12,7 +12,7 @@ export const WORK_CARDS = [
     href: workDetailPath("price-signal"),
     external: false,
     comingSoon: false,
-    image: "/images/work/price-signal-card.jpg",
+    image: "/images/work/scenes/price-signal.webp",
   },
   {
     id: "bitpin-deposit",
@@ -24,7 +24,7 @@ export const WORK_CARDS = [
     href: workDetailPath("bitpin-deposit"),
     external: false,
     comingSoon: false,
-    image: "/images/work/deposit-flow-card.jpg",
+    image: "/images/work/scenes/deposit-flow.webp",
   },
   {
     id: "pindo-secure-purchase",
@@ -36,7 +36,7 @@ export const WORK_CARDS = [
     href: workDetailPath("pindo-secure-purchase"),
     external: false,
     comingSoon: false,
-    image: "/images/work/secure-purchase-card.jpg",
+    image: "/images/work/scenes/secure-purchase.webp",
   },
   {
     id: "bitpin-motion",
@@ -48,7 +48,7 @@ export const WORK_CARDS = [
     href: workDetailPath("bitpin-motion"),
     external: false,
     comingSoon: false,
-    image: "/images/work/motion-loops-card.jpg",
+    image: "/images/work/scenes/motion-loops.webp",
   },
   {
     id: "wander",
@@ -62,12 +62,12 @@ export const WORK_CARDS = [
     image: "/images/games/wander-editorial.jpg",
   },
   {
-    id: "lana",
+    id: "mote",
     filter: "game",
     tag: "Game · Godot",
-    title: "Lana / Mote",
+    title: "Mote",
     description: "A small silhouette platformer about movement, atmosphere and a shifting world of colour.",
-    href: workDetailPath("lana"),
+    href: workDetailPath("mote"),
     external: false,
     comingSoon: false,
     image: "/images/games/lana-editorial.jpg",
@@ -82,7 +82,7 @@ export const WORK_CARDS = [
     href: "#",
     external: true,
     comingSoon: true,
-    image: "/images/work/low-trust-card.jpg",
+    image: "/images/work/scenes/low-trust.webp",
   },
   {
     id: "verified-listings",
@@ -94,7 +94,7 @@ export const WORK_CARDS = [
     href: "#",
     external: true,
     comingSoon: true,
-    image: "/images/work/verified-listings-card.jpg",
+    image: "/images/work/scenes/verified-listings.webp",
   },
 
 ];

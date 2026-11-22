@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Header from "./components/layout/Header.jsx";
 import PageBackground from "./components/layout/PageBackground.jsx";
 import ScrollRestoration from "./components/layout/ScrollRestoration.jsx";
@@ -18,7 +18,7 @@ const pages = {
   bitpinMotion: () => import("./pages/ArticleBitpinMotion.jsx"),
   wallgold: () => import("./pages/CaseStudyWallGoldBnpl.jsx"),
   wander: () => import("./pages/GameWander.jsx"),
-  lana: () => import("./pages/GameLana.jsx"),
+  mote: () => import("./pages/GameMote.jsx"),
 };
 const WorkDetailPage = lazy(pages.work);
 const CaseStudyPriceSignal = lazy(pages.priceSignal);
@@ -27,7 +27,7 @@ const CaseStudyPindoSecurePurchase = lazy(pages.pindo);
 const ArticleBitpinMotion = lazy(pages.bitpinMotion);
 const CaseStudyWallGoldBnpl = lazy(pages.wallgold);
 const GameWander = lazy(pages.wander);
-const GameLana = lazy(pages.lana);
+const GameMote = lazy(pages.mote);
 
 function usePrefetchPages() {
   useEffect(() => {
@@ -52,7 +52,8 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/work/:id" element={<WorkDetailPage />} />
             <Route path="/games/wander" element={<GameWander />} />
-            <Route path="/games/lana" element={<GameLana />} />
+            <Route path="/games/mote" element={<GameMote />} />
+            <Route path="/games/lana" element={<Navigate to="/games/mote" replace />} />
             <Route
               path="/case-studies/price-signal"
               element={<CaseStudyPriceSignal />}
