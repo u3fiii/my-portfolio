@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -112,6 +112,36 @@ const cardVariants = {
   }),
 };
 
+function mixWorkCards(cards) {
+  const groups = new Map();
+  for (const card of cards) {
+    if (!groups.has(card.filter)) groups.set(card.filter, []);
+    groups.get(card.filter).push(card);
+  }
+
+  const remaining = [...groups.values()];
+  // Pick from the largest eligible group so larger categories stay spread out.
+  const mixed = [];
+  while (mixed.length < cards.length) {
+    const previous = mixed.at(-1);
+    const eligible = remaining.filter(([first]) => first && first.filter !== previous?.filter);
+    const candidates = eligible.length ? eligible : remaining;
+    const maxSize = Math.max(...candidates.map((group) => group.length));
+    const largest = candidates.filter((group) => group.length === maxSize);
+    const group = largest[Math.floor(Math.random() * largest.length)];
+    const published = group.filter((card) => !card.comingSoon);
+    const pool = !previous && published.length ? published : group;
+    const card = pool[Math.floor(Math.random() * pool.length)];
+    mixed.push(card);
+    group.splice(group.indexOf(card), 1);
+  }
+
+  return mixed;
+}
+
+// Keep the same positions when filtering or returning from a detail page.
+const mixedWorkCards = mixWorkCards(WORK_CARDS);
+
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState("all");
   const sectionRef = useRef(null);
@@ -130,17 +160,9 @@ export default function Projects() {
     return () => window.clearTimeout(id);
   }, [hasEntered]);
 
-  // Published work leads; coming-soon pieces follow in their original order.
-  const filteredCards = useMemo(() => {
-    const cards =
-      activeFilter === "all"
-        ? WORK_CARDS
-        : WORK_CARDS.filter((card) => card.filter === activeFilter);
-    return [
-      ...cards.filter((card) => !card.comingSoon),
-      ...cards.filter((card) => card.comingSoon),
-    ];
-  }, [activeFilter]);
+  const filteredCards = activeFilter === "all"
+    ? mixedWorkCards
+    : mixedWorkCards.filter((card) => card.filter === activeFilter);
 
   return (
     <Section
