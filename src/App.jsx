@@ -1,45 +1,26 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Header from "./components/layout/Header.jsx";
 import PageBackground from "./components/layout/PageBackground.jsx";
 import ScrollRestoration from "./components/layout/ScrollRestoration.jsx";
 import { LenisProvider } from "./hooks/useLenis.jsx";
-import HomePage from "./pages/HomePage.jsx";
 import PageSkeleton from "./components/layout/PageSkeleton.jsx";
 
-// Article pages load on demand, so the home page doesn't download three.js,
-// the mockups or the WallGold demo. They're fetched in the background once the
-// home page is idle, so opening one usually feels instant anyway.
-const pages = {
-  work: () => import("./pages/WorkDetailPage.jsx"),
-  priceSignal: () => import("./pages/CaseStudyPriceSignal.jsx"),
-  bitpinDeposit: () => import("./pages/CaseStudyBitpinDeposit.jsx"),
-  pindo: () => import("./pages/CaseStudyPindoSecurePurchase.jsx"),
-  bitpinMotion: () => import("./pages/ArticleBitpinMotion.jsx"),
-  wallgold: () => import("./pages/CaseStudyWallGoldBnpl.jsx"),
-  wander: () => import("./pages/GameWander.jsx"),
-  mote: () => import("./pages/GameMote.jsx"),
-};
-const WorkDetailPage = lazy(pages.work);
-const CaseStudyPriceSignal = lazy(pages.priceSignal);
-const CaseStudyBitpinDeposit = lazy(pages.bitpinDeposit);
-const CaseStudyPindoSecurePurchase = lazy(pages.pindo);
-const ArticleBitpinMotion = lazy(pages.bitpinMotion);
-const CaseStudyWallGoldBnpl = lazy(pages.wallgold);
-const GameWander = lazy(pages.wander);
-const GameMote = lazy(pages.mote);
+import { pageLoaders } from "./routes/pageLoaders.js";
+import { workDetailPath } from "./routes/paths.js";
 
-function usePrefetchPages() {
-  useEffect(() => {
-    const idle = window.requestIdleCallback ?? ((fn) => window.setTimeout(fn, 2000));
-    const cancel = window.cancelIdleCallback ?? window.clearTimeout;
-    const id = idle(() => Object.values(pages).forEach((load) => load().catch(() => {})), { timeout: 4000 });
-    return () => cancel(id);
-  }, []);
-}
+const HomePage = lazy(() => import("./pages/HomePage.jsx"));
+
+const WorkDetailPage = lazy(pageLoaders["/work/:id"]);
+const CaseStudyPriceSignal = lazy(pageLoaders[workDetailPath("price-signal")]);
+const CaseStudyBitpinDeposit = lazy(pageLoaders[workDetailPath("bitpin-deposit")]);
+const CaseStudyPindoSecurePurchase = lazy(pageLoaders[workDetailPath("pindo-secure-purchase")]);
+const ArticleBitpinMotion = lazy(pageLoaders[workDetailPath("bitpin-motion")]);
+const CaseStudyWallGoldBnpl = lazy(pageLoaders[workDetailPath("wallgold-bnpl")]);
+const GameWander = lazy(pageLoaders[workDetailPath("wander")]);
+const GameMote = lazy(pageLoaders[workDetailPath("mote")]);
 
 export default function App() {
-  usePrefetchPages();
   return (
     <LenisProvider>
       <BrowserRouter>

@@ -10,13 +10,14 @@ export default function useActiveSection(sectionIds) {
   const lenis = useLenis();
 
   useEffect(() => {
-    const elements = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
+    if (sectionIds.length === 0) return;
 
-    if (elements.length === 0) return;
-
+    let elements = [];
     const updateActive = () => {
+      // The header can mount before the lazy home route.
+      if (elements.length !== sectionIds.length) {
+        elements = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
+      }
       const anchor = window.innerHeight * 0.35;
       let current = sectionIds[0];
 

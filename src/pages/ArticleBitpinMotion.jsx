@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useInView } from "framer-motion";
 import CaseStudyLayout, { Chapter, P } from "../components/case-study/CaseStudyLayout.jsx";
 import bitpinMotionThumbnail from "../assets/thumbnails/bitpin-motion-new.jpg";
 
@@ -8,12 +9,14 @@ const HERO_PIECES = [
     title: "Hero motion",
     body: "A looping hero for Bitpin's marketing pages. It had to feel premium without making the page slow.",
     src: "/videos/bitpin-motion/hero.mp4",
+    aspectRatio: "1280 / 826",
   },
   {
     id: "feature-loop",
     title: "Feature loop",
     body: "A second idea for the website hero: a short loop about a product feature, small enough to sit next to text.",
     src: "/videos/bitpin-motion/feature-loop.mp4",
+    aspectRatio: "1440 / 900",
   },
 ];
 
@@ -64,54 +67,58 @@ const SPLASH_PIECES = [
   },
 ];
 
-function DesktopFrame({ src, title }) {
+function ViewportVideo({ src, title, className, startOffset = 0 }) {
+  const videoRef = useRef(null);
+  const requested = useInView(videoRef, { margin: "240px 0px", once: true });
+  const visible = useInView(videoRef);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!requested || !video) return;
+
+    const syncPlayback = () => {
+      if (visible && !document.hidden) video.play().catch(() => {});
+      else video.pause();
+    };
+    syncPlayback();
+    document.addEventListener("visibilitychange", syncPlayback);
+    return () => document.removeEventListener("visibilitychange", syncPlayback);
+  }, [requested, visible]);
+
+  return (
+    <video
+      ref={videoRef}
+      src={requested ? src : undefined}
+      title={title}
+      className={className}
+      onLoadedMetadata={startOffset ? (event) => {
+        const video = event.currentTarget;
+        if (Number.isFinite(video.duration) && video.duration > 0) {
+          video.currentTime = startOffset % video.duration;
+        }
+      } : undefined}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+    />
+  );
+}
+
+function DesktopFrame({ src, title, aspectRatio }) {
   return (
     <div className="overflow-hidden rounded-[clamp(16px,4vw,32px)] border-[clamp(5px,1.4vw,10px)] border-[#D4D4D8] bg-[#D4D4D8] dark:border-white/10 dark:bg-white/10">
-      <video
-        src={src}
-        title={title}
-        className="block h-auto w-full"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-      />
+      <div style={{ aspectRatio }}>
+        <ViewportVideo src={src} title={title} className="block h-full w-full" />
+      </div>
     </div>
   );
 }
 
-function MobileFrame({ src, title, startOffset = 0 }) {
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video || !startOffset) return;
-
-    const applyOffset = () => {
-      if (!video.duration || Number.isNaN(video.duration)) return;
-      video.currentTime = startOffset % video.duration;
-    };
-
-    video.addEventListener("loadedmetadata", applyOffset);
-    if (video.readyState >= 1) applyOffset();
-
-    return () => video.removeEventListener("loadedmetadata", applyOffset);
-  }, [src, startOffset]);
-
+function MobileFrame({ src, title, startOffset }) {
   return (
     <div className="aspect-[39/85] w-full overflow-hidden rounded-[clamp(14px,3.5vw,20px)] border-[clamp(5px,1.25vw,8px)] border-[#D4D4D8] bg-[#D4D4D8] dark:border-white/10 dark:bg-white/10">
-      <video
-        ref={videoRef}
-        src={src}
-        title={title}
-        className="block h-full w-full object-cover object-top"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-      />
+      <ViewportVideo src={src} title={title} startOffset={startOffset} className="block h-full w-full object-cover object-top" />
     </div>
   );
 }
@@ -119,16 +126,7 @@ function MobileFrame({ src, title, startOffset = 0 }) {
 function SquareFrame({ src, title }) {
   return (
     <div className="aspect-square w-full max-w-[300px] overflow-hidden rounded-[clamp(14px,3vw,20px)] border-[clamp(4px,1vw,6px)] border-[#D4D4D8] bg-[#D4D4D8] dark:border-white/10 dark:bg-white/10">
-      <video
-        src={src}
-        title={title}
-        className="block h-full w-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-      />
+      <ViewportVideo src={src} title={title} className="block h-full w-full object-cover" />
     </div>
   );
 }
@@ -172,7 +170,7 @@ export default function ArticleBitpinMotion() {
             <p className="case-study__body font-semibold text-zinc-900">{piece.title}</p>
             <P>{piece.body}</P>
             <figure className="case-study__ui cs-tray my-2">
-              <DesktopFrame src={piece.src} title={piece.title} />
+              <DesktopFrame src={piece.src} title={piece.title} aspectRatio={piece.aspectRatio} />
             </figure>
           </div>
         ))}

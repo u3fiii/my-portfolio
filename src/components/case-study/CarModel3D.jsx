@@ -20,22 +20,26 @@ export default function CarModel3D({ className = "", modelUrl = MODEL_URL, paint
     if (!host || !canvas) return;
     setReady(false);
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const car = mountCar({ canvas, url: modelUrl, paint, startAngle, still, onReady: () => setReady(true) });
-
+    let car;
     const measure = () => {
       const { width, height } = host.getBoundingClientRect();
-      car.update({ width, height });
+      car?.update({ width, height });
     };
-    measure();
     const resizeObserver = new ResizeObserver(measure);
     resizeObserver.observe(host);
-    const io = new IntersectionObserver(([entry]) => car.update({ visible: entry.isIntersecting }));
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !car) {
+        car = mountCar({ canvas, url: modelUrl, paint, startAngle, still, onReady: () => setReady(true) });
+        measure();
+      }
+      car?.update({ visible: entry.isIntersecting });
+    });
     io.observe(host);
 
     return () => {
       io.disconnect();
       resizeObserver.disconnect();
-      car.destroy();
+      car?.destroy();
     };
   }, [modelUrl, paint, startAngle]);
 

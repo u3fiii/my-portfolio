@@ -48,6 +48,7 @@ export default function DotGrid({
   const wrapperRef = useRef(null);
   const canvasRef = useRef(null);
   const dotsRef = useRef([]);
+  const requestDraw = useRef(null);
   const pointerRef = useRef({
     x: 0,
     y: 0,
@@ -106,16 +107,19 @@ export default function DotGrid({
         dots.push({ cx, cy, xOffset: 0, yOffset: 0, _inertiaApplied: false });
       }
     }
+    dotsRef.current.forEach((dot) => gsap.killTweensOf(dot));
     dotsRef.current = dots;
+    requestDraw.current?.();
   }, [dotSize, gap]);
 
   useEffect(() => {
     if (!circlePath) return;
 
-    let rafId;
+    let rafId = null;
     const proxSq = proximity * proximity;
 
     const draw = () => {
+      rafId = null;
       const canvas = canvasRef.current;
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
@@ -148,11 +152,18 @@ export default function DotGrid({
         ctx.restore();
       }
 
-      rafId = requestAnimationFrame(draw);
     };
 
-    draw();
-    return () => cancelAnimationFrame(rafId);
+    const scheduleDraw = () => {
+      if (rafId === null) rafId = requestAnimationFrame(draw);
+    };
+
+    requestDraw.current = scheduleDraw;
+    scheduleDraw();
+    return () => {
+      requestDraw.current = null;
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, [proximity, baseColor, activeRgb, baseRgb, circlePath]);
 
   useEffect(() => {
@@ -171,6 +182,7 @@ export default function DotGrid({
   }, [buildGrid]);
 
   useEffect(() => {
+    const redraw = () => requestDraw.current?.();
     const onMove = (e) => {
       const now = performance.now();
       const pr = pointerRef.current;
@@ -196,6 +208,7 @@ export default function DotGrid({
       const rect = canvasRef.current.getBoundingClientRect();
       pr.x = e.clientX - rect.left;
       pr.y = e.clientY - rect.top;
+      redraw();
 
       for (const dot of dotsRef.current) {
         const dist = Math.hypot(dot.cx - pr.x, dot.cy - pr.y);
@@ -206,12 +219,14 @@ export default function DotGrid({
           const pushY = dot.cy - pr.y + vy * 0.005;
           gsap.to(dot, {
             inertia: { xOffset: pushX, yOffset: pushY, resistance },
+            onUpdate: redraw,
             onComplete: () => {
               gsap.to(dot, {
                 xOffset: 0,
                 yOffset: 0,
                 duration: returnDuration,
                 ease: "elastic.out(1,0.75)",
+                onUpdate: redraw,
               });
               dot._inertiaApplied = false;
             },
@@ -237,12 +252,14 @@ export default function DotGrid({
           const pushY = (dot.cy - cy) * shockStrength * falloff;
           gsap.to(dot, {
             inertia: { xOffset: pushX, yOffset: pushY, resistance },
+            onUpdate: redraw,
             onComplete: () => {
               gsap.to(dot, {
                 xOffset: 0,
                 yOffset: 0,
                 duration: returnDuration,
                 ease: "elastic.out(1,0.75)",
+                onUpdate: redraw,
               });
               dot._inertiaApplied = false;
             },
@@ -258,6 +275,13 @@ export default function DotGrid({
     return () => {
       window.removeEventListener("mousemove", throttledMove);
       window.removeEventListener("click", onClick);
+      dotsRef.current.forEach((dot) => {
+        gsap.killTweensOf(dot);
+        dot._inertiaApplied = false;
+        dot.xOffset = 0;
+        dot.yOffset = 0;
+      });
+      redraw();
     };
   }, [
     maxSpeed,

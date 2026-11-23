@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import { ICON_WEIGHT } from "../ui/icons.js";
 
+import { prefetchWork } from "../../routes/pageLoaders.js";
+
 const FONT_SERIF = '"Source Serif 4", Georgia, serif';
 const FONT_UI = '"DM Sans", ui-sans-serif, system-ui, sans-serif';
 
@@ -139,7 +141,14 @@ export default function WorkCard({
   }
 
   return (
-    <Link to={href} className={cardClass}>
+    <Link
+      to={href}
+      className={cardClass}
+      onPointerEnter={(event) => {
+        if (event.pointerType === "mouse") prefetchWork(href);
+      }}
+      onFocus={() => prefetchWork(href)}
+    >
       {content}
     </Link>
   );

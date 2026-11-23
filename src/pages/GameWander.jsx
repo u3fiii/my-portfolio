@@ -21,7 +21,7 @@ export default function GameWander() {
 
       <Chapter title="How the planet and road work" nav="World system">
         <P>The world is generated from a repeatable set of regions and terrain rules. The road is not a flat loop placed on top: its vertices are projected back onto the displaced sphere. That keeps the driveable surface attached to the land as the planet rises, dips and turns away from the camera.</P>
-        <GameImage src="/images/games/wander-world-system.png" alt="Editorial illustration showing Wander's terrain, road and scenery as separate layers" caption="Concept illustration of the construction logic: terrain first, a continuous route following its surface, then places and details. This is not a gameplay screenshot." />
+        <GameImage src="/images/games/wander-world-system.webp" alt="Editorial illustration showing Wander's terrain, road and scenery as separate layers" caption="Concept illustration of the construction logic: terrain first, a continuous route following its surface, then places and details. This is not a gameplay screenshot." />
         <ProcessStrip label="World-building pipeline" steps={[
           { title: "Define regions", detail: "City, forest and coast share one deterministic globe and road network." },
           { title: "Project the route", detail: "Road points follow the globe's surface and form a continuous driveable loop." },
