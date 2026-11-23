@@ -15,7 +15,7 @@ export default function GameWander() {
       <Chapter title="A drive without a destination" nav="The idea">
         <P>Wander started with a small question: could driving itself be the reward? Instead of a large open world, I built a miniature planet with a city, forest and coast connected by one road. The first thing you notice is the whole world at once; as you drive, individual places unfold around the curve.</P>
         <PullQuote>The planet is small enough to understand, but the next bend still feels worth seeing.</PullQuote>
-        <PlayGame href="https://wander-woad.vercel.app/" title="Wander" note="Open the playable browser game in a new tab. Keyboard, touch and gamepad controls are supported." />
+        <PlayGame href="https://wander.u3fiali-uv28s.arvanedge.ir/" title="Wander" note="Open the playable browser game in a new tab. Keyboard, touch and gamepad controls are supported." />
         <P>The <a href="https://github.com/u3fiii/wander" target="_blank" rel="noopener noreferrer">source code is also public ↗</a>.</P>
       </Chapter>
 
