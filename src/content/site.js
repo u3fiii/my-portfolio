@@ -5,7 +5,7 @@
 export const SITE = {
   logoAlt: "Ali",
   logo: "/images/ali-monogram.png?v=6",
-  cvUrl: "/cv.pdf",
+  cvUrl: "/Ali-Yousefi-CV.pdf",
   cvLabel: "Download CV",
 };
 

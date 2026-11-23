@@ -1,3 +1,4 @@
 {
+  "redirects": [{ "source": "/cv.pdf", "destination": "/Ali-Yousefi-CV.pdf", "permanent": false }],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
