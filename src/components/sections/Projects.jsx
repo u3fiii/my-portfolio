@@ -113,15 +113,17 @@ const cardVariants = {
 };
 
 function mixWorkCards(cards) {
+  const featured = cards.find((card) => card.id === "price-signal");
   const groups = new Map();
   for (const card of cards) {
+    if (card === featured) continue;
     if (!groups.has(card.filter)) groups.set(card.filter, []);
     groups.get(card.filter).push(card);
   }
 
   const remaining = [...groups.values()];
   // Pick from the largest eligible group so larger categories stay spread out.
-  const mixed = [];
+  const mixed = featured ? [featured] : [];
   while (mixed.length < cards.length) {
     const previous = mixed.at(-1);
     const eligible = remaining.filter(([first]) => first && first.filter !== previous?.filter);
