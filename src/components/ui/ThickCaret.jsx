@@ -19,12 +19,17 @@ const MIRROR_PROPS = [
   "fontVariant",
   "fontWeight",
   "fontStretch",
+  "fontKerning",
+  "fontFeatureSettings",
+  "fontVariationSettings",
   "letterSpacing",
   "lineHeight",
   "textAlign",
   "textIndent",
   "textTransform",
   "wordSpacing",
+  "wordBreak",
+  "direction",
   "tabSize",
 ];
 
@@ -52,11 +57,18 @@ function measureCaret(field) {
   });
 
   const position = field.selectionStart ?? field.value.length;
-  mirror.textContent = field.value.slice(0, position);
   const marker = document.createElement("span");
-  marker.textContent = field.value.slice(position) || ".";
+  marker.textContent = "H";
   mirror.appendChild(marker);
   document.body.appendChild(mirror);
+
+  // An inline marker sits at the font's text bounds, not the top of its
+  // line box. Calibrate it against the first line to remove that offset.
+  const firstLineTextTop = marker.getClientRects()[0].top;
+  mirror.prepend(document.createTextNode(field.value.slice(0, position)));
+  marker.textContent = field.value.slice(position) || ".";
+  const markerRect = marker.getClientRects()[0];
+  const mirrorRect = mirror.getBoundingClientRect();
 
   // Fit the bar to the glyphs actually on screen. While empty that's the
   // placeholder, which can have its own (smaller) size and line height.
@@ -68,11 +80,11 @@ function measureCaret(field) {
     ? lineHeight
     : parseFloat(placeholder.lineHeight) || lineHeight;
 
-  const left = marker.offsetLeft - field.scrollLeft;
-  // Inputs centre their single line vertically; textareas stack lines.
+  const left = markerRect.left - mirrorRect.left - field.scrollLeft;
+  const insetTop = parseFloat(style.borderTopWidth) + parseFloat(style.paddingTop);
   const lineTop = isInput
-    ? (field.clientHeight - textLineHeight) / 2
-    : marker.offsetTop - field.scrollTop;
+    ? (field.offsetHeight - textLineHeight) / 2
+    : insetTop + markerRect.top - firstLineTextTop - field.scrollTop;
   mirror.remove();
 
   // From just above cap height to just below the baseline, rather than the
@@ -81,8 +93,8 @@ function measureCaret(field) {
   ctx.font = `${style.fontWeight} ${textSize}px ${style.fontFamily}`;
   const box = ctx.measureText("Hg");
   const capHeight = ctx.measureText("H").actualBoundingBoxAscent;
-  const ascent = box.fontBoundingBoxAscent;
-  const descent = box.fontBoundingBoxDescent;
+  const ascent = box.fontBoundingBoxAscent ?? textSize * 0.8;
+  const descent = box.fontBoundingBoxDescent ?? textSize * 0.2;
   const baseline = (textLineHeight - (ascent + descent)) / 2 + ascent;
   const top = baseline - capHeight - textSize * 0.16;
   const bottom = baseline + textSize * 0.2;
@@ -91,7 +103,7 @@ function measureCaret(field) {
   // last one, and centred on the gap between two characters.
   const atStart = position === 0 || field.value[position - 1] === "\n";
   const atEnd = position === field.value.length || field.value[position] === "\n";
-  const nudge = atStart ? -2 : atEnd ? 0.5 : -1;
+  const nudge = atStart ? 0 : atEnd ? 0.5 : -1;
   return { left: left + nudge, top: lineTop + top, height: bottom - top };
 }
 
@@ -130,7 +142,12 @@ export default function ThickCaret({ fieldRef, className = "" }) {
         const visible =
           next.top + next.height > 0 && next.top < field.clientHeight;
         // `key` changes on every move so the blink restarts solid.
-        setCaret(visible ? { ...next, key: performance.now() } : null);
+        setCaret(visible ? {
+          ...next,
+          left: field.offsetLeft + next.left,
+          top: field.offsetTop + next.top,
+          key: performance.now(),
+        } : null);
       });
     };
     const hide = () => {
@@ -143,6 +160,7 @@ export default function ThickCaret({ fieldRef, className = "" }) {
     field.addEventListener("blur", hide);
     document.addEventListener("selectionchange", update);
     window.addEventListener("resize", update);
+    document.fonts?.addEventListener("loadingdone", update);
     if (document.activeElement === field) update();
 
     return () => {
@@ -151,6 +169,7 @@ export default function ThickCaret({ fieldRef, className = "" }) {
       field.removeEventListener("blur", hide);
       document.removeEventListener("selectionchange", update);
       window.removeEventListener("resize", update);
+      document.fonts?.removeEventListener("loadingdone", update);
       field.style.caretColor = "";
     };
   }, [fieldRef]);
