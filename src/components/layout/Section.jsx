@@ -13,9 +13,9 @@ export default function Section({
   sectionRef,
 }) {
   const alignClass = align === "start" ? "justify-start" : "justify-center";
-  const heightClass = tallOnMobile ? "h-[100dvh]" : "h-auto";
+  const heightClass = tallOnMobile ? "min-h-[100svh] md:h-[100dvh] md:min-h-0" : "h-auto";
   const overflowClass = tallOnMobile ? "overflow-hidden" : "overflow-visible";
-  const innerHeightClass = tallOnMobile ? "h-full min-h-0" : "h-auto";
+  const innerHeightClass = tallOnMobile ? "min-h-0 md:h-full" : "h-auto";
 
   return (
     <section

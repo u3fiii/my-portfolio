@@ -13,6 +13,7 @@ import {
   CONTACT_SOCIALS_LABEL,
 } from "../../content/contact.js";
 import { SOCIAL_LINKS } from "../../content/me.js";
+import useDesktopScroll from "../../hooks/useDesktopScroll.js";
 import useSectionParallax, {
   useDepth,
   useDepthTranslate,
@@ -20,7 +21,8 @@ import useSectionParallax, {
 
 const REVEAL_EASE = [0.22, 1, 0.36, 1];
 
-function reveal(hasEntered, step) {
+function reveal(hasEntered, step, desktopScroll) {
+  if (!desktopScroll) return { initial: false, animate: { opacity: 1, y: 0 } };
   return {
     initial: { opacity: 0, y: 14 },
     animate: hasEntered ? { opacity: 1, y: 0 } : undefined,
@@ -31,6 +33,7 @@ function reveal(hasEntered, step) {
 export default function Contact() {
   const sectionElRef = useRef(null);
   const contentRef = useRef(null);
+  const desktopScroll = useDesktopScroll();
   const hasEntered = useInView(contentRef, { once: true, amount: 0.4 });
   // Each line of copy sits a little nearer than the one above, so the column
   // fans open mid-glide; the message card is the nearest plane.
@@ -48,7 +51,7 @@ export default function Contact() {
     <Section
       id="contact"
       sectionRef={sectionElRef}
-      className="min-h-[100dvh] justify-center bg-transparent py-24"
+      className="min-h-[100dvh] justify-center bg-transparent py-12 md:py-24"
       contentMaxWidth="max-w-lg lg:max-w-[62rem]"
       tallOnMobile={false}
     >
@@ -58,7 +61,7 @@ export default function Contact() {
       >
         <header className="flex flex-col items-center text-center lg:items-start lg:text-left">
           <motion.p
-            {...reveal(hasEntered, 0)}
+            {...reveal(hasEntered, 0, desktopScroll)}
             style={{ translate: depth.badge }}
             className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white py-1 pl-2.5 pr-3 font-['DM_Sans',ui-sans-serif,sans-serif] text-[10px] font-semibold uppercase tracking-[0.1em] text-zinc-700"
           >
@@ -70,7 +73,7 @@ export default function Contact() {
           </motion.p>
 
           <motion.h2
-            {...reveal(hasEntered, 1)}
+            {...reveal(hasEntered, 1, desktopScroll)}
             style={{ translate: depth.heading }}
             className="mt-5 font-['Source_Serif_4',Georgia,serif] text-[1.625rem] font-bold leading-[1.15] tracking-[-0.02em] text-zinc-900 md:text-3xl lg:text-[2.625rem]"
           >
@@ -88,7 +91,7 @@ export default function Contact() {
           </motion.h2>
 
           <motion.p
-            {...reveal(hasEntered, 2)}
+            {...reveal(hasEntered, 2, desktopScroll)}
             style={{ translate: depth.description }}
             className="mt-4 max-w-sm font-['Quicksand',ui-sans-serif,sans-serif] text-lg font-medium leading-relaxed text-zinc-700"
           >
@@ -96,7 +99,7 @@ export default function Contact() {
           </motion.p>
 
           <motion.p
-            {...reveal(hasEntered, 3)}
+            {...reveal(hasEntered, 3, desktopScroll)}
             style={{ translate: depth.replyTime }}
             className="mt-3 inline-flex items-center gap-1.5 font-['DM_Sans',ui-sans-serif,sans-serif] text-sm text-zinc-500"
           >
@@ -105,7 +108,7 @@ export default function Contact() {
           </motion.p>
 
           <motion.nav
-            {...reveal(hasEntered, 4)}
+            {...reveal(hasEntered, 4, desktopScroll)}
             style={{ translate: depth.socials }}
             className="mt-8 flex flex-col items-center gap-3 lg:items-start"
             aria-label="Social links"
@@ -117,9 +120,9 @@ export default function Contact() {
               {SOCIAL_LINKS.map(({ id, label, href }, index) => (
                 <motion.li
                   key={id}
-                  initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                  initial={desktopScroll ? { opacity: 0, y: 10, scale: 0.9 } : false}
                   animate={
-                    hasEntered ? { opacity: 1, y: 0, scale: 1 } : undefined
+                    hasEntered || !desktopScroll ? { opacity: 1, y: 0, scale: 1 } : undefined
                   }
                   transition={{
                     duration: 0.5,
@@ -136,8 +139,8 @@ export default function Contact() {
 
         <motion.div style={{ y: cardY }} className="w-full">
           <motion.div
-            initial={{ opacity: 0, y: 36, scale: 0.97 }}
-            animate={hasEntered ? { opacity: 1, y: 0, scale: 1 } : undefined}
+            initial={desktopScroll ? { opacity: 0, y: 36, scale: 0.97 } : false}
+            animate={hasEntered || !desktopScroll ? { opacity: 1, y: 0, scale: 1 } : undefined}
             transition={{ duration: 0.8, delay: 0.16, ease: REVEAL_EASE }}
           >
             <ContactForm />

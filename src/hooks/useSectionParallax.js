@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
+import useDesktopScroll from "./useDesktopScroll.js";
 import { useReducedMotion, useScroll, useTransform } from "framer-motion";
-
-/** Same audience as the section snap: desktop pointer, motion allowed. */
-const PARALLAX_MEDIA = "(min-width: 768px) and (hover: hover) and (pointer: fine)";
 
 /**
  * Tracks a section's arrival and departure so its layers can move at
@@ -11,16 +8,7 @@ const PARALLAX_MEDIA = "(min-width: 768px) and (hover: hover) and (pointer: fine
  */
 export default function useSectionParallax(sectionRef) {
   const reduce = useReducedMotion();
-  const [enabled, setEnabled] = useState(
-    () => window.matchMedia(PARALLAX_MEDIA).matches,
-  );
-
-  useEffect(() => {
-    const media = window.matchMedia(PARALLAX_MEDIA);
-    const onChange = () => setEnabled(media.matches);
-    media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
-  }, []);
+  const enabled = useDesktopScroll();
 
   // 0 → 1 as the section's top travels from the viewport bottom to its top.
   const { scrollYProgress: enter } = useScroll({

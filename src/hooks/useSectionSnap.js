@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useReducedMotion } from "framer-motion";
+import useDesktopScroll from "./useDesktopScroll.js";
 import { useLenis } from "./useLenis.jsx";
 
 /**
@@ -14,10 +16,6 @@ const GESTURE_GAP_MS = 180;
 const GESTURE_THRESHOLD = 6;
 /** Slack (px) when comparing scroll positions against section edges. */
 const EDGE = 2;
-
-/** Desktop only: a mouse or trackpad, room for full sections, motion allowed. */
-const SNAP_MEDIA =
-  "(min-width: 768px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)";
 
 const PAGE_KEYS = {
   PageDown: 1,
@@ -77,16 +75,9 @@ function measureStops(ids) {
  */
 export default function useSectionSnap(sectionIds) {
   const lenis = useLenis();
-  const [enabled, setEnabled] = useState(
-    () => window.matchMedia(SNAP_MEDIA).matches,
-  );
-
-  useEffect(() => {
-    const media = window.matchMedia(SNAP_MEDIA);
-    const onChange = () => setEnabled(media.matches);
-    media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
-  }, []);
+  const reduceMotion = useReducedMotion();
+  const desktopScroll = useDesktopScroll();
+  const enabled = desktopScroll && !reduceMotion;
 
   useEffect(() => {
     if (!lenis || !enabled) return;

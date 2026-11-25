@@ -5,6 +5,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
+import useDesktopScroll from "../../hooks/useDesktopScroll.js";
 import Button from "../ui/Button.jsx";
 import LottiePlayer from "../LottiePlayer.jsx";
 import TypewriterText from "../TypewriterText.jsx";
@@ -51,6 +52,7 @@ function stepDelayMs(step) {
 /** As the page glides to Work, the hero recedes: it shrinks, lifts and fades. */
 function useExitStyle(ref) {
   const reduceMotion = useReducedMotion();
+  const desktopScroll = useDesktopScroll();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -58,7 +60,7 @@ function useExitStyle(ref) {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
   const y = useTransform(scrollYProgress, [0, 1], [0, -64]);
   const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
-  return reduceMotion ? undefined : { scale, y, opacity };
+  return desktopScroll && !reduceMotion ? { scale, y, opacity } : undefined;
 }
 
 export default function Me() {
@@ -71,7 +73,7 @@ export default function Me() {
   const buttonsStartStep = 4;
 
   return (
-    <Section id="me" className="overflow-visible bg-transparent">
+    <Section id="me" className="justify-center overflow-visible bg-transparent pt-20 pb-12 md:py-0">
       <motion.div
         ref={contentRef}
         style={exitStyle}

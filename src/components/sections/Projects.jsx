@@ -14,6 +14,7 @@ import JellyRadio from "../ui/JellyRadio.jsx";
 import LottieIcon, { prefersReducedMotion } from "../ui/LottieIcon.jsx";
 import WorkCard from "../work/WorkCard.jsx";
 import { WORK_CARDS } from "../../content/workCards.js";
+import useDesktopScroll from "../../hooks/useDesktopScroll.js";
 import useSectionParallax, { useDepth } from "../../hooks/useSectionParallax.js";
 
 const FONT_SERIF = '"Source Serif 4", Georgia, serif';
@@ -82,7 +83,8 @@ const COVER_CLASS =
 const REVEAL_EASE = [0.22, 1, 0.36, 1];
 
 /** Header lines: title, subtitle, filters — a short cascade. */
-function headerReveal(hasEntered, step, reduce) {
+function headerReveal(hasEntered, step, reduce, desktopScroll) {
+  if (!desktopScroll) return { initial: false };
   return {
     initial: { opacity: 0, y: reduce ? 0 : 14 },
     animate: hasEntered ? { opacity: 1, y: 0 } : undefined,
@@ -154,6 +156,7 @@ export default function Projects() {
   const cardsY = useDepth(parallax, 110);
   const hasEntered = useInView(contentRef, { once: true, amount: 0.25 });
   const reduce = useReducedMotion();
+  const desktopScroll = useDesktopScroll();
   const [introDone, setIntroDone] = useState(false);
 
   useEffect(() => {
@@ -170,7 +173,7 @@ export default function Projects() {
     <Section
       id="projects"
       sectionRef={sectionRef}
-      className="scroll-mt-[-5rem] bg-transparent pt-24 pb-12 md:min-h-[100dvh] md:pb-6 md:pt-[clamp(6rem,15vh,9rem)]"
+      className="bg-transparent pt-8 pb-12 md:scroll-mt-[-5rem] md:min-h-[100dvh] md:pb-6 md:pt-[clamp(6rem,15vh,9rem)]"
       align="center"
       contentMaxWidth="max-w-xl min-[600px]:max-w-2xl lg:max-w-[62rem]"
       tallOnMobile={false}
@@ -186,14 +189,14 @@ export default function Projects() {
         >
           <div>
             <motion.h2
-              {...headerReveal(hasEntered, 0, reduce)}
+              {...headerReveal(hasEntered, 0, reduce, desktopScroll)}
               className="text-[1.375rem] font-bold tracking-[-0.02em] text-zinc-900 md:text-2xl lg:text-3xl"
               style={{ fontFamily: FONT_SERIF }}
             >
               Selected work
             </motion.h2>
             <motion.p
-              {...headerReveal(hasEntered, 1, reduce)}
+              {...headerReveal(hasEntered, 1, reduce, desktopScroll)}
               className="mt-1 text-zinc-500"
               style={{ fontFamily: FONT_UI, fontSize: "14px" }}
             >
@@ -202,7 +205,7 @@ export default function Projects() {
           </div>
 
           <motion.div
-            {...headerReveal(hasEntered, 2, reduce)}
+            {...headerReveal(hasEntered, 2, reduce, desktopScroll)}
             className="flex justify-center md:hidden"
           >
             <JellyRadio
@@ -218,7 +221,7 @@ export default function Projects() {
           </motion.div>
 
           <motion.div
-            {...headerReveal(hasEntered, 2, reduce)}
+            {...headerReveal(hasEntered, 2, reduce, desktopScroll)}
             className="hidden md:flex"
           >
             <JellyRadio
@@ -251,8 +254,8 @@ export default function Projects() {
                     className="h-full"
                     variants={cardVariants}
                     custom={{ index, intro: !introDone, reduce }}
-                    initial="hidden"
-                    animate={hasEntered ? "shown" : "hidden"}
+                    initial={desktopScroll ? "hidden" : false}
+                    animate={hasEntered || !desktopScroll ? "shown" : "hidden"}
                   >
                     <WorkCard {...card} imageClassName={COVER_CLASS} />
                   </motion.div>

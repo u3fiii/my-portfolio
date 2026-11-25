@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import Lenis from "lenis";
+import useDesktopScroll from "./useDesktopScroll.js";
 
 const LenisContext = createContext(null);
 
@@ -13,11 +14,14 @@ export const LENIS_OPTIONS = {
   anchors: true,
 };
 
-/** Provides a Lenis instance for smooth vertical scrolling. */
+/** Touch and narrow layouts use the browser’s native scrolling. */
 export function LenisProvider({ children }) {
   const [lenis, setLenis] = useState(null);
 
+  const desktopScroll = useDesktopScroll();
+
   useEffect(() => {
+    if (!desktopScroll) return;
     const instance = new Lenis(LENIS_OPTIONS);
     setLenis(instance);
 
@@ -38,7 +42,7 @@ export function LenisProvider({ children }) {
       instance.destroy();
       setLenis(null);
     };
-  }, []);
+  }, [desktopScroll]);
 
   return (
     <LenisContext.Provider value={lenis}>{children}</LenisContext.Provider>
